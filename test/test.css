@@ -10,3 +10,6 @@
 @media(max-width:520px){.review-question .question{font-size:13px}.review-answer{font-size:25px}.review-explanation{font-size:18px}}
 
 .matching-columns{display:grid;grid-template-columns:1fr 1fr;gap:26px;white-space:normal}.matching-columns h3{font:500 14px/1.5 system-ui;color:var(--muted);margin:0 0 14px}.matching-columns section>div{white-space:pre-wrap;overflow-wrap:anywhere}.question>p{margin:0 0 22px}@media(max-width:650px){.matching-columns{grid-template-columns:1fr;gap:24px}}
+
+/* Collapse only the source passage; task instructions stay outside this block. */
+.passage-block{white-space:normal;margin-bottom:24px}.passage-block .passage{margin-bottom:0}.passage-toggle{display:block;min-height:44px;margin-bottom:10px;font:inherit;font-size:14px;text-align:left}.passage-toggle:focus-visible{outline:3px solid var(--blue,#293ef4);outline-offset:4px}

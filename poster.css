@@ -8,3 +8,12 @@ body{font-family:Golos,Arial,sans-serif;background:var(--bg);color:var(--ink)}.a
 
 /* Outlined logo: independent of installed fonts and font loading. */
 .brand{display:inline-flex;align-items:center;line-height:1}.brand img{display:block;width:46px;height:46px}.print-art{aspect-ratio:1;height:auto;background:var(--blue)}.print-art img{display:block;width:100%;height:100%;object-fit:cover}.print-art:after{display:none}@media(max-width:680px){.brand img{width:38px;height:38px}}
+
+/* Unified masthead: title, mode navigation and imprint share one composition. */
+.poster-hero{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:24px;min-height:214px;padding:0 0 24px}
+.poster-hero h1{grid-column:1;grid-row:1;margin:0;min-width:0;padding-top:12px}
+.poster-hero .mode-nav{grid-column:2;grid-row:1;position:relative;z-index:1;justify-content:flex-end}
+.poster-hero .poster-caption{grid-column:1/-1;justify-content:flex-end;align-self:end}
+.poster-hero:before{top:0;bottom:0;height:auto}
+@media(min-width:681px) and (max-width:1000px){.poster-hero .mode-nav a{min-width:108px;padding:15px 14px}.poster-hero{gap:20px;min-height:180px}}
+@media(max-width:680px){.poster-hero{display:flex;flex-direction:column;align-items:stretch;gap:24px;min-height:0;padding:0 0 20px}.poster-hero .mode-nav{order:0;align-self:flex-end}.poster-hero h1{order:1;margin:0}.poster-hero .poster-caption{order:2;align-self:stretch}.poster-hero:before{top:30px;bottom:0;height:auto}}

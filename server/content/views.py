@@ -10,7 +10,7 @@ def content_js(request):
     response['Cache-Control']='no-store'
     return response
 
-PUBLIC_FILES={'index.html','app.js','styles.css','favicon.svg','assets/logo.svg','assets/brand-poster.svg','poster.css','poster.js','assets/fonts/roboto-400.ttf','assets/fonts/roboto-500.ttf','assets/fonts/roboto-700.ttf','assets/fonts/roboto-900.ttf','assets/fonts/plex-mono-400.ttf','assets/fonts/roboto-condensed-700.ttf','cards.js','explanations.js','punctuation.js','adapted-cards.js','exam-config.js','prefix-explanations.js','audited-explanations.js','exam-explanations.js','reasoned-explanations.js','test/index.html','test/test.css','test/test.js','test/bank.js','test/bank-manifest.js','test/bank-loader.js'}
+PUBLIC_FILES={'index.html','app.js','styles.css','favicon.svg','assets/logo.svg','assets/brand-poster.svg','poster.css','poster.js','assets/fonts/golos-400.ttf','assets/fonts/golos-500.ttf','assets/fonts/golos-700.ttf','assets/fonts/golos-900.ttf','assets/fonts/roboto-400.ttf','assets/fonts/roboto-500.ttf','assets/fonts/roboto-700.ttf','assets/fonts/roboto-900.ttf','assets/fonts/plex-mono-400.ttf','assets/fonts/roboto-condensed-700.ttf','cards.js','explanations.js','punctuation.js','adapted-cards.js','exam-config.js','prefix-explanations.js','audited-explanations.js','exam-explanations.js','reasoned-explanations.js','test/index.html','test/test.css','test/test.js','test/bank.js','test/bank-manifest.js','test/bank-loader.js'}
 def public_file(request,path='index.html'):
     if path in ('','test/'):path=path+'index.html'
     variant=re.fullmatch(r'test/doshchinsky-2027/v(\d+)\.json',path)

@@ -183,11 +183,6 @@
   $('feedback').textContent='';$('feedback').className='feedback';
   $('task-label').textContent=`Задание ${current.task}`;
   $('options').replaceChildren();
-  const paronym = current.task === 5;
-  $('paronym-info').hidden = !paronym;
-  $('paronym-info').setAttribute('aria-expanded', 'false');
-  $('paronym-note').hidden = true;
-  $('paronym-note').textContent = paronym ? current.explanation || '' : '';
   $('word').classList.toggle('stress-word', current.kind === 'stress');
   if (punctuation) {
     showPunctuation(current);
@@ -212,7 +207,7 @@
     right.textContent = current.prompt[Number(current.answer)];
   } else if (!punctuation) solution($('word'),current);
   $('feedback').textContent=good ? (punctuation && !current.answer.length ? 'Верно! ' + ({',':'Запятые',':':'Двоеточия','—':'Тире'}[current.mark]) + ' не нужны.' : 'Верно!') : 'Вы ошиблись.';$('feedback').className='feedback'+(good?'':' error');
-  if ($('paronym-note').hidden) timer=setTimeout(chooseNext,punctuation ? (good?1800:3000) : good?600:1200);
+  timer=setTimeout(chooseNext,punctuation ? (good?1800:3000) : good?600:1200);
  }
  function select(id){
   clearTimeout(timer);timer=null;current=null;locked=false;$('instruction').hidden=true;
@@ -225,13 +220,6 @@
  sections.forEach(([id,label])=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.section=id;b.setAttribute('aria-label',/^\d+$/.test(id)?`Задание ${id}`:label);b.addEventListener('click',()=>select(id));$('sections').append(b);});
  $('check-answer').addEventListener('click', () => { if (current?.kind === 'punctuation') answer(); });
  $('skip').addEventListener('click',chooseNext);
- $('paronym-info').addEventListener('click', () => {
-   const note = $('paronym-note');
-   note.hidden = !note.hidden;
-   $('paronym-info').setAttribute('aria-expanded', String(!note.hidden));
-   clearTimeout(timer); timer = null;
-   if (note.hidden && locked) timer = setTimeout(chooseNext, 1200);
- });
  document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||e.repeat||locked)return;if (e.key === 'Enter' && current?.kind === 'punctuation' && e.target?.tagName !== 'BUTTON') { e.preventDefault(); answer(); return; }const n=Number(e.key);if(n>=1&&n<=9){const b=choices()[n-1];if(b){e.preventDefault();b.click();}}});
  select('all');
 })();

@@ -192,7 +192,7 @@
     showStress(current);
     return;
   }
-  (current.kind==='join'?current.options:shuffle(current.options)).forEach(value=>{const b=document.createElement('button');b.type='button';b.className='option'+(phrase?' phrase':'');b.textContent=value==='∅'?'нет буквы':value;b.dataset.value=value;b.addEventListener('click',()=>answer(value));$('options').append(b);});
+  (current.kind==='join'?current.options:shuffle(current.options)).forEach(value=>{const b=document.createElement('button');b.type='button';b.className='option'+(phrase?' phrase':'');b.textContent=value;if(value==='∅')b.setAttribute('aria-label','Нет буквы');b.dataset.value=value;b.addEventListener('click',()=>answer(value));$('options').append(b);});
  }
  function answer(value){
   if(locked||!current)return;locked=true;

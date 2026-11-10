@@ -11,7 +11,7 @@ class Command(BaseCommand):
     def handle(self,*args,**kwargs):
         script=r'''
 const fs=require('fs'),vm=require('vm');const ctx={window:{}};
-for(const p of ['exam-config.js','cards.js','explanations.js','punctuation.js','adapted-cards.js','test/bank.js','prefix-explanations.js','audited-explanations.js','exam-explanations.js','reasoned-explanations.js']){if(fs.existsSync(p))vm.runInNewContext(fs.readFileSync(p,'utf8'),ctx);}
+for(const p of ['exam-config.js','cards.js','explanations.js','punctuation.js','adapted-cards.js','paronyms.js','test/bank.js','prefix-explanations.js','audited-explanations.js','exam-explanations.js','reasoned-explanations.js']){if(fs.existsSync(p))vm.runInNewContext(fs.readFileSync(p,'utf8'),ctx);}
 for(let v=3;v<=36;v++){
   const file=`test/doshchinsky-2027/v${v}.json`;
   if(!fs.existsSync(file))continue;
@@ -22,7 +22,7 @@ const app=fs.readFileSync('app.js','utf8');
 const words=app.match(/const stressWords = `([\s\S]*?)`\.trim/)[1].trim().split(/\s+/);
 const stress=words.map(form=>{const pos=form.search(/[АЕЁИОУЫЭЮЯ]/),word=form.toLowerCase();return {id:'stress-'+form,task:4,kind:'stress',prompt:word,before:word.slice(0,pos),after:word.slice(pos+1),spelling:word[pos],answer:String(pos),context:form==='Отзыв'?'о книге':form==='отзЫв'?'посла из страны':''};});
 const choices=JSON.parse(app.match(/const wordChoiceCards = (\[[\s\S]*?\n \]);/)[1]);
-process.stdout.write(JSON.stringify({tasks:ctx.window.EGE_EXAM_CONFIG.tasks,exams:ctx.window.EGE_EXAM_BANK,cards:[...choices,...ctx.window.EGE_CARDS.map(c=>({...c,explanation:c.explanation||ctx.window.EGE_HINTS?.get(c.id)||''})),...stress,...ctx.window.EGE_PUNCTUATION,...(ctx.window.EGE_ADAPTED_CARDS||[])]}));
+process.stdout.write(JSON.stringify({tasks:ctx.window.EGE_EXAM_CONFIG.tasks,exams:ctx.window.EGE_EXAM_BANK,cards:[...choices,...(ctx.window.EGE_PARONYMS||[]),...ctx.window.EGE_CARDS.map(c=>({...c,explanation:c.explanation||ctx.window.EGE_HINTS?.get(c.id)||''})),...stress,...ctx.window.EGE_PUNCTUATION,...(ctx.window.EGE_ADAPTED_CARDS||[])]}));
 '''
         data=json.loads(subprocess.check_output(['node','-e',script],cwd=settings.ROOT,text=True))
         for n,t in data['tasks'].items():Task.objects.get_or_create(number=int(n),defaults={'title':f'Задание {n}','max_primary':t['maxPrimary']})

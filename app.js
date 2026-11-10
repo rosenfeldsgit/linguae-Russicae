@@ -73,11 +73,11 @@
  const stableId = id => 200000 + [...id].reduce((hash, c) => (Math.imul(hash, 31) + c.codePointAt(0)) >>> 0, 0);
  const managed = window.EGE_MANAGED || {cards:[],disabled:[],tasks:{}};
  const overrides = new Map(managed.cards.map(c => [c.id,c]));
- const staticCards = [...wordChoiceCards, ...(window.EGE_ADAPTED_CARDS || []), ...(window.EGE_CARDS || []), ...stressCards, ...(window.EGE_PUNCTUATION || [])];
+ const staticCards = [...wordChoiceCards, ...(window.EGE_PARONYMS || []), ...(window.EGE_ADAPTED_CARDS || []), ...(window.EGE_CARDS || []), ...stressCards, ...(window.EGE_PUNCTUATION || [])];
  const staticIds = new Set(staticCards.map(c=>c.id));
  const cards = [...staticCards,...managed.cards.filter(c=>!staticIds.has(c.id))].filter(c => !managed.disabled.includes(c.id)).map(c => overrides.get(c.id) || c).map(card => ({ ...card, displayId: card.displayId || stableId(card.id), maxPrimary: (managed.tasks[card.task] || window.EGE_EXAM_CONFIG.tasks[card.task] || {maxPrimary:1}).maxPrimary }));
  const $=id=>document.getElementById(id);
- const sections=[['all','Все подряд'],['1','1'],...Array.from({length:7},(_,i)=>[String(i+9),String(i+9)]),['stress','Ударение'],['punctuation','Пунктуация']];
+ const sections=[['all','Все подряд'],['1','1'],['5','5'],...Array.from({length:7},(_,i)=>[String(i+9),String(i+9)]),['stress','Ударение'],['punctuation','Пунктуация']];
  for (const task of Object.values(managed.tasks)) { if (!sections.some(s=>s[0]===String(task.number)) && cards.some(c=>c.task===task.number)) sections.splice(sections.length-2,0,[String(task.number),String(task.number)]); }
  let pool=[],current=null,timer=null,locked=false,correct=0,wrong=0;
  const mistakes=new Map();
@@ -183,6 +183,11 @@
   $('feedback').textContent='';$('feedback').className='feedback';
   $('task-label').textContent=`Задание ${current.task}`;
   $('options').replaceChildren();
+  const paronym = current.task === 5;
+  $('paronym-info').hidden = !paronym;
+  $('paronym-info').setAttribute('aria-expanded', 'false');
+  $('paronym-note').hidden = true;
+  $('paronym-note').textContent = paronym ? current.explanation || '' : '';
   $('word').classList.toggle('stress-word', current.kind === 'stress');
   if (punctuation) {
     showPunctuation(current);
@@ -207,7 +212,7 @@
     right.textContent = current.prompt[Number(current.answer)];
   } else if (!punctuation) solution($('word'),current);
   $('feedback').textContent=good ? (punctuation && !current.answer.length ? 'Верно! ' + ({',':'Запятые',':':'Двоеточия','—':'Тире'}[current.mark]) + ' не нужны.' : 'Верно!') : 'Вы ошиблись.';$('feedback').className='feedback'+(good?'':' error');
-  timer=setTimeout(chooseNext,punctuation ? (good?1800:3000) : good?600:1200);
+  if ($('paronym-note').hidden) timer=setTimeout(chooseNext,punctuation ? (good?1800:3000) : good?600:1200);
  }
  function select(id){
   clearTimeout(timer);timer=null;current=null;locked=false;$('instruction').hidden=true;
@@ -220,8 +225,13 @@
  sections.forEach(([id,label])=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.section=id;b.setAttribute('aria-label',/^\d+$/.test(id)?`Задание ${id}`:label);b.addEventListener('click',()=>select(id));$('sections').append(b);});
  $('check-answer').addEventListener('click', () => { if (current?.kind === 'punctuation') answer(); });
  $('skip').addEventListener('click',chooseNext);
+ $('paronym-info').addEventListener('click', () => {
+   const note = $('paronym-note');
+   note.hidden = !note.hidden;
+   $('paronym-info').setAttribute('aria-expanded', String(!note.hidden));
+   clearTimeout(timer); timer = null;
+   if (note.hidden && locked) timer = setTimeout(chooseNext, 1200);
+ });
  document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||e.repeat||locked)return;if (e.key === 'Enter' && current?.kind === 'punctuation' && e.target?.tagName !== 'BUTTON') { e.preventDefault(); answer(); return; }const n=Number(e.key);if(n>=1&&n<=9){const b=choices()[n-1];if(b){e.preventDefault();b.click();}}});
  select('all');
 })();
-
-

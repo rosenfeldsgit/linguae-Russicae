@@ -46,3 +46,8 @@ body{font-family:Golos,Arial,sans-serif;background:var(--bg);color:var(--ink)}.a
 .versions-dialog{width:100vw;max-width:none;height:100dvh;max-height:none;margin:0;padding:0;border:0;background:var(--bg)}
 .versions-dialog::backdrop{background:var(--bg)}
 .versions-dialog iframe{display:block;width:100%;height:100%;border:0}
+
+.footer-links{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.telegram-link{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;flex-shrink:0;color:var(--ink);text-decoration:none}
+.telegram-link:hover{color:var(--blue)}
+.telegram-link:focus-visible{outline:2px solid currentColor;outline-offset:2px}

@@ -5,4 +5,4 @@ COPY server/requirements.txt /app/server/requirements.txt
 RUN pip install --no-cache-dir -r /app/server/requirements.txt
 COPY . /app
 WORKDIR /app/server
-CMD ["gunicorn", "ege.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "2", "--access-logfile", "-"]
+CMD ["gunicorn", "ege.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "2", "--access-logfile", "-", "--timeout", "30", "--max-requests", "1000", "--max-requests-jitter", "100"]

@@ -1,0 +1,16 @@
+.git
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.sqlite3*
+*.sql
+*.dump
+*.bundle
+backups
+server/data
+__pycache__
+.venv
+node_modules
+public-build

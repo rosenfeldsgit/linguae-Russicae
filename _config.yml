@@ -1,0 +1,18 @@
+# GitHub Pages' branch/Jekyll build must not publish development/server files.
+# The explicit allowlist in scripts/build_public.py is used for the personal host.
+exclude:
+  - server
+  - scripts
+  - tests
+  - data
+  - design
+  - compose.yaml
+  - README.md
+  - VERSION.md
+  - SECURITY.md
+  - public-build
+  - backups
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor

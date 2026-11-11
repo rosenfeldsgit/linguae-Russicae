@@ -80,10 +80,45 @@
  const sections=[['all','Все подряд'],['1','1'],['5','5'],...Array.from({length:7},(_,i)=>[String(i+9),String(i+9)]),['stress','Ударение'],['punctuation','Пунктуация']];
  for (const task of Object.values(managed.tasks)) { if (!sections.some(s=>s[0]===String(task.number)) && cards.some(c=>c.task===task.number)) sections.splice(sections.length-2,0,[String(task.number),String(task.number)]); }
  let pool=[],current=null,timer=null,locked=false,correct=0,wrong=0;
+ const rotations = new Map();
+ let rotation;
  const mistakes=new Map();
  let selectedSlots = new Set();
  const random=n=>Math.floor(Math.random()*n);
  function shuffle(items){const a=[...items];for(let i=a.length-1;i>0;i--){const j=random(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
+ // Source IDs differ across editions, so rotate by the exercise content.
+ function exerciseKey(card) {
+   const normalize = value => String(value || '').normalize('NFC').toLowerCase()
+     .replace(/ё/g, 'е').replace(/\*\*/g, '').replace(/(?:\.{2,}|…|___)/g, '…')
+     .replace(/\s+/g, ' ').trim();
+   const prompt = card.kind === 'word-choice' || card.kind === 'letter'
+     ? card.before + '…' + card.after
+     : card.kind === 'punctuation' ? card.parts.join('…') : card.prompt;
+   return JSON.stringify([card.task, card.kind, normalize(prompt),
+     card.kind === 'stress' ? '' : normalize(card.context), card.answer, card.mark || '']);
+ }
+ function createRotation(items) {
+   const groups = new Map();
+   for (const card of items) {
+     const key = exerciseKey(card);
+     if (!groups.has(key)) groups.set(key, []);
+     groups.get(key).push(card);
+   }
+   return {groups, remaining: [], lastKey: null};
+ }
+ function nextCard(state) {
+   if (!state.remaining.length) {
+     state.remaining = shuffle([...state.groups.keys()]);
+     // Avoid repeating the last exercise at the boundary between rounds.
+     const last = state.remaining.length - 1;
+     if (last > 0 && state.remaining[last] === state.lastKey) {
+       [state.remaining[0], state.remaining[last]] = [state.remaining[last], state.remaining[0]];
+     }
+   }
+   state.lastKey = state.remaining.pop();
+   const copies = state.groups.get(state.lastKey);
+   return copies[random(copies.length)];
+ }
  function solution(node,c){if(c.kind === 'punctuation'){node.replaceChildren();c.parts.forEach((part,index)=>{node.append(document.createTextNode(part));if(index<c.parts.length-1){if(c.answer.includes(index)){const m=document.createElement('mark');m.textContent=c.mark==='—'?' —':c.mark;node.append(m);}node.append(document.createTextNode(' '));}});return;}node.replaceChildren(document.createTextNode(c.before));const m=document.createElement('mark');m.textContent=c.spelling||c.answer;node.append(m,document.createTextNode(c.after));}
  function addExplanation(item, word, card) {
    let hint = card.explanation || window.EGE_HINTS?.get(card.id);
@@ -166,9 +201,7 @@
  function chooseNext(){
   clearTimeout(timer);timer=null;locked=false;
   if(!pool.length)return;
-  // Uniform independent draws; exclude only the immediately preceding card.
-  const available=pool.length>1?pool.filter(c=>c.id!==current?.id):pool;
-  current=available[random(available.length)];
+  current=nextCard(rotation);
   const punctuation = current.kind === 'punctuation';
   const phrase=['spelling','join','word-choice'].includes(current.kind);
   $('instruction').textContent=current.instruction || (phrase?'Выбери написание':'');
@@ -215,6 +248,8 @@
   for(const b of $('sections').children)b.setAttribute('aria-pressed',String(b.dataset.section===id));
   pool = id === 'all' ? cards : id === 'stress' ? cards.filter(c => c.kind === 'stress') : id === 'punctuation' ? cards.filter(c => c.kind === 'punctuation') : cards.filter(c => c.task === Number(id));
   if(!pool.length){$('word').textContent='Не удалось загрузить карточки';$('context').textContent='Проверьте, что файл cards.js находится рядом с index.html.';$('skip').hidden=true;return;}
+  if (!rotations.has(id)) rotations.set(id, createRotation(pool));
+  rotation = rotations.get(id);
   chooseNext();
  }
  sections.forEach(([id,label])=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.section=id;b.setAttribute('aria-label',/^\d+$/.test(id)?`Задание ${id}`:label);b.addEventListener('click',()=>select(id));$('sections').append(b);});

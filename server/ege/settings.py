@@ -6,6 +6,8 @@ SECRET_KEY=os.environ.get('DJANGO_SECRET_KEY','')
 if not SECRET_KEY:
     raise RuntimeError('Set DJANGO_SECRET_KEY before starting the server')
 DEBUG=os.environ.get('DJANGO_DEBUG')=='1'
+if not DEBUG and (len(SECRET_KEY)<50 or len(set(SECRET_KEY))<5 or SECRET_KEY.startswith('django-insecure-')):
+    raise RuntimeError('Use a strong random DJANGO_SECRET_KEY of at least 50 characters')
 ALLOWED_HOSTS=os.environ.get('DJANGO_ALLOWED_HOSTS','localhost,127.0.0.1,testserver').split(',')
 CSRF_TRUSTED_ORIGINS=[x for x in os.environ.get('DJANGO_CSRF_ORIGINS','').split(',') if x]
 INSTALLED_APPS=['django.contrib.admin','django.contrib.auth','django.contrib.contenttypes','django.contrib.sessions','django.contrib.messages','django.contrib.staticfiles','content']
@@ -32,5 +34,15 @@ CSRF_COOKIE_SECURE=not DEBUG
 SECURE_SSL_REDIRECT=not DEBUG
 SECURE_PROXY_SSL_HEADER=('HTTP_X_FORWARDED_PROTO','https')
 SECURE_CONTENT_TYPE_NOSNIFF=True
-X_FRAME_OPTIONS='DENY'
+# The versions dialog embeds a same-origin page.
+X_FRAME_OPTIONS='SAMEORIGIN'
 SESSION_COOKIE_AGE=8*60*60
+
+SECURE_REFERRER_POLICY='same-origin'
+SECURE_HSTS_SECONDS=0 if DEBUG else int(os.environ.get('DJANGO_HSTS_SECONDS','3600'))
+# Opt in only after verifying HTTPS on every subdomain.
+SECURE_HSTS_INCLUDE_SUBDOMAINS=False
+SECURE_HSTS_PRELOAD=False
+DATA_UPLOAD_MAX_MEMORY_SIZE=1024*1024
+FILE_UPLOAD_MAX_MEMORY_SIZE=1024*1024
+DATA_UPLOAD_MAX_NUMBER_FIELDS=1000

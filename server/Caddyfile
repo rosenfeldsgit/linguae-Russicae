@@ -1,10 +1,14 @@
+{
+    servers {
+        timeouts {
+            read_header 10s
+            read_body 15s
+            write 30s
+            idle 30s
+        }
+    }
+}
 {$DOMAIN} {
     encode zstd gzip
-    handle_path /static/* {
-        root * /srv/static
-        file_server
-    }
-    handle {
-        reverse_proxy web:8000
-    }
+    reverse_proxy gateway:8080
 }

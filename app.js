@@ -82,7 +82,7 @@
  let pool=[],current=null,timer=null,locked=false,correct=0,wrong=0;
  const rotations = new Map();
  let rotation;
- const mistakes=new Map();
+ let historySequence = 0;
  let selectedSlots = new Set();
  const random=n=>Math.floor(Math.random()*n);
  function shuffle(items){const a=[...items];for(let i=a.length-1;i>0;i--){const j=random(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
@@ -130,7 +130,7 @@
    if (!hint) return;
    const note = document.createElement('p');
    note.className = 'rule-note';
-   note.id = 'rule-' + card.id;
+   note.id = 'rule-' + card.id + '-' + historySequence;
    note.textContent = hint;
    note.hidden = true;
    const toggle = document.createElement('button');
@@ -227,12 +227,47 @@
   }
   (current.kind==='join'?current.options:shuffle(current.options)).forEach(value=>{const b=document.createElement('button');b.type='button';b.className='option'+(phrase?' phrase':'');b.textContent=value;if(value==='∅')b.setAttribute('aria-label','Нет буквы');b.dataset.value=value;b.addEventListener('click',()=>answer(value));$('options').append(b);});
  }
+ function addHistory(card, good) {
+   historySequence++;
+   const item = document.createElement('li');
+   item.className = good ? 'history-correct' : 'history-incorrect';
+   item.setAttribute('aria-label', good ? 'Верный ответ' : 'Ошибка');
+   const word = document.createElement('div');
+   word.className = 'mistake-word';
+   solution(word, card);
+   if (card.kind === 'punctuation') {
+     word.replaceChildren();
+     card.parts.forEach((part, index) => {
+       word.append(document.createTextNode(part));
+       if (index === card.parts.length - 1) return;
+       const expected = card.answer.includes(index);
+       const selected = selectedSlots.has(index);
+       if (expected || selected) {
+         const mark = document.createElement('mark');
+         mark.className = expected && selected ? 'history-right' : 'history-wrong';
+         mark.textContent = card.mark === '—' ? ' —' : card.mark;
+         word.append(mark);
+       }
+       word.append(document.createTextNode(' '));
+     });
+   }
+   item.append(word);
+   if (card.context) {
+     const context = document.createElement('small');
+     context.textContent = card.context;
+     item.append(context);
+   }
+   if (!good) addExplanation(item, word, card);
+   $('mistake-list').prepend(item);
+   $('empty').hidden = true;
+ }
  function answer(value){
   if(locked||!current)return;locked=true;
   const punctuation = current.kind === 'punctuation';
   const good=punctuation ? selectedSlots.size===current.answer.length && current.answer.every(index=>selectedSlots.has(index)) : value===current.answer;
   $('check-answer').disabled=true;
-  if(good)correct++;else{wrong++;if(!mistakes.has(current.id)){mistakes.set(current.id,current);const li=document.createElement('li'),w=document.createElement('div');w.className='mistake-word';solution(w,current);li.append(w);if(current.context){const s=document.createElement('small');s.textContent=current.context;li.append(s);}addExplanation(li,w,current);$('mistake-list').prepend(li);}$('empty').hidden=true;}
+  if(good)correct++;else wrong++;
+  addHistory(current, good);
   $('correct').textContent=correct;$('wrong').textContent=wrong;
   for(const b of choices()){b.disabled=true;if(punctuation){const index=Number(b.dataset.value);const expected=current.answer.includes(index);b.textContent=expected || selectedSlots.has(index) ? current.mark : '·';b.classList.add(expected===selectedSlots.has(index)?'right':'wrong');continue;}if(b.dataset.value===current.answer)b.classList.add('right');else if(b.dataset.value===value)b.classList.add('wrong');}
   if (current.kind === 'stress') {
@@ -244,7 +279,7 @@
  }
  function select(id){
   clearTimeout(timer);timer=null;current=null;locked=false;$('instruction').hidden=true;
-  correct=wrong=0;mistakes.clear();$('correct').textContent='0';$('wrong').textContent='0';$('mistake-list').replaceChildren();$('empty').hidden=false;
+  correct=wrong=0;$('correct').textContent='0';$('wrong').textContent='0';$('mistake-list').replaceChildren();$('empty').hidden=false;
   for(const b of $('sections').children)b.setAttribute('aria-pressed',String(b.dataset.section===id));
   pool = id === 'all' ? cards : id === 'stress' ? cards.filter(c => c.kind === 'stress') : id === 'punctuation' ? cards.filter(c => c.kind === 'punctuation') : cards.filter(c => c.task === Number(id));
   if(!pool.length){$('word').textContent='Не удалось загрузить карточки';$('context').textContent='Проверьте, что файл cards.js находится рядом с index.html.';$('skip').hidden=true;return;}

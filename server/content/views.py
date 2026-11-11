@@ -10,12 +10,12 @@ def content_js(request):
     response['Cache-Control']='no-store'
     return response
 
-PUBLIC_FILES={'index.html','app.js','styles.css','favicon.svg','assets/logo.svg','assets/brand-poster.svg','poster.css','poster.js','assets/fonts/golos-400.ttf','assets/fonts/golos-500.ttf','assets/fonts/golos-700.ttf','assets/fonts/golos-900.ttf','assets/fonts/roboto-400.ttf','assets/fonts/roboto-500.ttf','assets/fonts/roboto-700.ttf','assets/fonts/roboto-900.ttf','assets/fonts/plex-mono-400.ttf','assets/fonts/roboto-condensed-700.ttf','cards.js','explanations.js','punctuation.js','adapted-cards.js','paronyms.js','exam-config.js','prefix-explanations.js','audited-explanations.js','exam-explanations.js','reasoned-explanations.js','versions-link.js','versions/index.html','versions/versions.js','test/index.html','test/test.css','test/test.js','test/bank.js','test/bank-manifest.js','test/bank-loader.js'}
+PUBLIC_FILES={'index.html','app.js','styles.css','favicon.svg','assets/logo.svg','assets/brand-poster.svg','poster.css','poster.js','assets/fonts/golos-400.ttf','assets/fonts/golos-500.ttf','assets/fonts/golos-700.ttf','assets/fonts/golos-900.ttf','assets/fonts/roboto-400.ttf','assets/fonts/roboto-500.ttf','assets/fonts/roboto-700.ttf','assets/fonts/roboto-900.ttf','assets/fonts/plex-mono-400.ttf','assets/fonts/roboto-condensed-700.ttf','cards.js','explanations.js','punctuation.js','adapted-cards.js','collection-cards.js','paronyms.js','exam-config.js','prefix-explanations.js','audited-explanations.js','exam-explanations.js','reasoned-explanations.js','versions-link.js','versions/index.html','versions/versions.js','test/index.html','test/test.css','test/test.js','test/bank.js','test/bank-manifest.js','test/bank-loader.js'}
 def public_file(request,path='index.html'):
     if path=='versions':path='versions/'
     if path in ('','test/','versions/'):path=path+'index.html'
-    variant=re.fullmatch(r'test/doshchinsky-2027/v(\d+)\.json',path)
-    if not (path in PUBLIC_FILES or variant and 3<=int(variant[1])<=36):raise Http404
+    variant=re.fullmatch(r'test/doshchinsky-(2026|2027)/v(\d+)\.json',path)
+    if not (path in PUBLIC_FILES or variant and (1 if variant[1]=="2026" else 3)<=int(variant[2])<=36):raise Http404
     file=settings.ROOT/path
     if not file.is_file():raise Http404
     types={'.html':'text/html; charset=utf-8','.js':'application/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml','.json':'application/json; charset=utf-8','.png':'image/png','.ttf':'font/ttf'}

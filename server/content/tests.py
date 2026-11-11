@@ -67,7 +67,7 @@ class BookImport(TestCase):
         task=Task.objects.create(number=11,title='Суффиксы')
         original=Record.objects.create(id=53,category='card',task=task,title='Своё',prompt='Моя карточка',legacy_id='school-owned',explanation='Мой текст')
         call_command('import_site',stdout=StringIO())
-        self.assertEqual(Record.objects.filter(category='exam').count(),936)
+        self.assertEqual(Record.objects.filter(category='exam').count(),1872)
         original.refresh_from_db();self.assertEqual(original.prompt,'Моя карточка')
         imported=Record.objects.get(legacy_id='doshchinsky-2027-v3-q1')
         self.assertNotEqual(imported.pk,53);self.assertGreater(len(imported.passage),250)
@@ -76,7 +76,7 @@ class BookImport(TestCase):
         self.assertEqual(Record.objects.count(),total)
         imported.refresh_from_db();self.assertEqual(imported.explanation,'Учитель отредактировал')
     def test_book_assets_are_public_but_paths_are_bounded(self):
-        for path in ['test/bank-manifest.js','test/bank-loader.js','test/doshchinsky-2027/v36.json']:
+        for path in ['test/bank-manifest.js','test/bank-loader.js','test/doshchinsky-2027/v36.json','test/doshchinsky-2026/v1.json','collection-cards.js']:
             response=self.client.get('/'+path);self.assertEqual(response.status_code,200,path);response.close()
         for path in ['test/doshchinsky-2027/v37.json','test/assets/doshchinsky-2027/p300.png','test/assets/doshchinsky-2027/p999.png','test/assets/doshchinsky-2027/../../../server/ege/settings.py']:
             self.assertEqual(self.client.get('/'+path).status_code,404)

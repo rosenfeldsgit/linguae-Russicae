@@ -73,7 +73,7 @@
  const stableId = id => 200000 + [...id].reduce((hash, c) => (Math.imul(hash, 31) + c.codePointAt(0)) >>> 0, 0);
  const managed = window.EGE_MANAGED || {cards:[],disabled:[],tasks:{}};
  const overrides = new Map(managed.cards.map(c => [c.id,c]));
- const staticCards = [...wordChoiceCards, ...(window.EGE_PARONYMS || []), ...(window.EGE_ADAPTED_CARDS || []), ...(window.EGE_CARDS || []), ...stressCards, ...(window.EGE_PUNCTUATION || [])];
+ const staticCards = [...wordChoiceCards, ...(window.EGE_PARONYMS || []), ...(window.EGE_ADAPTED_CARDS || []), ...(window.EGE_COLLECTION_CARDS || []), ...(window.EGE_CARDS || []), ...stressCards, ...(window.EGE_PUNCTUATION || [])];
  const staticIds = new Set(staticCards.map(c=>c.id));
  const cards = [...staticCards,...managed.cards.filter(c=>!staticIds.has(c.id))].filter(c => !managed.disabled.includes(c.id)).map(c => overrides.get(c.id) || c).map(card => ({ ...card, displayId: card.displayId || stableId(card.id), maxPrimary: (managed.tasks[card.task] || window.EGE_EXAM_CONFIG.tasks[card.task] || {maxPrimary:1}).maxPrimary }));
  const $=id=>document.getElementById(id);

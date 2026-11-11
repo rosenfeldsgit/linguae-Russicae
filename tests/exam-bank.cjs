@@ -21,7 +21,7 @@ for(let v=3;v<=36;v++){
  }
 }
 assert.equal(bank.length,936);assert.equal(new Set(bank.map(q=>q.id)).size,936);assert.equal(new Set(bank.map(q=>q.displayId)).size,936);
-assert.equal(ctx.window.EGE_EXAM_MANIFEST.length,884);
+assert.equal(ctx.window.EGE_EXAM_MANIFEST.length,1820);
 for(let task=1;task<=26;task++)assert.equal(bank.filter(q=>q.task===task).length,36);
 for(let v=1;v<=36;v++)assert.equal(bank.filter(q=>q.source.variant===v).reduce((sum,q)=>sum+q.maxPrimary,0),28);
 // Exercise the actual scoring implementation, including multi-digit sentence numbers.
@@ -46,13 +46,16 @@ console.log('936 questions, 36 variants, keys, text-only content, scoring and sh
  vm.runInNewContext(fs.readFileSync(path.join(root,'test/bank-loader.js'),'utf8'),context);
  const loader=context.window.EGE_EXAM_LOADER;
  const loaded=await Promise.all(ctx.window.EGE_EXAM_MANIFEST.map(q=>loader.load(q)));
- assert.equal(loaded.length,884);assert.equal(calls.length,34,'one request per variant, including parallel calls');
+ assert.equal(loaded.length,1820);assert.equal(calls.length,70,'one request per variant, including parallel calls');
  assert(loaded.every(q=>q.task<=3||q.task>=23?q.passage.length>250:!q.passage));
+ bank.push(...loaded.filter(q=>q.id.startsWith('doshchinsky-2026-')));
+ assert.equal(new Set(bank.map(q=>q.displayId)).size,1872);
+ for(const q of bank)for(const a of q.answers)assert.equal(scoring.score(q,a),q.maxPrimary,q.id);
  const selectionCode=js.slice(js.indexOf('    const variants = {};'),js.indexOf('    const questions = await Promise.all'));
  for(let i=0;i<50;i++){
   const selectionContext={numbers:Array.from({length:26},(_,i)=>i+1),bank,randomItem:xs=>xs[Math.floor(Math.random()*xs.length)]};
   vm.runInNewContext(selectionCode+'\nthis.selected=selected;',selectionContext);
-  for(const group of [[1,2,3],[23,24,25,26]])assert.equal(new Set(selectionContext.selected.filter(q=>group.includes(q.task)).map(q=>q.source.variant)).size,1);
+  for(const group of [[1,2,3],[23,24,25,26]])assert.equal(new Set(selectionContext.selected.filter(q=>group.includes(q.task)).map(q=>JSON.stringify([q.source.title,q.source.variant]))).size,1);
  }
  console.log('Lazy loading, parallel request cache, random shared-text grouping: OK');
 })().catch(error=>{console.error(error);process.exitCode=1;});

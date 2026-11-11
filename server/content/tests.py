@@ -80,3 +80,29 @@ class BookImport(TestCase):
             response=self.client.get('/'+path);self.assertEqual(response.status_code,200,path);response.close()
         for path in ['test/doshchinsky-2027/v37.json','test/assets/doshchinsky-2027/p300.png','test/assets/doshchinsky-2027/p999.png','test/assets/doshchinsky-2027/../../../server/ege/settings.py']:
             self.assertEqual(self.client.get('/'+path).status_code,404)
+
+class SecurityRegression(TestCase):
+    def test_private_paths_and_unsupported_methods(self):
+        for path in ['/.env', '/.git/config', '/compose.yaml', '/server/.env.example', '/backup.sql']:
+            self.assertEqual(self.client.get(path).status_code, 404, path)
+        self.assertEqual(self.client.post('/content.js').status_code, 405)
+        self.assertEqual(self.client.post('/index.html').status_code, 405)
+
+    def test_managed_content_is_encoded_as_data(self):
+        import json
+        task = Task.objects.create(number=1, title='Test')
+        text = '\";window.compromised=true;//<script>alert(1)</script>'
+        Record.objects.create(category='card', task=task, title='Test', prompt=text, active=True)
+        response = self.client.get('/content.js')
+        payload = json.loads(response.content.decode().removeprefix('window.EGE_MANAGED = ')[:-1])
+        self.assertEqual(payload['cards'][0]['prompt'], text)
+        self.assertEqual(response['X-Content-Type-Options'], 'nosniff')
+
+    def test_versions_frame_and_content_policy(self):
+        response = self.client.get('/versions/')
+        self.assertEqual(response['X-Frame-Options'], 'SAMEORIGIN')
+        body = b''.join(response.streaming_content).decode()
+        self.assertIn("script-src 'self'", body)
+        self.assertIn("object-src 'none'", body)
+        self.assertIn("base-uri 'none'", body)
+        response.close()

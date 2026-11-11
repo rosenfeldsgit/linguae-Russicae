@@ -1,8 +1,10 @@
 import json,re
 from django.http import HttpResponse,FileResponse,Http404
 from django.conf import settings
+from django.views.decorators.http import require_safe
 from .models import Record,Task
 
+@require_safe
 def content_js(request):
     rows=Record.objects.select_related('task','rule')
     payload={'cards':[r.payload() for r in rows.filter(category='card',active=True)],'exams':[r.payload() for r in rows.filter(category='exam',active=True)],'disabled':[r.legacy_id for r in rows.filter(active=False).exclude(legacy_id=None)],'tasks':{str(t.number):{'number':t.number,'title':t.title,'maxPrimary':t.max_primary} for t in Task.objects.all()}}
@@ -11,6 +13,7 @@ def content_js(request):
     return response
 
 PUBLIC_FILES={'index.html','app.js','styles.css','favicon.svg','assets/logo.svg','assets/brand-poster.svg','poster.css','poster.js','assets/fonts/golos-400.ttf','assets/fonts/golos-500.ttf','assets/fonts/golos-700.ttf','assets/fonts/golos-900.ttf','assets/fonts/roboto-400.ttf','assets/fonts/roboto-500.ttf','assets/fonts/roboto-700.ttf','assets/fonts/roboto-900.ttf','assets/fonts/plex-mono-400.ttf','assets/fonts/roboto-condensed-700.ttf','cards.js','explanations.js','punctuation.js','adapted-cards.js','collection-cards.js','paronyms.js','exam-config.js','prefix-explanations.js','audited-explanations.js','exam-explanations.js','reasoned-explanations.js','versions-link.js','versions/index.html','versions/versions.js','test/index.html','test/test.css','test/test.js','test/bank.js','test/bank-manifest.js','test/bank-loader.js'}
+@require_safe
 def public_file(request,path='index.html'):
     if path=='versions':path='versions/'
     if path in ('','test/','versions/'):path=path+'index.html'

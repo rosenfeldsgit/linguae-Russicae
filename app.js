@@ -257,7 +257,7 @@
      context.textContent = card.context;
      item.append(context);
    }
-   if (!good) addExplanation(item, word, card);
+   addExplanation(item, word, card);
    $('mistake-list').prepend(item);
    $('empty').hidden = true;
  }

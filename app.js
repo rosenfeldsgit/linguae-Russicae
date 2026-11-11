@@ -120,14 +120,61 @@
    return copies[random(copies.length)];
  }
  function solution(node,c){if(c.kind === 'punctuation'){node.replaceChildren();c.parts.forEach((part,index)=>{node.append(document.createTextNode(part));if(index<c.parts.length-1){if(c.answer.includes(index)){const m=document.createElement('mark');m.textContent=c.mark==='—'?' —':c.mark;node.append(m);}node.append(document.createTextNode(' '));}});return;}node.replaceChildren(document.createTextNode(c.before));const m=document.createElement('mark');m.textContent=c.spelling||c.answer;node.append(m,document.createTextNode(c.after));}
+ function hintKey(card) {
+   const text = card.kind === 'punctuation' ? card.parts.join('…')
+     : card.before + (card.spelling || (card.answer === '∅' ? '' : card.answer)) + card.after;
+   return JSON.stringify([card.task, card.kind, String(text).toLowerCase().replace(/ё/g, 'е').replace(/\s+/g, ' ').trim(),
+     card.context || '', card.answer]);
+ }
+ const sharedHints = new Map();
+ for (const card of cards) {
+   const hint = card.explanation || window.EGE_HINTS?.get(card.id);
+   if (hint && hint.trim()) sharedHints.set(hintKey(card), hint);
+ }
+ function fallbackHint(card) {
+   const word = card.before + (card.spelling || (card.answer === '∅' ? '' : card.answer)) + card.after;
+   if (/^подч[её]ркивать$/i.test(word)) {
+     return 'Подчёркивать → подчёркиваю: в форме «я» сохраняется -ива-, поэтому в инфинитиве тоже пишется -ива-.';
+   }
+   if (card.task === 14 && card.spelling === 'то же' && /^\s*время/i.test(card.after)) {
+     return 'В то же время — раздельно: «то» указывает на время, «же» — частица. Её можно убрать: «в то время». Союз «тоже» можно заменить на «также».';
+   }
+   const checks = {
+     1: 'Определите, как слово связывает части текста, и проверьте указанную в условии часть речи. Местоимения согласуются с тем словом, к которому относятся.',
+     9: 'Определите тип корня: проверяемый, чередующийся или словарный. Для проверяемого корня подберите однокоренное слово с ударением на нужной гласной. У чередований действует отдельное правило.',
+     10: 'Проверьте приставку и границу приставки с корнем. Для пре-/при- важен смысл, для з-/с- — следующий согласный, для ъ/ь и и/ы — строение слова.',
+     11: 'Выделите суффикс. Для -ова-/-ева- и -ыва-/-ива- поставьте глагол в форму «я»: -ую/-юю указывает на -ова-/-ева-, сохранение -ываю/-иваю — на -ыва-/-ива-. У остальных суффиксов свои правила и исключения.',
+     12: 'Найдите инфинитив и определите спряжение с учётом исключений. I спряжение: -ешь, -ет, -ем, -ете, -ут/-ют; II: -ишь, -ит, -им, -ите, -ат/-ят. У причастия проверьте время и суффикс.',
+     13: 'Определите часть речи. НЕ с глаголами и деепричастиями обычно пишется раздельно. У прилагательных и причастий проверьте противопоставление, усиленное отрицание и зависимые слова. Учтите слова, которые без НЕ не употребляются.',
+     14: 'Определите значение слова в этом предложении. Различайте союз и сочетание самостоятельного слова с предлогом или частицей. У наречий проверьте условия дефиса: по- с -ому/-ему/-ски, кое-, -то/-либо/-нибудь.',
+     15: 'Определите часть речи и производящее слово. В кратком страдательном причастии пишется Н. В полном причастии проверьте приставку, зависимые слова, вид глагола и суффикс. У прилагательных учитывайте суффикс и исключения.',
+     16: 'Найдите грамматические основы и однородные члены. Проверьте повторяющиеся и парные союзы. В сложном предложении учитывайте общую часть, которая может отменять запятую.',
+     17: 'Найдите причастные и деепричастные обороты и их границы. У причастного оборота учитывайте положение относительно определяемого слова и дополнительные условия обособления.',
+     18: 'Проверьте вводные слова и обращения. Вводное слово не является членом предложения. Отличайте его от похожего по форме слова, связанного с другими членами предложения.',
+     19: 'Найдите главную и придаточную части и границы каждой из них. Учитывайте однородные придаточные, соединённые одиночным союзом И.',
+     20: 'Выделите грамматические основы и границы частей. На стыке союзов проверьте, можно ли убрать внутреннюю придаточную часть и есть ли далее ТО, ТАК или НО.',
+     21: 'Найдите грамматические основы и объясните связь частей. Тире может стоять между подлежащим и сказуемым или между частями предложения; двоеточие — перед пояснением, причиной или раскрытием содержания.'
+   };
+   let answer;
+   if (card.kind === 'punctuation') {
+     const fragments = card.parts.filter((part, index) => card.answer.includes(index));
+     answer = fragments.length ? 'Поставьте ' + ({',':'запятые',':':'двоеточия','—':'тире'}[card.mark]) +
+       ' после фрагментов: ' + fragments.map(text => '«' + text + '»').join(', ') + '.'
+       : 'В отмеченных местах знаки не нужны.';
+   } else {
+     answer = 'Верно: «' + word + '».';
+     if (card.kind === 'join') answer += ' Написание — ' + card.answer + '.';
+   }
+   return answer + (checks[card.task] ? '\n\nКак проверить. ' + checks[card.task] : '');
+ }
  function addExplanation(item, word, card) {
-   let hint = card.explanation || window.EGE_HINTS?.get(card.id);
+   let hint = card.explanation?.trim() || window.EGE_HINTS?.get(card.id)?.trim() || sharedHints.get(hintKey(card));
    if (card.kind === 'stress' && !hint) {
      const syllable = (card.before.match(/[аеёиоуыэюя]/g) || []).length + 1;
      hint = 'Словарное ударение падает на ' + syllable + '-й слог: ' +
        card.before + card.spelling.toUpperCase() + card.after + '.';
    }
-   if (!hint) return;
+   if (!hint) hint = fallbackHint(card);
    const note = document.createElement('p');
    note.className = 'rule-note';
    note.id = 'rule-' + card.id + '-' + historySequence;

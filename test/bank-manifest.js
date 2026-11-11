@@ -1,8 +1,16 @@
 'use strict';
-// The task index is tiny; full content is fetched only for selected variants.
-window.EGE_EXAM_MANIFEST = Array.from({length:34},(_,i)=>i+3).flatMap(variant =>
-  Array.from({length:26},(_,i) => {
-    const task=i+1;
-    return {id:`doshchinsky-2027-v${variant}-q${task}`,displayId:(variant-1)*26+task,task,maxPrimary:[8,22].includes(task)?2:1,source:{title:'Сборник Дощинского 2027',variant}};
-  })
-);
+window.EGE_EXAM_MANIFEST = [];
+for (const [year, firstVariant] of [[2027, 3], [2026, 1]]) {
+  for (let variant = firstVariant; variant <= 36; variant++) {
+    for (let task = 1; task <= 26; task++) {
+      window.EGE_EXAM_MANIFEST.push({
+        id: `doshchinsky-${year}-v${variant}-q${task}`,
+        displayId: (year === 2026 ? 936 : 0) + (variant - 1) * 26 + task,
+        task,
+        maxPrimary: [8, 22].includes(task) ? 2 : 1,
+        source: {title: `Сборник Дощинского ${year}`, variant},
+        file: `doshchinsky-${year}/v${variant}.json`,
+      });
+    }
+  }
+}

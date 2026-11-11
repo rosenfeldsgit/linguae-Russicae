@@ -137,13 +137,24 @@
     if (!numbers.length) return;
     // Номера, опирающиеся на один текст, получают общий вариант источника.
     const variants = {};
+    const groups = new Map();
+    for (const question of bank) {
+      const key = JSON.stringify([question.source.title, question.source.variant]);
+      if (!groups.has(key)) groups.set(key, new Map());
+      const tasks = groups.get(key);
+      if (!tasks.has(question.task)) tasks.set(question.task, []);
+      tasks.get(question.task).push(question);
+    }
     const selected = numbers.map(task => {
-      const group = task <= 3 ? 'text-1-3' : task >= 23 && task <= 26 ? 'text-23-26' : String(task);
-      const related = numbers.filter(n => task <= 3 ? n <= 3 : task >= 23 && task <= 26 ? n >= 23 && n <= 26 : n === task);
-      const candidates = bank.filter(q => q.task === task && related.every(n => bank.some(other => other.task === n && other.source.variant === q.source.variant)));
-      if (!candidates.length) throw new Error('Нет полного комплекта заданий для общего текста');
-      if (!variants[group]) variants[group] = randomItem(candidates).source.variant;
-      return randomItem(candidates.filter(q => q.source.variant === variants[group]));
+      const shared = task <= 3 ? [1, 2, 3] : task >= 23 && task <= 26 ? [23, 24, 25, 26] : [task];
+      const key = shared[0];
+      if (!variants[key]) {
+        const needed = shared.filter(n => numbers.includes(n));
+        const compatible = [...groups.values()].filter(tasks => needed.every(n => tasks.has(n)));
+        if (!compatible.length) throw new Error('Нет полного комплекта заданий для общего текста');
+        variants[key] = randomItem(compatible);
+      }
+      return randomItem(variants[key].get(task));
     });
     const questions = await Promise.all(selected.map(window.EGE_EXAM_LOADER.load));
     const now = performance.now();

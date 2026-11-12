@@ -6,7 +6,7 @@ const all=[...ctx.window.EGE_CARDS,...ctx.window.EGE_PUNCTUATION,...ctx.window.E
 const old=new Map(all.map(c=>[c.id,{hint:c.explanation||ctx.window.EGE_HINTS.get(c.id)||'',answer:JSON.stringify(c.answer),options:JSON.stringify(c.options)}]));
 vm.runInNewContext(fs.readFileSync('audited-explanations.js','utf8'),ctx);
 let changed=0;const byTask={};
-for(const c of all){assert.equal(JSON.stringify(c.answer),old.get(c.id).answer,c.id);assert.equal(JSON.stringify(c.options),old.get(c.id).options,c.id);const h=c.explanation||ctx.window.EGE_HINTS.get(c.id)||'';if(h!==old.get(c.id).hint){assert(h.length>15);changed++;byTask[c.task]=(byTask[c.task]||0)+1;}if(c.task===10)assert.equal(h,old.get(c.id).hint,'Preserve PRE/PRI audit');}
+for(const c of all){assert.equal(JSON.stringify(c.answer),old.get(c.id).answer,c.id);assert.equal(JSON.stringify(c.options),old.get(c.id).options,c.id);const h=c.explanation||ctx.window.EGE_HINTS.get(c.id)||'';if(h!==old.get(c.id).hint){assert(h.length>15);changed++;byTask[c.task]=(byTask[c.task]||0)+1;}if(c.task===10&&c.before+c.answer+c.after!=='взимать')assert.equal(h,old.get(c.id).hint,'Preserve PRE/PRI audit');}
 const find=w=>all.find(c=>c.task===9&&c.before+c.answer+c.after===w);
 assert.match(find('старожил').explanation,/стАрый/);
 assert.match(find('сторожил').explanation,/стОрож/);

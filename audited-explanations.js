@@ -777,4 +777,14 @@
     }
     put(c,hint);
   }
+
+  for (const card of window.EGE_COLLECTION_CARDS || []) {
+    if (card.explanation) continue;
+    const left = String(card.before || '').match(/[а-яё]+$/i)?.[0] || '';
+    const right = String(card.after || '').match(/^[а-яё]+/i)?.[0] || '';
+    const word = (left + card.answer + right).toLowerCase();
+    const hint = card.task === 14 ? joins[String(card.spelling || '').toLowerCase()]
+      : [9,11,12,15].includes(card.task) ? wordHints[word] : null;
+    if (hint) put(card, hint);
+  }
 })();

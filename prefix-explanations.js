@@ -138,9 +138,11 @@
     'предел|совершенства':'Запомнить ПРЕ: предел совершенства — высшая возможная степень качества.',
     'предел|терпению':'Запомнить ПРЕ: предел терпению — граница, после которой терпеть невозможно.'
   };
-  for (const card of [...(window.EGE_CARDS || []), ...(window.EGE_ADAPTED_CARDS || [])]) {
+  for (const card of [...(window.EGE_CARDS || []), ...(window.EGE_ADAPTED_CARDS || []), ...(window.EGE_COLLECTION_CARDS || [])]) {
     if (card.task !== 10 || !/пр$/.test(card.before || '') || !['е','и'].includes(card.answer)) continue;
-    const word = card.before + card.answer + card.after;
+    const left = String(card.before || '').match(/[а-яё]+$/i)?.[0] || '';
+    const right = String(card.after || '').match(/^[а-яё]+/i)?.[0] || '';
+    const word = (left + card.answer + right).toLowerCase();
     const hint = contexts[word + '|' + (card.context || '')] || meanings[word];
     if (!hint) continue;
     card.explanation = hint;

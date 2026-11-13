@@ -77,9 +77,12 @@ def chapter(number, meta, sources):
     title = escape(meta['title'])
     result = [f'<article id="task-{number}" data-number="{number}"><a href="#catalog">← Все задания</a>',
               f'<h2>№ {number}. {title}</h2>']
+    if 'Схемы' in sections[1::2]:
+        result.append(f'<a href="#schemes-{number}">Перейти к схемам ↓</a>')
     for heading, body in zip(sections[1::2], sections[2::2]):
-        result.append(f'<h3>{escape(heading)}</h3>')
-        pieces = re.split(r'^### (R\d+-\d+)\. (.+)$', body, flags=re.M)
+        anchor = f' id="schemes-{number}"' if heading == 'Схемы' else ''
+        result.append(f'<h3{anchor}>{escape(heading)}</h3>')
+        pieces = re.split(r'^### ([RS]\d+-\d+)\. (.+)$', body, flags=re.M)
         result.append(blocks(pieces[0].splitlines()))
         for key, name, content in zip(pieces[1::3], pieces[2::3], pieces[3::3]):
             result.extend([f'<section id="{key}" class="rule"><h4><a href="#{key}">{escape(name)}</a></h4>',

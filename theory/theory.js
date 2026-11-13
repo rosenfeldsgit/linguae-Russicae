@@ -39,12 +39,18 @@ function filter() {
 }
 
 function route() {
-  const target = document.getElementById(location.hash.slice(1));
+  const hash = location.hash.slice(1);
+  const oldSection = /^(?:S(\d{2})-\d{2}|schemes-(\d+))$/.exec(hash);
+  const target = oldSection
+    ? document.getElementById('task-' + Number(oldSection[1] || oldSection[2]))
+    : document.getElementById(hash);
   const chapter = target?.closest('article');
   for (const article of articles) article.hidden = article !== chapter;
-  catalog.hidden = Boolean(chapter);
+  const essay = document.getElementById('essay-practice');
+  essay.hidden = target !== essay;
+  catalog.hidden = Boolean(chapter) || !essay.hidden;
   document.title = (chapter ? chapter.querySelector('h2').textContent + ' — ' : '') + 'База знаний — Русский';
-  if (target && (chapter || target === catalog)) target.scrollIntoView();
+  if (target && (chapter || target === catalog || target === essay)) target.scrollIntoView();
 }
 
 document.querySelector('#search-box').hidden = false;

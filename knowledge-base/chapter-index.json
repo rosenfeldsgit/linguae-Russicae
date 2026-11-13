@@ -8,7 +8,25 @@
       "RUSTUTORS_1"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-4",
+        "title": "Союзы"
+      },
+      {
+        "anchor": "hmenu-7",
+        "title": "Частицы"
+      },
+      {
+        "anchor": "hmenu-9",
+        "title": "Местоимения"
+      },
+      {
+        "anchor": "hmenu-12",
+        "title": "Вводные конструкции"
+      }
+    ]
   },
   "2": {
     "title": "Лексическое значение слова в контексте",
@@ -19,7 +37,13 @@
       "RUSTUTORS_2"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-3",
+        "title": "Многозначность"
+      }
+    ]
   },
   "3": {
     "title": "Функциональные стили и языковые особенности текста",
@@ -30,7 +54,29 @@
       "RUSTUTORS_3"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-3",
+        "title": "Научная речь"
+      },
+      {
+        "anchor": "hmenu-4",
+        "title": "Деловая речь"
+      },
+      {
+        "anchor": "hmenu-5",
+        "title": "Разговорная речь"
+      },
+      {
+        "anchor": "hmenu-6",
+        "title": "Публицистика"
+      },
+      {
+        "anchor": "hmenu-7",
+        "title": "Художественная речь"
+      }
+    ]
   },
   "4": {
     "title": "Орфоэпические нормы и ударение",
@@ -41,7 +87,13 @@
       "RUSTUTORS_4"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-9",
+        "title": "Словник ударений"
+      }
+    ]
   },
   "5": {
     "title": "Паронимы и лексическая сочетаемость",
@@ -52,7 +104,17 @@
       "RUSTUTORS_5"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-5",
+        "title": "Значения суффиксов"
+      },
+      {
+        "anchor": "hmenu-8",
+        "title": "Значения приставок"
+      }
+    ]
   },
   "6": {
     "title": "Лексические нормы и речевая избыточность",
@@ -64,7 +126,13 @@
       "RUSTUTORS_6"
     ],
     "coverage": "supplementary",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-3",
+        "title": "Типы речевых ошибок"
+      }
+    ]
   },
   "7": {
     "title": "Образование форм слов",
@@ -76,7 +144,21 @@
       "RUSTUTORS_7"
     ],
     "coverage": "supplementary",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-3",
+        "title": "Формы именительного падежа"
+      },
+      {
+        "anchor": "hmenu-5",
+        "title": "Формы родительного падежа"
+      },
+      {
+        "anchor": "hmenu-8",
+        "title": "Числительные"
+      }
+    ]
   },
   "8": {
     "title": "Синтаксические нормы и грамматические ошибки",
@@ -87,7 +169,21 @@
       "RUSTUTORS_8"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-3",
+        "title": "Приложение"
+      },
+      {
+        "anchor": "hmenu-6",
+        "title": "Согласование"
+      },
+      {
+        "anchor": "hmenu-10",
+        "title": "Управление"
+      }
+    ]
   },
   "9": {
     "title": "Гласные и согласные в корне",
@@ -99,7 +195,21 @@
       "RUSTUTORS_9"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-3",
+        "title": "Чередования"
+      },
+      {
+        "anchor": "hmenu-5",
+        "title": "Исключения"
+      },
+      {
+        "anchor": "hmenu-8",
+        "title": "Гласные после ц"
+      }
+    ]
   },
   "10": {
     "title": "Приставки, И/Ы, Ъ/Ь",
@@ -111,7 +221,21 @@
       "RUSTUTORS_10"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-5",
+        "title": "И и ы"
+      },
+      {
+        "anchor": "hmenu-6",
+        "title": "Разделительные знаки"
+      },
+      {
+        "anchor": "hmenu-7",
+        "title": "Пре- и при-"
+      }
+    ]
   },
   "11": {
     "title": "Суффиксы существительных, прилагательных, наречий и глаголов",
@@ -122,7 +246,21 @@
       "RUSTUTORS_11"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-2",
+        "title": "Перечень суффиксов"
+      },
+      {
+        "anchor": "hmenu-5",
+        "title": "Суффиксы существительных"
+      },
+      {
+        "anchor": "hmenu-7",
+        "title": "Суффиксы прилагательных"
+      }
+    ]
   },
   "12": {
     "title": "Личные окончания глаголов и суффиксы причастий",
@@ -135,7 +273,21 @@
       "RUSTUTORS_12"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-3",
+        "title": "Настоящее и будущее время"
+      },
+      {
+        "anchor": "hmenu-5",
+        "title": "Прошедшее время"
+      },
+      {
+        "anchor": "hmenu-7",
+        "title": "Трудные формы"
+      }
+    ]
   },
   "13": {
     "title": "НЕ и НИ с разными частями речи",
@@ -147,7 +299,21 @@
       "PROJECT_NE"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-4",
+        "title": "Особые случаи с не"
+      },
+      {
+        "anchor": "hmenu-5",
+        "title": "Слитное и раздельное ни"
+      },
+      {
+        "anchor": "hmenu-6",
+        "title": "Выбор между не и ни"
+      }
+    ]
   },
   "14": {
     "title": "Слитное, раздельное и дефисное написание",
@@ -161,7 +327,25 @@
       "RUSTUTORS_14"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-4",
+        "title": "Предлоги"
+      },
+      {
+        "anchor": "hmenu-6",
+        "title": "Частицы"
+      },
+      {
+        "anchor": "hmenu-8",
+        "title": "Сложные слова"
+      },
+      {
+        "anchor": "hmenu-9",
+        "title": "Наречия"
+      }
+    ]
   },
   "15": {
     "title": "Н и НН в разных частях речи",
@@ -175,7 +359,17 @@
       "RUSTUTORS_15"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-4",
+        "title": "Причастие или прилагательное"
+      },
+      {
+        "anchor": "hmenu-6",
+        "title": "Производные существительные"
+      }
+    ]
   },
   "16": {
     "title": "Однородные члены и сложносочинённое предложение",
@@ -187,7 +381,17 @@
       "RUSTUTORS_16"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-3",
+        "title": "Однородные члены"
+      },
+      {
+        "anchor": "hmenu-5",
+        "title": "Сложносочинённое предложение"
+      }
+    ]
   },
   "17": {
     "title": "Обособленные определения, приложения и обстоятельства",
@@ -199,7 +403,21 @@
       "RUSTUTORS_17"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-7",
+        "title": "Приложения"
+      },
+      {
+        "anchor": "hmenu-9",
+        "title": "Союз перед оборотом"
+      },
+      {
+        "anchor": "hmenu-11",
+        "title": "Особые случаи"
+      }
+    ]
   },
   "18": {
     "title": "Вводные конструкции и обращения",
@@ -211,7 +429,17 @@
       "RUSTUTORS_18"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-7",
+        "title": "Разряды вводных слов"
+      },
+      {
+        "anchor": "hmenu-8",
+        "title": "Слова, не требующие обособления"
+      }
+    ]
   },
   "19": {
     "title": "Границы частей сложноподчинённого предложения",
@@ -222,7 +450,17 @@
       "RUSTUTORS_19"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-5",
+        "title": "Составные союзы"
+      },
+      {
+        "anchor": "hmenu-6",
+        "title": "Несколько придаточных"
+      }
+    ]
   },
   "20": {
     "title": "Сложные предложения с разными видами связи",
@@ -235,7 +473,17 @@
       "RUSTUTORS_20"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-5",
+        "title": "Когда нужна запятая"
+      },
+      {
+        "anchor": "hmenu-6",
+        "title": "Когда запятую пропускают"
+      }
+    ]
   },
   "21": {
     "title": "Пунктуационный анализ: одно правило в разных предложениях",
@@ -249,7 +497,21 @@
       "RUSTUTORS_21"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-6",
+        "title": "Тире при пропуске члена предложения"
+      },
+      {
+        "anchor": "hmenu-9",
+        "title": "Точка с запятой"
+      },
+      {
+        "anchor": "hmenu-13",
+        "title": "Оформление цитат"
+      }
+    ]
   },
   "22": {
     "title": "Изобразительно-выразительные средства",
@@ -261,7 +523,25 @@
       "RUSTUTORS_22"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-2",
+        "title": "Список терминов"
+      },
+      {
+        "anchor": "hmenu-5",
+        "title": "Фонетика"
+      },
+      {
+        "anchor": "hmenu-6",
+        "title": "Лексика"
+      },
+      {
+        "anchor": "hmenu-7",
+        "title": "Синтаксис"
+      }
+    ]
   },
   "23": {
     "title": "Содержание текста и проверка утверждений",
@@ -271,7 +551,13 @@
       "RUSTUTORS_23"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-2",
+        "title": "Проверка по исходному тексту"
+      }
+    ]
   },
   "24": {
     "title": "Типы речи и смысловые отношения предложений",
@@ -282,7 +568,21 @@
       "RUSTUTORS_24"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-4",
+        "title": "Повествование"
+      },
+      {
+        "anchor": "hmenu-5",
+        "title": "Описание"
+      },
+      {
+        "anchor": "hmenu-6",
+        "title": "Рассуждение"
+      }
+    ]
   },
   "25": {
     "title": "Лексические отношения и фразеология",
@@ -293,7 +593,21 @@
       "RUSTUTORS_25"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-5",
+        "title": "Словник фразеологизмов"
+      },
+      {
+        "anchor": "hmenu-6",
+        "title": "Пассивная лексика"
+      },
+      {
+        "anchor": "hmenu-7",
+        "title": "Сфера употребления"
+      }
+    ]
   },
   "26": {
     "title": "Средства связи предложений в тексте",
@@ -304,7 +618,21 @@
       "RUSTUTORS_26"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-8",
+        "title": "Числительные"
+      },
+      {
+        "anchor": "hmenu-10",
+        "title": "Наречия"
+      },
+      {
+        "anchor": "hmenu-13",
+        "title": "Ошибки поиска связи"
+      }
+    ]
   },
   "27": {
     "title": "Сочинение по исходному тексту",
@@ -314,6 +642,24 @@
       "RUSTUTORS_27"
     ],
     "coverage": "core",
-    "status": "authored"
+    "status": "authored",
+    "sourceSections": [
+      {
+        "anchor": "hmenu-3",
+        "title": "Позиция автора"
+      },
+      {
+        "anchor": "hmenu-4",
+        "title": "Комментарий"
+      },
+      {
+        "anchor": "hmenu-5",
+        "title": "Своя позиция"
+      },
+      {
+        "anchor": "hmenu-10",
+        "title": "Критерии оценивания"
+      }
+    ]
   }
 }

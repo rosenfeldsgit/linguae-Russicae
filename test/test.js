@@ -251,13 +251,15 @@
     $('results').hidden = false;
     $('result-title').focus();
   }
+  const requestedTask = new URLSearchParams(window.location.search).get('task');
+  const availableTask = bank.some(q => String(q.task) === requestedTask);
   for (const task of Object.values(config.tasks)) {
     const label = document.createElement('label');
     label.className = 'task-choice';
     const input = document.createElement('input');
     input.type = 'checkbox';
     input.value = task.number;
-    input.checked = true;
+    input.checked = !availableTask || String(task.number) === requestedTask;
     input.disabled = !bank.some(question => question.task === task.number);
     if (input.disabled) input.checked = false;
     input.setAttribute('aria-label', `Задание ${task.number}, максимум ${task.maxPrimary}`);

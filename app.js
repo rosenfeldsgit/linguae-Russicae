@@ -315,9 +315,15 @@
   rotation = rotations.get(id);
   chooseNext();
  }
+ const requestedTask = new URLSearchParams(window.location.search).get('task');
+ const hasTask = cards.some(card => String(card.task) === requestedTask);
+ const initialSection = hasTask ? (requestedTask === '4' ? 'stress' : requestedTask) : 'all';
+ if (hasTask && !sections.some(([id]) => id === initialSection)) {
+   sections.push([initialSection, '№ ' + requestedTask]);
+ }
  sections.forEach(([id,label])=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.section=id;b.setAttribute('aria-label',/^\d+$/.test(id)?`Задание ${id}`:label);b.addEventListener('click',()=>select(id));$('sections').append(b);});
  $('check-answer').addEventListener('click', () => { if (current?.kind === 'punctuation') answer(); });
  $('skip').addEventListener('click',chooseNext);
  document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||e.repeat||locked)return;if (e.key === 'Enter' && current?.kind === 'punctuation' && e.target?.tagName !== 'BUTTON') { e.preventDefault(); answer(); return; }const n=Number(e.key);if(n>=1&&n<=9){const b=choices()[n-1];if(b){e.preventDefault();b.click();}}});
- select('all');
+ select(initialSection);
 })();

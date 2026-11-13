@@ -71,17 +71,14 @@ def dictionary(number):
             + body + '</details>')
 
 
-def chapter(number, meta, sources):
+def chapter(number, meta, sources, card_tasks):
     raw = (KB / meta['path']).read_text().split('## Источники')[0]
     sections = re.split(r'^## (.+)$', raw, flags=re.M)
     title = escape(meta['title'])
     result = [f'<article id="task-{number}" data-number="{number}"><a href="#catalog">← Все задания</a>',
               f'<h2>№ {number}. {title}</h2>']
-    if 'Схемы' in sections[1::2]:
-        result.append(f'<a href="#schemes-{number}">Перейти к схемам ↓</a>')
     for heading, body in zip(sections[1::2], sections[2::2]):
-        anchor = f' id="schemes-{number}"' if heading == 'Схемы' else ''
-        result.append(f'<h3{anchor}>{escape(heading)}</h3>')
+        result.append(f'<h3>{escape(heading)}</h3>')
         pieces = re.split(r'^### ([RS]\d+-\d+)\. (.+)$', body, flags=re.M)
         result.append(blocks(pieces[0].splitlines()))
         for key, name, content in zip(pieces[1::3], pieces[2::3], pieces[3::3]):
@@ -95,7 +92,20 @@ def chapter(number, meta, sources):
             url = 'https://github.com/rosenfeldsgit/linguae-Russicae/blob/main/' + url.removeprefix('../')
         assert url.startswith('https://')
         result.append(f'<li><a href="{escape(url)}">{escape(src["title"])}</a></li>')
-    result.append('</ul><p>Дата сверки материалов: 13 ноября 2026 года.</p><a href="#catalog">← Все задания</a></article>')
+    result.append('</ul>')
+    source_url = next(sources['sources'][key]['url'] for key in meta['sourceIds'] if key.startswith('RUSTUTORS_') and key.rsplit('_', 1)[-1].isdigit())
+    result.append('<details><summary>Темы в статье Рустьюторс</summary><ul>')
+    for item in meta['sourceSections']:
+        result.append(f'<li><a href="{escape(source_url)}#{escape(item["anchor"])}">{escape(item["title"])}</a></li>')
+    result.append('</ul></details>')
+    result.append('<p>Дата сверки материалов: 13 ноября 2026 года.</p><a href="#catalog">← Все задания</a>')
+    if number == '27':
+        destination = '#essay-practice'
+    elif number in card_tasks:
+        destination = f'../?task={number}'
+    else:
+        destination = f'../test/?task={number}'
+    result.append(f'<p><a class="practice-link" href="{destination}">Перейти к практике</a></p></article>')
     return '\n'.join(result)
 
 
@@ -105,7 +115,8 @@ def build():
     template = (ROOT / 'scripts/theory-template.html').read_text()
     links = [f'<li><a href="#task-{n}"><span>№ {n}</span> {escape(meta["title"])}</a></li>'
              for n, meta in chapters.items()]
-    articles = [chapter(n, meta, sources) for n, meta in chapters.items()]
+    card_tasks = data('data/current-inventory.json')['cardCountsByTask']
+    articles = [chapter(n, meta, sources, card_tasks) for n, meta in chapters.items()]
     page = template.replace('<!--catalog-->', '\n'.join(links)).replace('<!--chapters-->', '\n'.join(articles))
     (ROOT / 'theory/index.html').write_text(page)
 

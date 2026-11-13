@@ -1,0 +1,216 @@
+{
+  "1": {
+    "title": "Средства связи и части речи",
+    "path": "chapters/01.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "GRAMOTA_MORPH"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "4": {
+    "title": "Орфоэпические нормы и ударение",
+    "path": "chapters/04.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "PROJECT_STRESS"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "5": {
+    "title": "Паронимы и лексическая сочетаемость",
+    "path": "chapters/05.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "PROJECT_PARONYMS",
+      "RUSTUTORS_5"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "6": {
+    "title": "Лексические нормы и речевая избыточность",
+    "path": "chapters/06.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "GRAMOTA_MORPH",
+      "PROJECT_HINTS"
+    ],
+    "coverage": "supplementary",
+    "status": "authored"
+  },
+  "7": {
+    "title": "Образование форм слов",
+    "path": "chapters/07.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "GRAMOTA_MORPH",
+      "PROJECT_HINTS"
+    ],
+    "coverage": "supplementary",
+    "status": "authored"
+  },
+  "9": {
+    "title": "Гласные и согласные в корне",
+    "path": "chapters/09.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "ORTH_ROOTS",
+      "IRYA_ROOTS"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "10": {
+    "title": "Приставки, И/Ы, Ъ/Ь",
+    "path": "chapters/10.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "ORTH_PREFIX",
+      "IRYA_ROOTS"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "11": {
+    "title": "Суффиксы существительных, прилагательных, наречий и глаголов",
+    "path": "chapters/11.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "ORTH_SUFFIX"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "12": {
+    "title": "Личные окончания глаголов и суффиксы причастий",
+    "path": "chapters/12.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "ORTH_VERBS",
+      "ORTH_SUFFIX",
+      "GRAMOTA_CONJ"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "13": {
+    "title": "НЕ и НИ с разными частями речи",
+    "path": "chapters/13.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "ORTH_NE",
+      "RUSTUTORS_13",
+      "PROJECT_NE"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "14": {
+    "title": "Слитное, раздельное и дефисное написание",
+    "path": "chapters/14.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "ORTH_SPELLING",
+      "ORTH_PRONOUNS",
+      "IRYA_EAST",
+      "PROJECT_HINTS"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "15": {
+    "title": "Н и НН в разных частях речи",
+    "path": "chapters/15.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "ORTH_NOUN_N",
+      "IRYA_N",
+      "ORTH_SPELLING",
+      "PROJECT_HINTS"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "16": {
+    "title": "Однородные члены и сложносочинённое предложение",
+    "path": "chapters/16.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "PUNCT_HOMOGENEOUS",
+      "PUNCT_SSP"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "17": {
+    "title": "Обособленные определения, приложения и обстоятельства",
+    "path": "chapters/17.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "PUNCT_DEFINITIONS",
+      "PUNCT_GERUNDS"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "18": {
+    "title": "Вводные конструкции и обращения",
+    "path": "chapters/18.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "PUNCT_INTRO",
+      "PUNCT_INDEX"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "19": {
+    "title": "Границы частей сложноподчинённого предложения",
+    "path": "chapters/19.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "PUNCT_SPP"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "20": {
+    "title": "Сложные предложения с разными видами связи",
+    "path": "chapters/20.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "PUNCT_COMPLEX",
+      "PUNCT_SPP",
+      "PUNCT_SSP"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "21": {
+    "title": "Пунктуационный анализ: одно правило в разных предложениях",
+    "path": "chapters/21.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "PUNCT_INDEX",
+      "PUNCT_DASH",
+      "PUNCT_BSP",
+      "PUNCT_DIRECT"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "22": {
+    "title": "Изобразительно-выразительные средства",
+    "path": "chapters/22.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "FIPI_EXPRESSIVE",
+      "PROJECT_HINTS"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  }
+}

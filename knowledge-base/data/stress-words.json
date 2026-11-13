@@ -1,0 +1,1326 @@
+{
+  "metadata": {
+    "asOf": "2026-11-13",
+    "scope": "current_repository_snapshot",
+    "official2027FullList": false,
+    "managedOverridesIncluded": false,
+    "source": "app.js: stressWords; source comment says FIPI 2026",
+    "verification": "Project spellings retained; not a new word-by-word verification against 2027 normative dictionaries"
+  },
+  "entries": [
+    {
+      "form": "аэропОрты",
+      "word": "аэропорты",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "бАнты",
+      "word": "банты",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "бОроду",
+      "word": "бороду",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "бухгАлтеров",
+      "word": "бухгалтеров",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "вероисповЕдание",
+      "word": "вероисповедание",
+      "stressIndex": 9,
+      "context": ""
+    },
+    {
+      "form": "водопровОд",
+      "word": "водопровод",
+      "stressIndex": 8,
+      "context": ""
+    },
+    {
+      "form": "газопровОд",
+      "word": "газопровод",
+      "stressIndex": 8,
+      "context": ""
+    },
+    {
+      "form": "граждАнство",
+      "word": "гражданство",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "дефИс",
+      "word": "дефис",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "дешевИзна",
+      "word": "дешевизна",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "диспансЕр",
+      "word": "диспансер",
+      "stressIndex": 7,
+      "context": ""
+    },
+    {
+      "form": "договорЁнность",
+      "word": "договорённость",
+      "stressIndex": 7,
+      "context": ""
+    },
+    {
+      "form": "докумЕнт",
+      "word": "документ",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "досУг",
+      "word": "досуг",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "еретИк",
+      "word": "еретик",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "жалюзИ",
+      "word": "жалюзи",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "знАчимость",
+      "word": "значимость",
+      "stressIndex": 2,
+      "context": ""
+    },
+    {
+      "form": "Иксы",
+      "word": "иксы",
+      "stressIndex": 0,
+      "context": ""
+    },
+    {
+      "form": "каталОг",
+      "word": "каталог",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "квартАл",
+      "word": "квартал",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "киломЕтр",
+      "word": "километр",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "кОнусов",
+      "word": "конусов",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "корЫсть",
+      "word": "корысть",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "крАны",
+      "word": "краны",
+      "stressIndex": 2,
+      "context": ""
+    },
+    {
+      "form": "кремЕнь",
+      "word": "кремень",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "кремнЯ",
+      "word": "кремня",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "лЕкторов",
+      "word": "лекторов",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "лОктя",
+      "word": "локтя",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "локтЕй",
+      "word": "локтей",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "лыжнЯ",
+      "word": "лыжня",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "мЕстностей",
+      "word": "местностей",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "намЕрение",
+      "word": "намерение",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "нЕдруг",
+      "word": "недруг",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "недУг",
+      "word": "недуг",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "некролОг",
+      "word": "некролог",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "нЕнависть",
+      "word": "ненависть",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "нефтепровОд",
+      "word": "нефтепровод",
+      "stressIndex": 9,
+      "context": ""
+    },
+    {
+      "form": "новостЕй",
+      "word": "новостей",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "нОгтя",
+      "word": "ногтя",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "ногтЕй",
+      "word": "ногтей",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "Отзыв",
+      "word": "отзыв",
+      "stressIndex": 0,
+      "context": "о книге"
+    },
+    {
+      "form": "отзЫв",
+      "word": "отзыв",
+      "stressIndex": 3,
+      "context": "посла из страны"
+    },
+    {
+      "form": "Отрочество",
+      "word": "отрочество",
+      "stressIndex": 0,
+      "context": ""
+    },
+    {
+      "form": "партЕр",
+      "word": "партер",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "портфЕль",
+      "word": "портфель",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "придАное",
+      "word": "приданое",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "призЫв",
+      "word": "призыв",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "свЁкла",
+      "word": "свёкла",
+      "stressIndex": 2,
+      "context": ""
+    },
+    {
+      "form": "сирОты",
+      "word": "сироты",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "созЫв",
+      "word": "созыв",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "сосредотОчение",
+      "word": "сосредоточение",
+      "stressIndex": 8,
+      "context": ""
+    },
+    {
+      "form": "срЕдства",
+      "word": "средства",
+      "stressIndex": 2,
+      "context": ""
+    },
+    {
+      "form": "стАтуя",
+      "word": "статуя",
+      "stressIndex": 2,
+      "context": ""
+    },
+    {
+      "form": "столЯр",
+      "word": "столяр",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "тамОжня",
+      "word": "таможня",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "тОрты",
+      "word": "торты",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "тУфля",
+      "word": "туфля",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "цемЕнт",
+      "word": "цемент",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "цЕнтнер",
+      "word": "центнер",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "цепОчка",
+      "word": "цепочка",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "шАрфы",
+      "word": "шарфы",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "шофЁр",
+      "word": "шофёр",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "экспЕрт",
+      "word": "эксперт",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "вернА",
+      "word": "верна",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "знАчимый",
+      "word": "значимый",
+      "stressIndex": 2,
+      "context": ""
+    },
+    {
+      "form": "красИвее",
+      "word": "красивее",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "красИвейший",
+      "word": "красивейший",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "кУхонный",
+      "word": "кухонный",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "ловкА",
+      "word": "ловка",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "мозаИчный",
+      "word": "мозаичный",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "оптОвый",
+      "word": "оптовый",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "прозорлИвый",
+      "word": "прозорливый",
+      "stressIndex": 7,
+      "context": ""
+    },
+    {
+      "form": "прозорлИва",
+      "word": "прозорлива",
+      "stressIndex": 7,
+      "context": ""
+    },
+    {
+      "form": "слИвовый",
+      "word": "сливовый",
+      "stressIndex": 2,
+      "context": ""
+    },
+    {
+      "form": "бралА",
+      "word": "брала",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "бралАсь",
+      "word": "бралась",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "взялА",
+      "word": "взяла",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "взялАсь",
+      "word": "взялась",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "влилАсь",
+      "word": "влилась",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "ворвалАсь",
+      "word": "ворвалась",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "воспринЯть",
+      "word": "воспринять",
+      "stressIndex": 7,
+      "context": ""
+    },
+    {
+      "form": "воспринялА",
+      "word": "восприняла",
+      "stressIndex": 9,
+      "context": ""
+    },
+    {
+      "form": "воссоздалА",
+      "word": "воссоздала",
+      "stressIndex": 9,
+      "context": ""
+    },
+    {
+      "form": "вручИт",
+      "word": "вручит",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "гналА",
+      "word": "гнала",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "гналАсь",
+      "word": "гналась",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "добралА",
+      "word": "добрала",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "добралАсь",
+      "word": "добралась",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "дождалАсь",
+      "word": "дождалась",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "дозвонИтся",
+      "word": "дозвонится",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "дозИровать",
+      "word": "дозировать",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "ждалА",
+      "word": "ждала",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "закУпорить",
+      "word": "закупорить",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "занЯть",
+      "word": "занять",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "зАнял",
+      "word": "занял",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "занялА",
+      "word": "заняла",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "зАняли",
+      "word": "заняли",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "заперлА",
+      "word": "заперла",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "запломбировАть",
+      "word": "запломбировать",
+      "stressIndex": 11,
+      "context": ""
+    },
+    {
+      "form": "защемИт",
+      "word": "защемит",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "звалА",
+      "word": "звала",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "звонИт",
+      "word": "звонит",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "кАшлянуть",
+      "word": "кашлянуть",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "клАла",
+      "word": "клала",
+      "stressIndex": 2,
+      "context": ""
+    },
+    {
+      "form": "клЕить",
+      "word": "клеить",
+      "stressIndex": 2,
+      "context": ""
+    },
+    {
+      "form": "крАлась",
+      "word": "кралась",
+      "stressIndex": 2,
+      "context": ""
+    },
+    {
+      "form": "кровоточИть",
+      "word": "кровоточить",
+      "stressIndex": 8,
+      "context": ""
+    },
+    {
+      "form": "лгалА",
+      "word": "лгала",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "лилА",
+      "word": "лила",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "лилАсь",
+      "word": "лилась",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "наделИт",
+      "word": "наделит",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "надорвалАсь",
+      "word": "надорвалась",
+      "stressIndex": 8,
+      "context": ""
+    },
+    {
+      "form": "назвалАсь",
+      "word": "назвалась",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "накренИтся",
+      "word": "накренится",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "налилА",
+      "word": "налила",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "нарвалА",
+      "word": "нарвала",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "начАть",
+      "word": "начать",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "нАчал",
+      "word": "начал",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "началА",
+      "word": "начала",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "нАчали",
+      "word": "начали",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "обзвонИт",
+      "word": "обзвонит",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "облегчИть",
+      "word": "облегчить",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "облегчИт",
+      "word": "облегчит",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "облилАсь",
+      "word": "облилась",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "обнялАсь",
+      "word": "обнялась",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "обогналА",
+      "word": "обогнала",
+      "stressIndex": 7,
+      "context": ""
+    },
+    {
+      "form": "ободралА",
+      "word": "ободрала",
+      "stressIndex": 7,
+      "context": ""
+    },
+    {
+      "form": "ободрИть",
+      "word": "ободрить",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "ободрИт",
+      "word": "ободрит",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "ободрИться",
+      "word": "ободриться",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "ободрИтся",
+      "word": "ободрится",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "обострИть",
+      "word": "обострить",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "одолжИть",
+      "word": "одолжить",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "одолжИт",
+      "word": "одолжит",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "озлОбить",
+      "word": "озлобить",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "оклЕить",
+      "word": "оклеить",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "окружИт",
+      "word": "окружит",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "опОшлить",
+      "word": "опошлить",
+      "stressIndex": 2,
+      "context": ""
+    },
+    {
+      "form": "освЕдомиться",
+      "word": "осведомиться",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "освЕдомится",
+      "word": "осведомится",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "отбылА",
+      "word": "отбыла",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "отдалА",
+      "word": "отдала",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "откУпорить",
+      "word": "откупорить",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "отозвалА",
+      "word": "отозвала",
+      "stressIndex": 7,
+      "context": ""
+    },
+    {
+      "form": "отозвалАсь",
+      "word": "отозвалась",
+      "stressIndex": 7,
+      "context": ""
+    },
+    {
+      "form": "перезвонИт",
+      "word": "перезвонит",
+      "stressIndex": 8,
+      "context": ""
+    },
+    {
+      "form": "перелилА",
+      "word": "перелила",
+      "stressIndex": 7,
+      "context": ""
+    },
+    {
+      "form": "плодоносИть",
+      "word": "плодоносить",
+      "stressIndex": 8,
+      "context": ""
+    },
+    {
+      "form": "пломбировАть",
+      "word": "пломбировать",
+      "stressIndex": 9,
+      "context": ""
+    },
+    {
+      "form": "повторИт",
+      "word": "повторит",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "позвалА",
+      "word": "позвала",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "позвонИт",
+      "word": "позвонит",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "полилА",
+      "word": "полила",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "положИть",
+      "word": "положить",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "положИл",
+      "word": "положил",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "понЯть",
+      "word": "понять",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "понялА",
+      "word": "поняла",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "послАла",
+      "word": "послала",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "прибЫть",
+      "word": "прибыть",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "прИбыл",
+      "word": "прибыл",
+      "stressIndex": 2,
+      "context": ""
+    },
+    {
+      "form": "прибылА",
+      "word": "прибыла",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "прИбыли",
+      "word": "прибыли",
+      "stressIndex": 2,
+      "context": ""
+    },
+    {
+      "form": "принЯть",
+      "word": "принять",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "прИнял",
+      "word": "принял",
+      "stressIndex": 2,
+      "context": ""
+    },
+    {
+      "form": "принялА",
+      "word": "приняла",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "прИняли",
+      "word": "приняли",
+      "stressIndex": 2,
+      "context": ""
+    },
+    {
+      "form": "рвалА",
+      "word": "рвала",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "сверлИт",
+      "word": "сверлит",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "снялА",
+      "word": "сняла",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "создалА",
+      "word": "создала",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "сорвалА",
+      "word": "сорвала",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "убралА",
+      "word": "убрала",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "углубИть",
+      "word": "углубить",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "укрепИт",
+      "word": "укрепит",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "чЕрпать",
+      "word": "черпать",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "щемИт",
+      "word": "щемит",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "щЁлкать",
+      "word": "щёлкать",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "довезЁнный",
+      "word": "довезённый",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "зАгнутый",
+      "word": "загнутый",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "зАнятый",
+      "word": "занятый",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "занятА",
+      "word": "занята",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "зАпертый",
+      "word": "запертый",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "заселЁнный",
+      "word": "заселённый",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "заселенА",
+      "word": "заселена",
+      "stressIndex": 7,
+      "context": ""
+    },
+    {
+      "form": "кровоточАщий",
+      "word": "кровоточащий",
+      "stressIndex": 8,
+      "context": ""
+    },
+    {
+      "form": "нажИвший",
+      "word": "наживший",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "налИвший",
+      "word": "наливший",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "нанЯвшийся",
+      "word": "нанявшийся",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "начАвший",
+      "word": "начавший",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "нАчатый",
+      "word": "начатый",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "низведЁнный",
+      "word": "низведённый",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "облегчЁнный",
+      "word": "облегчённый",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "ободрЁнный",
+      "word": "ободрённый",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "обострЁнный",
+      "word": "обострённый",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "отключЁнный",
+      "word": "отключённый",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "повторЁнный",
+      "word": "повторённый",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "поделЁнный",
+      "word": "поделённый",
+      "stressIndex": 5,
+      "context": ""
+    },
+    {
+      "form": "понЯвший",
+      "word": "понявший",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "прИнятый",
+      "word": "принятый",
+      "stressIndex": 2,
+      "context": ""
+    },
+    {
+      "form": "принятА",
+      "word": "принята",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "приручЁнный",
+      "word": "приручённый",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "прожИвший",
+      "word": "проживший",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "снятА",
+      "word": "снята",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "сОгнутый",
+      "word": "согнутый",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "углублЁнный",
+      "word": "углублённый",
+      "stressIndex": 6,
+      "context": ""
+    },
+    {
+      "form": "закУпорив",
+      "word": "закупорив",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "начАв",
+      "word": "начав",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "начАвшись",
+      "word": "начавшись",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "отдАв",
+      "word": "отдав",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "понЯв",
+      "word": "поняв",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "прибЫв",
+      "word": "прибыв",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "создАв",
+      "word": "создав",
+      "stressIndex": 4,
+      "context": ""
+    },
+    {
+      "form": "вОвремя",
+      "word": "вовремя",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "дОверху",
+      "word": "доверху",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "дОнизу",
+      "word": "донизу",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "дОсуха",
+      "word": "досуха",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "зАсветло",
+      "word": "засветло",
+      "stressIndex": 1,
+      "context": ""
+    },
+    {
+      "form": "надОлго",
+      "word": "надолго",
+      "stressIndex": 3,
+      "context": ""
+    },
+    {
+      "form": "ненадОлго",
+      "word": "ненадолго",
+      "stressIndex": 5,
+      "context": ""
+    }
+  ]
+}

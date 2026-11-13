@@ -28,6 +28,7 @@ for (const word of ['деревья', 'смириться', 'берёзовый'
   const card = find(word);
   if (card) assert(!/перед суффиксом -а-|без -а-/.test(hint(card)), word);
 }
+assert.match(hint(find('необитаемый (остров)')), /обитать.*I спряжение/);
 // A spelling label alone must not replace the morphological reason.
 assert.match(hint(find('набелённые')), /набелить/);
 assert.match(hint(find('набелённые')), /совершенного вида/);

@@ -4,7 +4,7 @@ const root=path.resolve(__dirname,'..');
 const out=path.resolve(process.argv[2]||path.join(root,'generated'));
 const catalog=JSON.parse(fs.readFileSync(path.join(root,'chapter-index.json'),'utf8'));
 const sources=JSON.parse(fs.readFileSync(path.join(root,'sources.json'),'utf8'));
-const expected=[1,4,5,6,7,...Array.from({length:14},(_,i)=>i+9)];
+const expected=Array.from({length:27},(_,i)=>i+1);
 assert.deepEqual(Object.keys(catalog).map(Number),expected);
 const ids=new Set,chapters=[],rules=[];
 for(const [number,entry] of Object.entries(catalog)){
@@ -30,7 +30,7 @@ for(const x of stress.entries){assert.equal((x.form.match(/[АЕЁИОУЫЭЮЯ
 const groups=JSON.parse(fs.readFileSync(path.join(root,'data/paronym-groups.json'),'utf8')).groups;
 for(const x of groups){assert(x.forms.length>=2);assert(x.meanings);assert(x.cardIds.length);}
 fs.mkdirSync(out,{recursive:true});
-const metadata={schemaVersion:1,title:'Русский — база знаний',checkedOn:'2026-11-13',targetExamYear:2027,canonicalSource:'../chapters/*.md',chapterCount:chapters.length,ruleCount:rules.length,notCovered:[2,3,8,23,24,25,26,27]};
+const metadata={schemaVersion:1,title:'Русский — база знаний',checkedOn:'2026-11-13',targetExamYear:2027,canonicalSource:'../chapters/*.md',chapterCount:chapters.length,ruleCount:rules.length,notCovered:[]};
 for(const [name,data]of Object.entries({'chapters.json':{metadata,chapters},'rules.json':{metadata,rules}}))fs.writeFileSync(path.join(out,name),JSON.stringify(data,null,2)+'\n');
 fs.writeFileSync(path.join(out,'KNOWLEDGE_BASE_ALL.md'),'# Русский — база знаний\n\nВерсия 1.0. Дата 13.11.2026.\n\n'+fs.readFileSync(path.join(root,'README.md'),'utf8').replace(/\]\((?!https?:|#)([^)]+)\)/g,'](../$1)')+'\n\n'+chapters.map(c=>c.markdown).join('\n\n---\n\n'));
 console.log(JSON.stringify({output:out,chapters:chapters.length,rules:rules.length,stressForms:stress.entries.length,paronymGroups:groups.length}));

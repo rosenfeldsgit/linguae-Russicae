@@ -4,7 +4,30 @@
     "path": "chapters/01.md",
     "sourceIds": [
       "FIPI_2027",
-      "GRAMOTA_MORPH"
+      "GRAMOTA_MORPH",
+      "RUSTUTORS_1"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "2": {
+    "title": "Лексическое значение слова в контексте",
+    "path": "chapters/02.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "GRAMOTA_MORPH",
+      "RUSTUTORS_2"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "3": {
+    "title": "Функциональные стили и языковые особенности текста",
+    "path": "chapters/03.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "GRAMOTA_MORPH",
+      "RUSTUTORS_3"
     ],
     "coverage": "core",
     "status": "authored"
@@ -14,7 +37,8 @@
     "path": "chapters/04.md",
     "sourceIds": [
       "FIPI_2027",
-      "PROJECT_STRESS"
+      "PROJECT_STRESS",
+      "RUSTUTORS_4"
     ],
     "coverage": "core",
     "status": "authored"
@@ -36,7 +60,8 @@
     "sourceIds": [
       "FIPI_2027",
       "GRAMOTA_MORPH",
-      "PROJECT_HINTS"
+      "PROJECT_HINTS",
+      "RUSTUTORS_6"
     ],
     "coverage": "supplementary",
     "status": "authored"
@@ -47,9 +72,21 @@
     "sourceIds": [
       "FIPI_2027",
       "GRAMOTA_MORPH",
-      "PROJECT_HINTS"
+      "PROJECT_HINTS",
+      "RUSTUTORS_7"
     ],
     "coverage": "supplementary",
+    "status": "authored"
+  },
+  "8": {
+    "title": "Синтаксические нормы и грамматические ошибки",
+    "path": "chapters/08.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "GRAMOTA_MORPH",
+      "RUSTUTORS_8"
+    ],
+    "coverage": "core",
     "status": "authored"
   },
   "9": {
@@ -58,7 +95,8 @@
     "sourceIds": [
       "FIPI_2027",
       "ORTH_ROOTS",
-      "IRYA_ROOTS"
+      "IRYA_ROOTS",
+      "RUSTUTORS_9"
     ],
     "coverage": "core",
     "status": "authored"
@@ -69,7 +107,8 @@
     "sourceIds": [
       "FIPI_2027",
       "ORTH_PREFIX",
-      "IRYA_ROOTS"
+      "IRYA_ROOTS",
+      "RUSTUTORS_10"
     ],
     "coverage": "core",
     "status": "authored"
@@ -79,7 +118,8 @@
     "path": "chapters/11.md",
     "sourceIds": [
       "FIPI_2027",
-      "ORTH_SUFFIX"
+      "ORTH_SUFFIX",
+      "RUSTUTORS_11"
     ],
     "coverage": "core",
     "status": "authored"
@@ -91,7 +131,8 @@
       "FIPI_2027",
       "ORTH_VERBS",
       "ORTH_SUFFIX",
-      "GRAMOTA_CONJ"
+      "GRAMOTA_CONJ",
+      "RUSTUTORS_12"
     ],
     "coverage": "core",
     "status": "authored"
@@ -116,7 +157,8 @@
       "ORTH_SPELLING",
       "ORTH_PRONOUNS",
       "IRYA_EAST",
-      "PROJECT_HINTS"
+      "PROJECT_HINTS",
+      "RUSTUTORS_14"
     ],
     "coverage": "core",
     "status": "authored"
@@ -129,7 +171,8 @@
       "ORTH_NOUN_N",
       "IRYA_N",
       "ORTH_SPELLING",
-      "PROJECT_HINTS"
+      "PROJECT_HINTS",
+      "RUSTUTORS_15"
     ],
     "coverage": "core",
     "status": "authored"
@@ -140,7 +183,8 @@
     "sourceIds": [
       "FIPI_2027",
       "PUNCT_HOMOGENEOUS",
-      "PUNCT_SSP"
+      "PUNCT_SSP",
+      "RUSTUTORS_16"
     ],
     "coverage": "core",
     "status": "authored"
@@ -151,7 +195,8 @@
     "sourceIds": [
       "FIPI_2027",
       "PUNCT_DEFINITIONS",
-      "PUNCT_GERUNDS"
+      "PUNCT_GERUNDS",
+      "RUSTUTORS_17"
     ],
     "coverage": "core",
     "status": "authored"
@@ -162,7 +207,8 @@
     "sourceIds": [
       "FIPI_2027",
       "PUNCT_INTRO",
-      "PUNCT_INDEX"
+      "PUNCT_INDEX",
+      "RUSTUTORS_18"
     ],
     "coverage": "core",
     "status": "authored"
@@ -172,7 +218,8 @@
     "path": "chapters/19.md",
     "sourceIds": [
       "FIPI_2027",
-      "PUNCT_SPP"
+      "PUNCT_SPP",
+      "RUSTUTORS_19"
     ],
     "coverage": "core",
     "status": "authored"
@@ -184,7 +231,8 @@
       "FIPI_2027",
       "PUNCT_COMPLEX",
       "PUNCT_SPP",
-      "PUNCT_SSP"
+      "PUNCT_SSP",
+      "RUSTUTORS_20"
     ],
     "coverage": "core",
     "status": "authored"
@@ -197,7 +245,8 @@
       "PUNCT_INDEX",
       "PUNCT_DASH",
       "PUNCT_BSP",
-      "PUNCT_DIRECT"
+      "PUNCT_DIRECT",
+      "RUSTUTORS_21"
     ],
     "coverage": "core",
     "status": "authored"
@@ -208,7 +257,61 @@
     "sourceIds": [
       "FIPI_2027",
       "FIPI_EXPRESSIVE",
-      "PROJECT_HINTS"
+      "PROJECT_HINTS",
+      "RUSTUTORS_22"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "23": {
+    "title": "Содержание текста и проверка утверждений",
+    "path": "chapters/23.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "RUSTUTORS_23"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "24": {
+    "title": "Типы речи и смысловые отношения предложений",
+    "path": "chapters/24.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "GRAMOTA_MORPH",
+      "RUSTUTORS_24"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "25": {
+    "title": "Лексические отношения и фразеология",
+    "path": "chapters/25.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "GRAMOTA_MORPH",
+      "RUSTUTORS_25"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "26": {
+    "title": "Средства связи предложений в тексте",
+    "path": "chapters/26.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "GRAMOTA_MORPH",
+      "RUSTUTORS_26"
+    ],
+    "coverage": "core",
+    "status": "authored"
+  },
+  "27": {
+    "title": "Сочинение по исходному тексту",
+    "path": "chapters/27.md",
+    "sourceIds": [
+      "FIPI_2027",
+      "RUSTUTORS_27"
     ],
     "coverage": "core",
     "status": "authored"

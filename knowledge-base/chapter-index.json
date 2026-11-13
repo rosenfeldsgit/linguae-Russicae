@@ -141,7 +141,8 @@
       "FIPI_2027",
       "GRAMOTA_MORPH",
       "PROJECT_HINTS",
-      "RUSTUTORS_7"
+      "RUSTUTORS_7",
+      "GRAMOTA_NUMERALS"
     ],
     "coverage": "supplementary",
     "status": "authored",
@@ -243,7 +244,9 @@
     "sourceIds": [
       "FIPI_2027",
       "ORTH_SUFFIX",
-      "RUSTUTORS_11"
+      "RUSTUTORS_11",
+      "IRYA_SUFFIX",
+      "GRAMOTA_DIMINUTIVES"
     ],
     "coverage": "core",
     "status": "authored",

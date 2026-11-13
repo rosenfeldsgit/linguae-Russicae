@@ -343,6 +343,18 @@
       "url": "https://rustutors.ru/egeteoriya/1160-zadanie-27.html",
       "kind": "secondary",
       "note": "Прочитана теория задания по ссылке из пользовательского оглавления; изложение базы авторское, примеры составлены для проекта."
+    },
+    "GRAMOTA_NUMERALS": {
+      "title": "Грамота.ру. Как правильно употреблять числительные",
+      "url": "https://gramota.ru/biblioteka/spravochniki/pismovnik/kak-pravilno-upotreblyat-chislitelnye",
+      "kind": "primary",
+      "note": "Падежные формы количественных, порядковых и собирательных числительных."
+    },
+    "IRYA_SUFFIX": {
+      "title": "ИРЯ РАН. Орфографическое комментирование русского словаря, §32",
+      "url": "https://oross.ruslang.ru/paragraph/32",
+      "kind": "primary",
+      "note": "Разграничение суффиксальных образований с е/и."
     }
   },
   "officialArchive": {

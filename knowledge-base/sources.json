@@ -1,0 +1,216 @@
+{
+  "schemaVersion": 1,
+  "checkedOn": "2026-11-13",
+  "sources": {
+    "FIPI_2027": {
+      "title": "ФИПИ. Проекты КИМ ЕГЭ 2027: демоверсия, спецификация, кодификатор",
+      "url": "https://fipi.ru/ege/demoversii-specifikacii-kodifikatory",
+      "kind": "primary",
+      "note": "Архив ru_11_2027.zip скачан; три PDF прочитаны через извлечение текста. На странице публикации обозначены как проекты."
+    },
+    "GRAMOTA_MORPH": {
+      "title": "Е. И. Литневская. Русский язык: краткий теоретический курс для школьников",
+      "url": "https://gramota.ru/uchebnik",
+      "kind": "primary",
+      "note": "Школьная грамматическая классификация; конкретные нормы словоформ дополнительно проверяются по словарям кодификатора."
+    },
+    "ORTH_ROOTS": {
+      "title": "Полный академический справочник под ред. В. В. Лопатина. Безударные гласные в корнях",
+      "url": "https://orthographia.ru/orfografia.php?sid=31",
+      "kind": "primary",
+      "note": "Проверяемые, непроверяемые и чередующиеся гласные."
+    },
+    "IRYA_ROOTS": {
+      "title": "ИРЯ РАН. Орфографическое комментирование русского словаря, §24",
+      "url": "https://oross.ruslang.ru/paragraph/24",
+      "kind": "primary",
+      "note": "Условия чередования и специальные написания."
+    },
+    "ORTH_PREFIX": {
+      "title": "Академический справочник. Гласные в приставках",
+      "url": "https://orthographia.ru/orfografia.php?sid=33",
+      "kind": "primary",
+      "note": "Правила приставок; связанные согласные, разделительные знаки см. также общий справочник ORTH_SPELLING."
+    },
+    "ORTH_SUFFIX": {
+      "title": "Академический справочник. Безударные гласные в суффиксах",
+      "url": "https://orthographia.ru/orfografia.php?sid=34",
+      "kind": "primary",
+      "note": "Суффиксы разных частей речи."
+    },
+    "ORTH_VERBS": {
+      "title": "Академический справочник. Гласные в глагольных окончаниях",
+      "url": "https://orthographia.ru/orfografia.php?sid=40",
+      "kind": "primary",
+      "note": "Безударные окончания, исключения, приставочные формы."
+    },
+    "GRAMOTA_CONJ": {
+      "title": "Грамота. Разноспрягаемые глаголы, ответ №282332",
+      "url": "https://gramota.ru/spravka/vopros/282332",
+      "kind": "primary",
+      "note": "Хотеть, бежать, варианты классификации особых парадигм."
+    },
+    "ORTH_NE": {
+      "title": "Академический справочник. НЕ, §§145–150",
+      "url": "https://orthographia.ru/orfografia.php?sid=63",
+      "kind": "primary",
+      "note": "Слитное и раздельное написание, часть речи и роль контекста."
+    },
+    "ORTH_SPELLING": {
+      "title": "Полный академический справочник. Орфография",
+      "url": "https://orthographia.ru/orfografia.php",
+      "kind": "primary",
+      "note": "Общий первоисточник для связанных разделов; не подменяет точечную проверку словарного слова."
+    },
+    "ORTH_PRONOUNS": {
+      "title": "Академический справочник. Местоименные слова",
+      "url": "https://orthographia.ru/orfografia.php?sid=72",
+      "kind": "primary",
+      "note": "Частицы и строение местоименных слов."
+    },
+    "IRYA_EAST": {
+      "title": "ИРЯ РАН. Восточно… и Восточно- в географических названиях",
+      "url": "https://oross.ruslang.ru/orthogr/formula?id=693",
+      "kind": "primary",
+      "note": "Различие обычного прилагательного и собственного географического названия."
+    },
+    "ORTH_NOUN_N": {
+      "title": "Академический справочник. Н/НН в прилагательных и существительных",
+      "url": "https://orthographia.ru/orfografia.php?sid=51",
+      "kind": "primary",
+      "note": "Отыменные образования, суффиксы, стык морфем."
+    },
+    "IRYA_N": {
+      "title": "ИРЯ РАН. Н/НН в полных прилагательных, §14",
+      "url": "https://oross.ruslang.ru/paragraph/14",
+      "kind": "primary",
+      "note": "Прилагательные и отглагольные образования; исключения и альтернативные объяснения."
+    },
+    "PUNCT_INDEX": {
+      "title": "Академический справочник. Пунктуация",
+      "url": "https://orthographia.ru/punctuatio.php",
+      "kind": "primary",
+      "note": "Содержание раздела и общие принципы."
+    },
+    "PUNCT_HOMOGENEOUS": {
+      "title": "Академический справочник. Однородные члены с союзами и без",
+      "url": "https://orthographia.ru/punctuatio.php?sid=112",
+      "kind": "primary",
+      "note": "Повторяющиеся союзы, пары и устойчивые сочетания."
+    },
+    "PUNCT_SSP": {
+      "title": "Академический справочник. Сложносочинённое предложение",
+      "url": "https://orthographia.ru/punctuatio.php?sid=133",
+      "kind": "primary",
+      "note": "Границы частей, общий элемент."
+    },
+    "PUNCT_DEFINITIONS": {
+      "title": "Академический справочник. Обособленные согласованные определения",
+      "url": "https://orthographia.ru/punctuatio.php?sid=118",
+      "kind": "primary",
+      "note": "Позиция определения и определяемое слово."
+    },
+    "PUNCT_GERUNDS": {
+      "title": "Академический справочник. Обособленные обстоятельства",
+      "url": "https://orthographia.ru/punctuatio.php?sid=121",
+      "kind": "primary",
+      "note": "Добавочное действие и необособляемые конструкции."
+    },
+    "PUNCT_INTRO": {
+      "title": "Академический справочник. Вводные слова и сочетания",
+      "url": "https://orthographia.ru/punctuatio.php?sid=127",
+      "kind": "primary",
+      "note": "Вводная функция и её отличие от члена предложения."
+    },
+    "PUNCT_SPP": {
+      "title": "Академический справочник. Сложноподчинённое предложение",
+      "url": "https://orthographia.ru/punctuatio.php?sid=134",
+      "kind": "primary",
+      "note": "Придаточные, однородное подчинение, составные союзы."
+    },
+    "PUNCT_COMPLEX": {
+      "title": "Академический справочник. Сложные синтаксические конструкции",
+      "url": "https://orthographia.ru/punctuatio.php?sid=136",
+      "kind": "primary",
+      "note": "Стыки союзов и разные виды связи."
+    },
+    "PUNCT_DASH": {
+      "title": "Академический справочник. Тире между подлежащим и сказуемым",
+      "url": "https://orthographia.ru/punctuatio.php?sid=106",
+      "kind": "primary",
+      "note": "Основания тире и условия его отсутствия."
+    },
+    "PUNCT_BSP": {
+      "title": "Академический справочник. Бессоюзное сложное предложение",
+      "url": "https://orthographia.ru/punctuatio.php?sid=135",
+      "kind": "primary",
+      "note": "Смысловые отношения и выбор знака."
+    },
+    "PUNCT_DIRECT": {
+      "title": "Академический справочник. Прямая речь",
+      "url": "https://orthographia.ru/punctuatio.php?sid=138",
+      "kind": "primary",
+      "note": "Различение авторской речи и прямой речи."
+    },
+    "FIPI_EXPRESSIVE": {
+      "title": "ФИПИ. Навигатор ЕГЭ 2026. Выразительность русской речи",
+      "url": "https://doc.fipi.ru/navigator-podgotovki/navigator-ege/2026/ru-7-vyrazitelnost-russkoj-rechi.pdf",
+      "kind": "primary",
+      "note": "PDF прочитан через извлечение текста. Термины — учебная опора; формат 2027 сверялся отдельно по FIPI_2027."
+    },
+    "RUSTUTORS_13": {
+      "title": "Рустьюторс. Теория задания 13, ссылка пользователя",
+      "url": "https://rustutors.ru/egeteoriya/1146-zadanie-13.html",
+      "kind": "secondary",
+      "note": "Использована тематическая структура. Упрощения о кратких прилагательных и всех словах на -мый не перенесены как абсолютные правила."
+    },
+    "RUSTUTORS_5": {
+      "title": "Рустьюторс. Теория задания 5, ранее указанный источник проекта",
+      "url": "https://rustutors.ru/egeteoriya/1138-zadanie-5.html",
+      "kind": "secondary",
+      "note": "Источник проекта; конкретные значения в словнике взяты из текущих авторских объяснений, не объявляются дословной нормой ФИПИ."
+    },
+    "PROJECT_STRESS": {
+      "title": "Текущий словник ударений сайта",
+      "url": "../app.js",
+      "kind": "project",
+      "note": "В исходнике обозначен как список 2026. Снимок не выдаётся за полный официальный список 2027."
+    },
+    "PROJECT_PARONYMS": {
+      "title": "Карточки и описания паронимов проекта",
+      "url": "../data/paronyms-README.md",
+      "kind": "project",
+      "note": "paronyms.js, data/paronyms-source.json и список исключённых неоднозначных примеров; значения короткие авторские."
+    },
+    "PROJECT_HINTS": {
+      "title": "Текущие объяснения карточек",
+      "url": "../EXPLANATION_GUIDELINES.md",
+      "kind": "project",
+      "note": "Приоритет правил задан в CURRENT_STATE.md. Старые подсказки — материал для переноса, а не нормативный первоисточник."
+    },
+    "PROJECT_NE": {
+      "title": "Проверенные контекстные подсказки задания 13",
+      "url": "../ne-explanations.js",
+      "kind": "project",
+      "note": "507 подсказок по ID после исправления частей речи, зависимых слов и значений."
+    }
+  },
+  "officialArchive": {
+    "url": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2027/ru_11_2027.zip",
+    "publicationStatus": "draft_as_labelled_by_FIPI_page",
+    "documents": [
+      {
+        "filename": "РУ-11 ЕГЭ 2027 ДЕМО.pdf",
+        "sha256": "a099403e7a0481cb6c87ec3f888ed5f5a9128e2b86c7beda900f7a30b059e673"
+      },
+      {
+        "filename": "РУ-11 ЕГЭ 2027 КОДИФ.pdf",
+        "sha256": "1888e4318d9d004b483ef9e6dcb7a0bb730577bf9aba6db48680e985995fda3f"
+      },
+      {
+        "filename": "РУ-11 ЕГЭ 2027 СПЕЦ.pdf",
+        "sha256": "a615ab1653a5265dd3d7a39c110c8c94f6c6e0f59b6f3cb060a69008d7a2751a"
+      }
+    ]
+  }
+}

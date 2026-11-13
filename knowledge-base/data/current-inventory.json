@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "asOf": "2026-11-13",
+    "scope": "current_repository_snapshot",
+    "official2027FullList": false,
+    "managedOverridesIncluded": false
+  },
+  "cardCountsByTask": {
+    "1": 74,
+    "4": 333,
+    "5": 173,
+    "6": 2,
+    "7": 2,
+    "9": 882,
+    "10": 640,
+    "11": 436,
+    "12": 445,
+    "13": 507,
+    "14": 890,
+    "15": 481,
+    "16": 425,
+    "17": 150,
+    "18": 229,
+    "19": 192,
+    "20": 143,
+    "21": 322,
+    "22": 10
+  },
+  "stressForms": 219,
+  "paronymGroups": 127,
+  "paronymCards": 141
+}

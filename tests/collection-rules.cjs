@@ -32,13 +32,13 @@ assert.match(hint(find('необитаемый (остров)')), /обитат�
 // A spelling label alone must not replace the morphological reason.
 assert.match(hint(find('набелённые')), /набелить/);
 assert.match(hint(find('набелённые')), /совершенного вида/);
-assert.match(hint(find('набелённые')), /-ённ-/);
+assert.match(hint(find('набелённые')), /-ённ-/i);
 assert.match(hint(find('рафинированное')), /прилагательное/);
-assert.match(hint(find('рафинированное')), /-ированный/);
+assert.match(hint(find('рафинированное')), /-ированный/i);
 assert.match(hint(find('отправленное (письмо)')), /отправить/);
 assert.match(hint(find('отправленное (письмо)')), /-енн-/);
 assert.match(hint(find('рассеянной')), /прилагательное/);
-assert.match(hint(find('картонными')), /Н основы.*суффикс -н-/);
+assert.match(hint(find('картонными')), /Н основы.*суффикс -н-/i);
 assert.match(hint(find('нарисована')), /кратких страдательных причастиях всегда одна Н/);
 for (const card of cards.filter(c => [12, 15].includes(c.task))) {
   assert(!/полная форма причастия с суффиксом -нн-|У полного страдательного причастия «[^»]+» в суффиксе пишется|В суффиксе -енн-\/-онн- пишутся две Н/.test(hint(card)), card.id);

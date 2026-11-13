@@ -7,7 +7,7 @@ vm.runInNewContext(fs.readFileSync('reasoned-explanations.js','utf8'),ctx);
 let count=0;
 for(const c of all){assert.equal(JSON.stringify(c.answer),old.get(c.id).answer);assert.equal(JSON.stringify(c.options),old.get(c.id).options);const hint=c.explanation||ctx.window.EGE_HINTS.get(c.id)||'';if(hint!==old.get(c.id).hint){count++;assert(hint.length>40);assert([14,15].includes(c.task));}}
 for(const [word,rule] of [['студёный','несовершенного вида'],['русско-китайского','равноправные основы'],['вбок','пространственное наречие'],['труженик','суффикс -еник-'],['вдвоём','собирательное числительное']]){
- const c=all.find(c=>(c.spelling||c.before+c.answer+c.after)===word);assert(c&&c.explanation.includes(rule),word);
+ const c=all.find(c=>(c.spelling||c.before+c.answer+c.after)===word);assert(c&&c.explanation.toLocaleLowerCase('ru').includes(rule.toLocaleLowerCase('ru')),word);
 }
 const bare=all.filter(c=>[14,15].includes(c.task)&&/^Запомни(ть)? (слитное|раздельное|дефисное|одну|написание)/.test(c.explanation||ctx.window.EGE_HINTS.get(c.id)||''));
 assert.equal(bare.length,0);

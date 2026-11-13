@@ -11,7 +11,7 @@ class Command(BaseCommand):
     def handle(self,*args,**kwargs):
         script=r'''
 const fs=require('fs'),vm=require('vm');const ctx={window:{}};
-for(const p of ['exam-config.js','cards.js','explanations.js','punctuation.js','adapted-cards.js','collection-cards.js','paronyms.js','test/bank.js','prefix-explanations.js','audited-explanations.js','exam-explanations.js','reasoned-explanations.js','collection-rule-hints.js']){if(fs.existsSync(p))vm.runInNewContext(fs.readFileSync(p,'utf8'),ctx);}
+for(const p of ['exam-config.js','cards.js','explanations.js','punctuation.js','adapted-cards.js','collection-cards.js','paronyms.js','test/bank.js','prefix-explanations.js','audited-explanations.js','exam-explanations.js','reasoned-explanations.js','collection-rule-hints.js','ne-explanations.js']){if(fs.existsSync(p))vm.runInNewContext(fs.readFileSync(p,'utf8'),ctx);}
 for(const [year,start] of [[2027,3],[2026,1]]) for(let v=start;v<=36;v++){
   const file=`test/doshchinsky-${year}/v${v}.json`;
   if(!fs.existsSync(file))continue;

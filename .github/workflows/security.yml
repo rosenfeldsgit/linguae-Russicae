@@ -18,6 +18,7 @@ jobs:
           persist-credentials: false
       - run: python3 scripts/scan_secrets.py
       - run: python3 tests/public-artifact.py
+      - run: python3 tests/editor-build.py
       - run: python3 scripts/build_public.py public-build
       - run: pip install -r server/requirements.txt pip-audit
       - run: pip-audit -r server/requirements.txt

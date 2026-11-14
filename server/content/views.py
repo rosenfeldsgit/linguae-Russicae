@@ -13,14 +13,14 @@ def content_js(request):
     response['Cache-Control']='no-store'
     return response
 
-PUBLIC_FILES={'theory/index.html','theory/theory.css','theory/theory.js','assets/apple-touch-icon.png','manifest.json','assets/icon-192.png','assets/icon-512.png','index.html','app.js','styles.css','favicon.svg','assets/logo.svg','assets/brand-poster.svg','poster.css','poster.js','assets/fonts/golos-400.ttf','assets/fonts/golos-500.ttf','assets/fonts/golos-700.ttf','assets/fonts/golos-900.ttf','assets/fonts/plex-mono-400.ttf','assets/fonts/roboto-condensed-700.ttf','exam-config.js','exam-explanations.js','cards/catalog.js','cards/task-1.js','cards/task-10.js','cards/task-11.js','cards/task-12.js','cards/task-13.js','cards/task-14.js','cards/task-15.js','cards/task-16.js','cards/task-17.js','cards/task-18.js','cards/task-19.js','cards/task-20.js','cards/task-21.js','cards/task-22.js','cards/task-4.js','cards/task-5.js','cards/task-6.js','cards/task-7.js','cards/task-9.js','versions-link.js','versions/index.html','versions/versions.js','test/feed.html','feed/index.html','feed/feed.js','feed/feed.css','test/exercises.js','test/index.html','test/test.css','test/test.js','test/bank.js','test/bank-manifest.js','test/bank-loader.js'}
+PUBLIC_FILES={'edit/index.html','edit/editor.css','edit/editor.js','edit/chapters.json','theory/index.html','theory/theory.css','theory/theory.js','assets/apple-touch-icon.png','manifest.json','assets/icon-192.png','assets/icon-512.png','index.html','app.js','styles.css','favicon.svg','assets/logo.svg','assets/brand-poster.svg','poster.css','poster.js','assets/fonts/golos-400.ttf','assets/fonts/golos-500.ttf','assets/fonts/golos-700.ttf','assets/fonts/golos-900.ttf','assets/fonts/plex-mono-400.ttf','assets/fonts/roboto-condensed-700.ttf','exam-config.js','exam-explanations.js','cards/catalog.js','cards/task-1.js','cards/task-10.js','cards/task-11.js','cards/task-12.js','cards/task-13.js','cards/task-14.js','cards/task-15.js','cards/task-16.js','cards/task-17.js','cards/task-18.js','cards/task-19.js','cards/task-20.js','cards/task-21.js','cards/task-22.js','cards/task-4.js','cards/task-5.js','cards/task-6.js','cards/task-7.js','cards/task-9.js','versions-link.js','versions/index.html','versions/versions.js','test/feed.html','feed/index.html','feed/feed.js','feed/feed.css','test/exercises.js','test/index.html','test/test.css','test/test.js','test/bank.js','test/bank-manifest.js','test/bank-loader.js'}
 @require_safe
 def public_file(request,path='index.html'):
-    if path in ('theory','feed'):
+    if path in ('theory','feed','edit'):
         return redirect(request.path + '/')
     if path=='test/feed.html':return redirect('../feed/')
     if path=='versions':path='versions/'
-    if path in ('','test/','versions/','theory/','feed/'):path=path+'index.html'
+    if path in ('','test/','versions/','theory/','feed/','edit/'):path=path+'index.html'
     variant=re.fullmatch(r'test/doshchinsky-(2026|2027)/v(\d+)\.json',path)
     if not (path in PUBLIC_FILES or variant and (1 if variant[1]=="2026" else 3)<=int(variant[2])<=36):raise Http404
     file=settings.ROOT/path

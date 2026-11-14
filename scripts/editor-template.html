@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="same-origin">
+<title>Редактор базы знаний — Русский</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../poster.css">
+<link rel="stylesheet" href="../theory/theory.css">
+<link rel="stylesheet" href="editor.css">
+<script defer src="editor.js"></script>
+</head>
+<body>
+<main class="editor-app">
+<header class="editor-header"><a href="../theory/">← База знаний</a><span>РУССКИЙ / ЛИЧНЫЙ ЧЕРНОВИК</span></header>
+<h1>Редактор базы знаний</h1>
+<p class="editor-intro">Правьте текст прямо на странице, как в Word. Затем скачайте изменения и отправьте файл в наш чат — я перенесу правки в базу сайта.</p>
+<p class="mobile-notice">Для работы с редактором откройте эту страницу на компьютере.</p>
+<div class="editor-desktop">
+<section class="editor-controls" aria-label="Выбор главы и сохранение">
+<div class="chapter-picker"><label for="chapter">Задание</label><select id="chapter" disabled><!--options--></select></div>
+<button id="download" class="download" type="button" disabled>Скачать изменения <span id="change-count">0</span></button>
+<p id="save-status" role="status" aria-live="polite">Загружаем базу…</p>
+</section>
+<div class="editor-toolbar" role="toolbar" aria-label="Форматирование текста">
+<button type="button" data-command="bold" aria-label="Жирный (Ctrl+B)" title="Жирный (Ctrl+B)"><b>Ж</b></button>
+<button type="button" data-command="italic" aria-label="Курсив (Ctrl+I)" title="Курсив (Ctrl+I)"><i>К</i></button>
+<button type="button" data-command="formatBlock" data-value="p">Текст</button>
+<button type="button" data-command="formatBlock" data-value="h3">Заголовок</button>
+<button type="button" data-command="insertUnorderedList" title="Маркированный список">• Список</button>
+<button type="button" data-command="insertOrderedList" title="Нумерованный список">1. Список</button>
+<button type="button" id="add-table">Таблица</button>
+<button type="button" data-command="undo" aria-label="Отменить" title="Отменить (Ctrl+Z)">↶</button>
+<button type="button" data-command="redo" aria-label="Повторить" title="Повторить">↷</button>
+</div>
+<div class="chapters"><article id="editor" role="textbox" aria-label="Текст выбранной главы" aria-multiline="true" contenteditable="false" spellcheck="true"></article></div>
+<p class="editor-note">Черновик хранится в этом браузере. Скачивайте файл перед очисткой данных или переходом на другой компьютер. Изменения попадут на сайт после обработки файла в чате.</p>
+</div>
+<noscript>Для редактирования включите JavaScript.</noscript>
+</main>
+</body>
+</html>

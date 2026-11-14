@@ -26,8 +26,8 @@ for(let task=1;task<=26;task++)assert.equal(bank.filter(q=>q.task===task).length
 for(let v=1;v<=36;v++)assert.equal(bank.filter(q=>q.source.variant===v).reduce((sum,q)=>sum+q.maxPrimary,0),28);
 // Exercise the actual scoring implementation, including multi-digit sentence numbers.
 const js=fs.readFileSync(path.join(root,'test/test.js'),'utf8');
-const a=js.indexOf('  const normalize ='),b=js.indexOf('  function selection()');
-const scoring={};vm.runInNewContext(js.slice(a,b)+'\nthis.score=score;',scoring);
+vm.runInNewContext(fs.readFileSync(path.join(root,'test/exercises.js'),'utf8'),ctx);
+const scoring=ctx.window.EGE_EXERCISES;
 for(const q of bank)for(const answer of q.answers){assert.equal(scoring.score(q,answer),q.maxPrimary,q.id);assert.equal(scoring.score(q,''),0);}
 const matching=bank.find(q=>q.answerType==='matching'),correct=matching.answers[0];
 assert.equal(scoring.score(matching,'0'+correct.slice(1)),0);

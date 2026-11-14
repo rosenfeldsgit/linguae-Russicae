@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'"><meta name="referrer" content="same-origin"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#F2F0E7"><title>Лента заданий — Ѣ</title>
+<link rel="icon" href="../favicon.svg?v=golos4" type="image/svg+xml">
+<link rel="stylesheet" href="../styles.css?v=mock1"><link rel="stylesheet" href="test.css?v=books2">
+<script defer src="../exam-config.js?v=2"></script><script defer src="bank.js?v=2"></script><script defer src="bank-manifest.js?v=books2"></script><script defer src="bank-loader.js?v=books2"></script><script defer src="../exam-explanations.js?v=1"></script><script defer src="../content.js?v=1"></script><script defer src="exercises.js"></script><script defer src="feed.js"></script>
+<link rel="preload" href="../assets/fonts/golos-400.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="../poster.css?v=theory1"><script defer src="../poster.js?v=poster1"></script><script defer src="../versions-link.js?v=1"></script><link rel="manifest" href="../manifest.json"><link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png"><meta name="apple-mobile-web-app-title" content="Русский"><link rel="stylesheet" href="feed.css"></head>
+<body><main class="app exam-app">
+<header class="poster-header"><div class="poster-hero"><h1>ЛЕНТА</h1><nav class="mode-nav" aria-label="Режим тренировки"><a href="../">Карточки</a><a href="./">Пробники</a><a href="feed.html" aria-current="page">Лента заданий</a><a href="../theory/">База знаний</a></nav><div class="poster-caption"><span>ЕГЭ / 2027</span></div></div></header>
+<section class="exam-panel filters" aria-label="Поиск заданий">
+<label>Номер задания ЕГЭ<select id="task"><option value="">Все задания</option></select></label>
+<form id="search"><label for="search-id">Поиск по ID</label><div class="controls"><input id="search-id" type="search" placeholder="Например, 937" inputmode="numeric"><button class="secondary">Найти</button></div></form>
+<button type="button" id="reset" class="quiet">Сбросить</button>
+</section>
+<p id="status" role="status"></p><section id="feed" aria-label="Задания"></section>
+<button type="button" class="secondary" id="more">Показать ещё</button>
+<template id="exercise"><article class="exam-panel"><h2></h2><p class="source"></p><div class="reading"></div><div class="question"></div>
+<form class="check"><label>Ваш ответ<input autocomplete="off" required></label><button class="primary">Проверить</button></form>
+<p class="result" role="status"></p></article></template>
+</main></body></html>

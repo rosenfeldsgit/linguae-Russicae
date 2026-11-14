@@ -42,7 +42,7 @@ for(const q of bank.filter(q=>q.source.variant>=3&&q.task===26)) {
 }
 console.log('936 questions, 36 variants, keys, text-only content, scoring and shared passages: OK');
 (async()=>{
- const calls=[];const context={window:{},Map,Set,Promise,fetch:async url=>{calls.push(url);return {ok:true,json:async()=>JSON.parse(fs.readFileSync(path.join(root,'test',url),'utf8'))};}};
+ const calls=[];const context={window:{},Map,Set,Promise,URL,document:{baseURI:'https://example.test/linguae-Russicae/feed/',currentScript:{src:'https://example.test/linguae-Russicae/test/bank-loader.js'}},fetch:async url=>{calls.push(String(url));assert(String(url).startsWith('https://example.test/linguae-Russicae/test/'));return {ok:true,json:async()=>JSON.parse(fs.readFileSync(path.join(root,'test',new URL(url).pathname.split('/test/')[1]),'utf8'))};}};
  vm.runInNewContext(fs.readFileSync(path.join(root,'test/bank-loader.js'),'utf8'),context);
  const loader=context.window.EGE_EXAM_LOADER;
  const loaded=await Promise.all(ctx.window.EGE_EXAM_MANIFEST.map(q=>loader.load(q)));

@@ -54,3 +54,5 @@ for script in tests/*.cjs; do node "$script" || exit; done
 Повторная генерация паронимов выполняется командой `node scripts/build-paronyms.cjs`. Источники и ограничения описаны в [data/paronyms-README.md](data/paronyms-README.md).
 
 Перед изменениями создаётся резервная ветка. Изменения поступают в `main` через pull request с обязательными проверками GitHub.
+
+Лента заданий — самостоятельный раздел `/feed/` (`feed/index.html`, `feed/feed.js`, `feed/feed.css`). Общие рендерер, проверка и банк остаются в `test/`; JSON загружаются относительно адреса загрузчика. Старый `/test/feed.html` перенаправляет в ленту.

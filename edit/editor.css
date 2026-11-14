@@ -1,0 +1,34 @@
+*{box-sizing:border-box}
+body{margin:0}
+.editor-app{max-width:1120px;margin:auto;padding:32px 40px 48px}
+.editor-header{display:flex;justify-content:space-between;align-items:center;gap:24px;border-bottom:1px solid var(--ink);padding-bottom:24px}
+.editor-header a{color:var(--ink);text-underline-offset:4px}
+.editor-header span{font:11px/1.5 Plex,monospace;color:var(--muted)}
+h1{font-size:clamp(32px,4vw,52px);font-weight:500;letter-spacing:-.035em;margin:36px 0 12px}
+.editor-intro{max-width:760px;line-height:1.6;color:var(--muted);margin:0 0 28px}
+.editor-controls{display:flex;align-items:end;gap:18px;flex-wrap:wrap;margin-bottom:18px}
+.chapter-picker{flex:1;min-width:260px}
+.chapter-picker label{display:block;font-size:12px;margin-bottom:8px;color:var(--muted)}
+button,select{font:inherit;color:var(--ink);border:1px solid var(--line);background:var(--paper);border-radius:0}
+select{width:100%;padding:12px;font-size:14px;min-height:48px}
+button{cursor:pointer;padding:10px 14px;min-height:40px}
+button:hover{background:var(--lime)}
+button:disabled{opacity:.5;cursor:default}
+button:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.download{background:var(--ink);color:var(--paper);min-height:48px;font-weight:500}
+.download:hover{background:var(--blue)}
+#change-count{margin-left:12px;font-family:Plex,monospace}
+#save-status{flex-basis:100%;font-size:13px;margin:0;min-height:20px;color:var(--green)}
+#save-status.error{color:var(--red)}
+.editor-toolbar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;position:sticky;top:0;z-index:2;background:var(--bg);border-block:1px solid var(--line);padding:12px 0}
+.editor-toolbar button{font-size:14px}
+.chapters #editor{max-width:none;padding:36px 52px;min-height:60vh;margin:0;background:var(--paper);border:1px solid var(--line);border-top:0;line-height:1.65;outline:none;overflow-wrap:anywhere}
+#editor:focus{box-shadow:inset 3px 0 var(--blue)}
+.chapters #editor h2{font-size:34px;line-height:1.2;margin:0 0 32px}
+#editor li{margin:.4rem 0}
+#editor table{width:100%;border-collapse:collapse}
+#editor a{cursor:text}
+#editor .rule{scroll-margin-top:85px}
+.editor-note{font-size:13px;line-height:1.6;color:var(--muted);max-width:780px;margin:18px 0}
+.mobile-notice{display:none}
+@media(max-width:899px){.editor-app{padding:24px}.editor-header span{display:none}.editor-desktop{display:none}.mobile-notice{display:block;border-top:1px solid var(--line);padding-top:20px;line-height:1.6}}

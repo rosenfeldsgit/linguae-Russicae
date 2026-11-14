@@ -68,6 +68,14 @@ class AdminFlow(TestCase):
             self.assertEqual(response.status_code,200,path)
             response.close()
 
+    def test_local_editor_is_served_without_write_endpoint(self):
+        self.assertRedirects(self.client.get('/edit'), '/edit/', fetch_redirect_response=False)
+        for path in ['edit/', 'edit/editor.js', 'edit/editor.css', 'edit/chapters.json']:
+            response = self.client.get('/' + path)
+            self.assertEqual(response.status_code, 200, path)
+            response.close()
+        self.assertEqual(self.client.post('/edit/', {'text': 'change'}).status_code, 405)
+
 class BookImport(TestCase):
     def test_import_preserves_existing_ids_and_is_repeatable(self):
         from django.core.management import call_command

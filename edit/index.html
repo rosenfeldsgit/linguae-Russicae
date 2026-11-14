@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="same-origin">
+<title>Редактор базы знаний — Русский</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../poster.css">
+<link rel="stylesheet" href="../theory/theory.css">
+<link rel="stylesheet" href="editor.css">
+<script defer src="editor.js"></script>
+</head>
+<body>
+<main class="editor-app">
+<header class="editor-header"><a href="../theory/">← База знаний</a><span>РУССКИЙ / ЛИЧНЫЙ ЧЕРНОВИК</span></header>
+<h1>Редактор базы знаний</h1>
+<p class="editor-intro">Правьте текст прямо на странице, как в Word. Затем скачайте изменения и отправьте файл в наш чат — я перенесу правки в базу сайта.</p>
+<p class="mobile-notice">Для работы с редактором откройте эту страницу на компьютере.</p>
+<div class="editor-desktop">
+<section class="editor-controls" aria-label="Выбор главы и сохранение">
+<div class="chapter-picker"><label for="chapter">Задание</label><select id="chapter" disabled><option value="1">№ 1. Средства связи и части речи</option><option value="2">№ 2. Лексическое значение слова в контексте</option><option value="3">№ 3. Функциональные стили и языковые особенности текста</option><option value="4">№ 4. Орфоэпические нормы и ударение</option><option value="5">№ 5. Паронимы и лексическая сочетаемость</option><option value="6">№ 6. Лексические нормы и речевая избыточность</option><option value="7">№ 7. Образование форм слов</option><option value="8">№ 8. Синтаксические нормы и грамматические ошибки</option><option value="9">№ 9. Гласные и согласные в корне</option><option value="10">№ 10. Приставки, И/Ы, Ъ/Ь</option><option value="11">№ 11. Суффиксы существительных, прилагательных, наречий и глаголов</option><option value="12">№ 12. Личные окончания глаголов и суффиксы причастий</option><option value="13">№ 13. НЕ и НИ с разными частями речи</option><option value="14">№ 14. Слитное, раздельное и дефисное написание</option><option value="15">№ 15. Н и НН в разных частях речи</option><option value="16">№ 16. Однородные члены и сложносочинённое предложение</option><option value="17">№ 17. Обособленные определения, приложения и обстоятельства</option><option value="18">№ 18. Вводные конструкции и обращения</option><option value="19">№ 19. Границы частей сложноподчинённого предложения</option><option value="20">№ 20. Сложные предложения с разными видами связи</option><option value="21">№ 21. Пунктуационный анализ: одно правило в разных предложениях</option><option value="22">№ 22. Изобразительно-выразительные средства</option><option value="23">№ 23. Содержание текста и проверка утверждений</option><option value="24">№ 24. Типы речи и смысловые отношения предложений</option><option value="25">№ 25. Лексические отношения и фразеология</option><option value="26">№ 26. Средства связи предложений в тексте</option><option value="27">№ 27. Сочинение по исходному тексту</option></select></div>
+<button id="download" class="download" type="button" disabled>Скачать изменения <span id="change-count">0</span></button>
+<p id="save-status" role="status" aria-live="polite">Загружаем базу…</p>
+</section>
+<div class="editor-toolbar" role="toolbar" aria-label="Форматирование текста">
+<button type="button" data-command="bold" aria-label="Жирный (Ctrl+B)" title="Жирный (Ctrl+B)"><b>Ж</b></button>
+<button type="button" data-command="italic" aria-label="Курсив (Ctrl+I)" title="Курсив (Ctrl+I)"><i>К</i></button>
+<button type="button" data-command="formatBlock" data-value="p">Текст</button>
+<button type="button" data-command="formatBlock" data-value="h3">Заголовок</button>
+<button type="button" data-command="insertUnorderedList" title="Маркированный список">• Список</button>
+<button type="button" data-command="insertOrderedList" title="Нумерованный список">1. Список</button>
+<button type="button" id="add-table">Таблица</button>
+<button type="button" data-command="undo" aria-label="Отменить" title="Отменить (Ctrl+Z)">↶</button>
+<button type="button" data-command="redo" aria-label="Повторить" title="Повторить">↷</button>
+</div>
+<div class="chapters"><article id="editor" role="textbox" aria-label="Текст выбранной главы" aria-multiline="true" contenteditable="false" spellcheck="true"></article></div>
+<p class="editor-note">Черновик хранится в этом браузере. Скачивайте файл перед очисткой данных или переходом на другой компьютер. Изменения попадут на сайт после обработки файла в чате.</p>
+</div>
+<noscript>Для редактирования включите JavaScript.</noscript>
+</main>
+</body>
+</html>

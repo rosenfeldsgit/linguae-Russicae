@@ -36,7 +36,7 @@
     text.className = 'passage';
     text.id = `exam-passage-${++passageId}`;
     formattedText(text, question.passage);
-    const collapsible = Number(question.task) === 1 || (Number(question.task) >= 23 && Number(question.task) <= 27);
+    const collapsible = (Number(question.task) >= 1 && Number(question.task) <= 3) || (Number(question.task) >= 23 && Number(question.task) <= 27);
     if (collapsible) {
       const button = document.createElement('button');
       button.type = 'button';

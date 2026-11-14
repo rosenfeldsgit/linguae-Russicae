@@ -4,7 +4,7 @@
     "scope": "current_repository_snapshot",
     "official2027FullList": false,
     "managedOverridesIncluded": false,
-    "source": "app.js: stressWords; source comment says FIPI 2026",
+    "source": "cards/task-4.js: original stress-* entries from the FIPI 2026 subset",
     "verification": "Project spellings retained; not a new word-by-word verification against 2027 normative dictionaries"
   },
   "entries": [

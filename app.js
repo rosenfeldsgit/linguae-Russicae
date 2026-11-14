@@ -1,79 +1,9 @@
 'use strict';
 (() => {
- // ФИПИ, Орфоэпический список – 2026. Прописная гласная отмечает ударение.
- const stressWords = `аэропОрты бАнты бОроду бухгАлтеров вероисповЕдание водопровОд газопровОд граждАнство 
-дефИс дешевИзна диспансЕр договорЁнность докумЕнт досУг еретИк жалюзИ 
-знАчимость Иксы каталОг квартАл киломЕтр кОнусов корЫсть крАны 
-кремЕнь кремнЯ лЕкторов лОктя локтЕй лыжнЯ мЕстностей намЕрение 
-нЕдруг недУг некролОг нЕнависть нефтепровОд новостЕй нОгтя ногтЕй 
-Отзыв отзЫв Отрочество партЕр портфЕль придАное призЫв свЁкла 
-сирОты созЫв сосредотОчение срЕдства стАтуя столЯр тамОжня тОрты 
-тУфля цемЕнт цЕнтнер цепОчка шАрфы шофЁр экспЕрт вернА 
-знАчимый красИвее красИвейший кУхонный ловкА мозаИчный оптОвый прозорлИвый 
-прозорлИва слИвовый бралА бралАсь взялА взялАсь влилАсь ворвалАсь 
-воспринЯть воспринялА воссоздалА вручИт гналА гналАсь добралА добралАсь 
-дождалАсь дозвонИтся дозИровать ждалА закУпорить занЯть зАнял занялА 
-зАняли заперлА запломбировАть защемИт звалА звонИт кАшлянуть клАла 
-клЕить крАлась кровоточИть лгалА лилА лилАсь наделИт надорвалАсь 
-назвалАсь накренИтся налилА нарвалА начАть нАчал началА нАчали 
-обзвонИт облегчИть облегчИт облилАсь обнялАсь обогналА ободралА ободрИть 
-ободрИт ободрИться ободрИтся обострИть одолжИть одолжИт озлОбить оклЕить 
-окружИт опОшлить освЕдомиться освЕдомится отбылА отдалА откУпорить отозвалА 
-отозвалАсь перезвонИт перелилА плодоносИть пломбировАть повторИт позвалА позвонИт 
-полилА положИть положИл понЯть понялА послАла прибЫть прИбыл 
-прибылА прИбыли принЯть прИнял принялА прИняли рвалА сверлИт 
-снялА создалА сорвалА убралА углубИть укрепИт чЕрпать щемИт 
-щЁлкать довезЁнный зАгнутый зАнятый занятА зАпертый заселЁнный заселенА 
-кровоточАщий нажИвший налИвший нанЯвшийся начАвший нАчатый низведЁнный облегчЁнный 
-ободрЁнный обострЁнный отключЁнный повторЁнный поделЁнный понЯвший прИнятый принятА 
-приручЁнный прожИвший снятА сОгнутый углублЁнный закУпорив начАв начАвшись 
-отдАв понЯв прибЫв создАв вОвремя дОверху дОнизу дОсуха 
-зАсветло надОлго ненадОлго`.trim().split(/\s+/);
- const stressCards = stressWords.map(form => {
-   const position = form.search(/[АЕЁИОУЫЭЮЯ]/);
-   const word = form.toLowerCase();
-   const context = form === 'Отзыв' ? 'о книге' : form === 'отзЫв' ? 'посла из страны' : '';
-   return { id: 'stress-' + form, task: 4, kind: 'stress', prompt: word,
-     before: word.slice(0, position), after: word.slice(position + 1),
-     spelling: word[position],
-     answer: String(position), context };
- });
- const wordChoiceCards = [
-   {
-     "id": "task1-50641",
-     "task": 1,
-     "kind": "word-choice",
-     "instruction": "Подберите притяжательное местоимение",
-     "before": "Даль изучал жизнь простых людей и хорошо понимал ",
-     "after": " психологию.",
-     "answer": "их",
-     "options": [
-       "их",
-       "его",
-       "свою"
-     ],
-     "explanation": "Психологию чью? Простых людей → их. «Свою» относилось бы к самому Далю."
-   },
-   {
-     "id": "task1-50675",
-     "task": 1,
-     "kind": "word-choice",
-     "instruction": "Подберите подчинительный союз со значением условия",
-     "before": "",
-     "after": " человек высший смысл видит в куске прожаренного мяса, то ему подвиг Гумбольдта покажется вздорным сумасбродством.",
-     "answer": "Если",
-     "options": [
-       "Если",
-       "Хотя",
-       "Поскольку"
-     ],
-     "explanation": "«Если …, то …» — условие и его следствие. «Хотя» выражает уступку, «поскольку» — причину."
-   }
- ];
  const stableId = id => 200000 + [...id].reduce((hash, c) => (Math.imul(hash, 31) + c.codePointAt(0)) >>> 0, 0);
  const managed = window.EGE_MANAGED || {cards:[],disabled:[],tasks:{}};
  const overrides = new Map(managed.cards.map(c => [c.id,c]));
- const staticCards = [...wordChoiceCards, ...(window.EGE_PARONYMS || []), ...(window.EGE_ADAPTED_CARDS || []), ...(window.EGE_COLLECTION_CARDS || []), ...(window.EGE_CARDS || []), ...stressCards, ...(window.EGE_PUNCTUATION || [])];
+ const staticCards = window.EGE_TRAINER_CARDS;
  const staticIds = new Set(staticCards.map(c=>c.id));
  const cards = [...staticCards,...managed.cards.filter(c=>!staticIds.has(c.id))].filter(c => !managed.disabled.includes(c.id)).map(c => overrides.get(c.id) || c).map(card => ({ ...card, displayId: card.displayId || stableId(card.id), maxPrimary: (managed.tasks[card.task] || window.EGE_EXAM_CONFIG.tasks[card.task] || {maxPrimary:1}).maxPrimary }));
  const $=id=>document.getElementById(id);
@@ -120,17 +50,6 @@
    return copies[random(copies.length)];
  }
  function solution(node,c){if(c.kind === 'punctuation'){node.replaceChildren();c.parts.forEach((part,index)=>{node.append(document.createTextNode(part));if(index<c.parts.length-1){if(c.answer.includes(index)){const m=document.createElement('mark');m.textContent=c.mark==='—'?' —':c.mark;node.append(m);}node.append(document.createTextNode(' '));}});return;}node.replaceChildren(document.createTextNode(c.before));const m=document.createElement('mark');m.textContent=c.spelling||c.answer;node.append(m,document.createTextNode(c.after));}
- function hintKey(card) {
-   const text = card.kind === 'punctuation' ? card.parts.join('…')
-     : card.before + (card.spelling || (card.answer === '∅' ? '' : card.answer)) + card.after;
-   return JSON.stringify([card.task, card.kind, String(text).toLowerCase().replace(/ё/g, 'е').replace(/\s+/g, ' ').trim(),
-     card.context || '', card.answer]);
- }
- const sharedHints = new Map();
- for (const card of cards) {
-   const hint = card.explanation || window.EGE_HINTS?.get(card.id);
-   if (hint && hint.trim()) sharedHints.set(hintKey(card), hint);
- }
  function fallbackHint(card) {
    const word = card.before + (card.spelling || (card.answer === '∅' ? '' : card.answer)) + card.after;
    if (/^подч[её]ркивать$/i.test(word)) {
@@ -149,17 +68,22 @@
 
  }
  function addExplanation(item, word, card) {
-   let hint = card.explanation?.trim() || window.EGE_HINTS?.get(card.id)?.trim() || sharedHints.get(hintKey(card));
-   if (card.kind === 'stress' && !hint) {
-     const syllable = (card.before.match(/[аеёиоуыэюя]/g) || []).length + 1;
-     hint = 'Словарное ударение падает на ' + syllable + '-й слог: ' +
-       card.before + card.spelling.toUpperCase() + card.after + '.';
-   }
+   if (card.kind === 'stress') return;
+   let hint = card.explanation;
    if (!hint) hint = fallbackHint(card);
    const note = document.createElement('p');
    note.className = 'rule-note';
    note.id = 'rule-' + card.id + '-' + historySequence;
-   note.textContent = hint;
+   for (const part of hint.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g)) {
+     if (!part.startsWith('*') || !part.endsWith('*') || part.length < 3) {
+       note.append(document.createTextNode(part));
+       continue;
+     }
+     const bold = part.startsWith('**');
+     const emphasis = document.createElement(bold ? 'strong' : 'em');
+     emphasis.textContent = part.slice(bold ? 2 : 1, bold ? -2 : -1);
+     note.append(emphasis);
+   }
    note.hidden = true;
    const toggle = document.createElement('button');
    toggle.type = 'button';
@@ -310,7 +234,7 @@
   correct=wrong=0;$('correct').textContent='0';$('wrong').textContent='0';$('mistake-list').replaceChildren();$('empty').hidden=false;
   for(const b of $('sections').children)b.setAttribute('aria-pressed',String(b.dataset.section===id));
   pool = id === 'all' ? cards : id === 'stress' ? cards.filter(c => c.kind === 'stress') : id === 'punctuation' ? cards.filter(c => c.kind === 'punctuation') : cards.filter(c => c.task === Number(id));
-  if(!pool.length){$('word').textContent='Не удалось загрузить карточки';$('context').textContent='Проверьте, что файл cards.js находится рядом с index.html.';$('skip').hidden=true;return;}
+  if(!pool.length){$('word').textContent='Не удалось загрузить карточки';$('context').textContent='Проверьте, что папка cards находится рядом с index.html.';$('skip').hidden=true;return;}
   if (!rotations.has(id)) rotations.set(id, createRotation(pool));
   rotation = rotations.get(id);
   chooseNext();

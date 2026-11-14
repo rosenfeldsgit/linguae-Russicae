@@ -55,7 +55,7 @@ class AdminFlow(TestCase):
         first.refresh_from_db();self.assertEqual(first.pk,first_id)
 
     def test_public_explanations_are_served(self):
-        for path in ['prefix-explanations.js','audited-explanations.js','exam-explanations.js','reasoned-explanations.js']:
+        for path in ['cards/catalog.js','cards/task-15.js','exam-explanations.js']:
             response=self.client.get('/'+path)
             self.assertEqual(response.status_code,200,path)
             response.close()
@@ -76,7 +76,7 @@ class BookImport(TestCase):
         self.assertEqual(Record.objects.count(),total)
         imported.refresh_from_db();self.assertEqual(imported.explanation,'Учитель отредактировал')
     def test_book_assets_are_public_but_paths_are_bounded(self):
-        for path in ['test/bank-manifest.js','test/bank-loader.js','test/doshchinsky-2027/v36.json','test/doshchinsky-2026/v1.json','collection-cards.js']:
+        for path in ['test/bank-manifest.js','test/bank-loader.js','test/doshchinsky-2027/v36.json','test/doshchinsky-2026/v1.json','cards/task-1.js']:
             response=self.client.get('/'+path);self.assertEqual(response.status_code,200,path);response.close()
         for path in ['test/doshchinsky-2027/v37.json','test/assets/doshchinsky-2027/p300.png','test/assets/doshchinsky-2027/p999.png','test/assets/doshchinsky-2027/../../../server/ege/settings.py']:
             self.assertEqual(self.client.get('/'+path).status_code,404)

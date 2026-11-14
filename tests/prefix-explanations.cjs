@@ -1,15 +1,6 @@
-'use strict';
-const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
-const ctx={window:{}};
-for(const file of ['cards.js','explanations.js','adapted-cards.js'])vm.runInNewContext(fs.readFileSync(file,'utf8'),ctx);
-const all=[...ctx.window.EGE_CARDS,...ctx.window.EGE_ADAPTED_CARDS];
-const tested=c=>c.task===10&&/пр$/.test(c.before||'')&&['е','и'].includes(c.answer);
-const unchanged=all.filter(c=>!tested(c)).map(c=>JSON.stringify(c));
-const answers=all.map(c=>JSON.stringify([c.id,c.answer,c.options,c.context]));
-vm.runInNewContext(fs.readFileSync('prefix-explanations.js','utf8'),ctx);
-assert.deepEqual(all.map(c=>JSON.stringify([c.id,c.answer,c.options,c.context])),answers,'Answers, choices, IDs and contexts must stay unchanged');
-assert.deepEqual(all.filter(c=>!tested(c)).map(c=>JSON.stringify(c)),unchanged,'Other spelling rules must stay unchanged');
-const targets=all.filter(tested);
+const assert = require('node:assert/strict');
+const all = require('./load-cards.js');
+const targets=all.filter(c=>c.task===10 && /пр$/.test(c.before) && ['е','и'].includes(c.answer));
 assert(targets.length>=139);
 for(const c of targets){assert(c.explanation&&c.explanation.length>20,c.id);assert(!/Написание зависит от смысла|Выбор приставки зависит|очень или пере/.test(c.explanation),c.id);}
 const hint=word=>targets.find(c=>c.before+c.answer+c.after===word).explanation;

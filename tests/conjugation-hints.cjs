@@ -1,16 +1,6 @@
-'use strict';
-const fs = require('node:fs'), vm = require('node:vm'), assert = require('node:assert/strict');
-const ctx = {window: {}};
-for (const file of ['cards.js', 'explanations.js', 'punctuation.js', 'adapted-cards.js', 'collection-cards.js']) {
-  vm.runInNewContext(fs.readFileSync(file, 'utf8'), ctx);
-}
-const cards = [...ctx.window.EGE_CARDS, ...ctx.window.EGE_ADAPTED_CARDS, ...ctx.window.EGE_COLLECTION_CARDS];
-const original = JSON.stringify(cards.map(c => [c.id, c.answer, c.options, c.before, c.after]));
-for (const file of ['prefix-explanations.js', 'audited-explanations.js', 'reasoned-explanations.js', 'collection-rule-hints.js']) {
-  vm.runInNewContext(fs.readFileSync(file, 'utf8'), ctx);
-}
-assert.equal(JSON.stringify(cards.map(c => [c.id, c.answer, c.options, c.before, c.after])), original);
-const hint = c => c.explanation || ctx.window.EGE_HINTS.get(c.id) || '';
+const assert = require('node:assert/strict');
+const cards = require('./load-cards.js');
+const hint = c => c.explanation || '';
 const word = c => {
   const left = (c.before || '').replace(/\u0301/g, '').match(/[а-яё]+$/i)?.[0] || '';
   const right = (c.after || '').replace(/\u0301/g, '').match(/^[а-яё]+/i)?.[0] || '';

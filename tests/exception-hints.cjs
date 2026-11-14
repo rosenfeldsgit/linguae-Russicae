@@ -1,16 +1,7 @@
-'use strict';
-const fs = require('node:fs'), vm = require('node:vm'), assert = require('node:assert/strict');
-const context = {window: {}};
-const sources = ['cards.js', 'explanations.js', 'punctuation.js', 'adapted-cards.js', 'collection-cards.js'];
-for (const file of sources) vm.runInNewContext(fs.readFileSync(file, 'utf8'), context);
-const cards = [...context.window.EGE_CARDS, ...context.window.EGE_ADAPTED_CARDS, ...context.window.EGE_COLLECTION_CARDS];
-const answers = JSON.stringify(cards.map(c => [c.id, c.answer, c.spelling, c.options]));
-for (const file of ['prefix-explanations.js', 'audited-explanations.js', 'reasoned-explanations.js', 'collection-rule-hints.js']) {
-  vm.runInNewContext(fs.readFileSync(file, 'utf8'), context);
-}
-assert.equal(JSON.stringify(cards.map(c => [c.id, c.answer, c.spelling, c.options])), answers);
-const hint = c => c.explanation || context.window.EGE_HINTS.get(c.id) || '';
-const word = c => c.spelling || c.before + c.answer + c.after;
+const assert = require('node:assert/strict');
+const cards = require('./load-cards.js');
+const hint = c => c.explanation || '';
+const word = c => (c.kind === 'n_count' ? c.before + c.spelling + c.after : c.spelling || c.before + c.answer + c.after);
 const matching = (task, text) => cards.filter(c => c.task === task && word(c) === text);
 for (const [task, text, expected] of [
   [14, 'восточно-европейской', /географических названиях/],

@@ -168,7 +168,27 @@ for (const question of questions) {
   });
 }
 if (cards.length + excluded.length !== 180) throw Error(`Count ${cards.length}/${excluded.length}`);
-fs.writeFileSync('paronyms.js', "'use strict';\n// Contexts: existing Doshchinsky 2027 exam bank; groups: supplied paronym list.\nwindow.EGE_PARONYMS = " + JSON.stringify(cards,null,2) + ';\n');
+// Preserve local IDs and the other exercises in the task 5 bank.
+const bankFile = 'cards/task-5.js';
+let previous;
+require('node:vm').runInNewContext(fs.readFileSync(bankFile, 'utf8'), {
+  registerCards(task, entries) { previous = entries; }
+});
+const byId = new Map(cards.map(c => [c.id, c]));
+let nextId = Math.max(...previous.map(row => row.id)) + 1;
+function entry(c, id) {
+  const {before, after, options, answer, explanation, id: legacyId, task, ...metadata} = c;
+  return {id, word: before + '___' + after, answer, choices: options, explanation, legacyId, ...metadata};
+}
+const bankRows = previous.flatMap(row => {
+  if (!row.legacyId?.startsWith('paronym-')) return [row];
+  const card = byId.get(row.legacyId);
+  if (!card) return [];
+  byId.delete(row.legacyId);
+  return [entry(card, row.id)];
+});
+for (const card of byId.values()) bankRows.push(entry(card, nextId++));
+fs.writeFileSync(bankFile, 'registerCards(5, ' + JSON.stringify(bankRows, null, 2) + ');\n');
 fs.mkdirSync('data',{recursive:true});
 fs.writeFileSync('data/paronyms-excluded.json',JSON.stringify(excluded,null,2)+'\n');
 console.log(`Built ${cards.length} cards; excluded ${excluded.length} contexts.`);

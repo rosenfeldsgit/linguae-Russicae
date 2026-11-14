@@ -47,7 +47,7 @@ class Record(models.Model):
     def __str__(self):return f'#{self.pk or "новый"} — {self.title}'
     def clean(self):
         errors={}
-        if self.active and not (self.explanation.strip() or self.rule_id):errors['explanation']='Добавьте свое пояснение или выберите правило.'
+        if self.active and not (self.category=='card' and self.kind=='stress') and not (self.explanation.strip() or self.rule_id):errors['explanation']='Добавьте свое пояснение или выберите правило.'
         if self.category=='exam':
             if not isinstance(self.answers,list) or not self.answers or not all(isinstance(v,str) and v.strip() for v in self.answers):errors['answers']='Нужен хотя бы один непустой ответ.'
             elif self.answer_type=='matching' and any(len(a)!=5 or not a.isdigit() or '0' in a for a in self.answers):errors['answers']='Нужно ровно пять цифр от 1 до 9.'

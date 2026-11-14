@@ -1,9 +1,6 @@
-const assert = require('node:assert/strict');
 const fs = require('node:fs');
-const vm = require('node:vm');
-const ctx = {window:{}};
-vm.runInNewContext(fs.readFileSync('paronyms.js','utf8'),ctx);
-const cards = ctx.window.EGE_PARONYMS;
+const assert = require('node:assert/strict');
+const cards = require('./load-cards.js').filter(c => c.id.startsWith('paronym-'));
 const sources = JSON.parse(fs.readFileSync('data/paronyms-source.json','utf8'));
 const excluded = JSON.parse(fs.readFileSync('data/paronyms-excluded.json','utf8'));
 const ids = new Set();

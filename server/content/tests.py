@@ -56,7 +56,7 @@ class AdminFlow(TestCase):
 
     def test_feed_is_a_separate_section(self):
         self.assertRedirects(self.client.get('/feed'), '/feed/', fetch_redirect_response=False)
-        self.assertRedirects(self.client.get('/test/feed.html'), '../feed/', fetch_redirect_response=False)
+        self.assertRedirects(self.client.get('/test/feed.html'), '/feed/', fetch_redirect_response=False)
         for path in ['feed/', 'feed/feed.js', 'feed/feed.css']:
             response = self.client.get('/' + path)
             self.assertEqual(response.status_code, 200, path)

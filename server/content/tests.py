@@ -54,6 +54,14 @@ class AdminFlow(TestCase):
         self.assertEqual(Card.objects.values('pk').distinct().count(),2)
         first.refresh_from_db();self.assertEqual(first.pk,first_id)
 
+    def test_feed_is_a_separate_section(self):
+        self.assertRedirects(self.client.get('/feed'), '/feed/', fetch_redirect_response=False)
+        self.assertRedirects(self.client.get('/test/feed.html'), '/feed/', fetch_redirect_response=False)
+        for path in ['feed/', 'feed/feed.js', 'feed/feed.css']:
+            response = self.client.get('/' + path)
+            self.assertEqual(response.status_code, 200, path)
+            response.close()
+
     def test_public_explanations_are_served(self):
         for path in ['cards/catalog.js','cards/task-15.js','exam-explanations.js']:
             response=self.client.get('/'+path)

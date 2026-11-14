@@ -26,22 +26,32 @@
     const input = node.querySelector('input');
     input.inputMode = q.answerType === 'word' ? 'text' : 'numeric';
     const feedback = node.querySelector('.result');
-    const state = attempts.get(q.id) || {value: '', feedback: ''};
+    const state = attempts.get(q.id) || {value: '', points: null};
+    const showResult = () => {
+      feedback.hidden = state.points === null;
+      input.removeAttribute('aria-invalid');
+      node.removeAttribute('data-result');
+      if (state.points === null) return;
+      const outcome = state.points === q.maxPrimary ? 'correct' : state.points ? 'partial' : 'incorrect';
+      node.dataset.result = outcome;
+      feedback.querySelector('.result-icon').textContent = {correct: '✓', partial: '◐', incorrect: '×'}[outcome];
+      feedback.querySelector('.result-title').textContent = {correct: 'Всё верно', partial: 'Частично верно', incorrect: 'Попробуйте ещё раз'}[outcome];
+      feedback.querySelector('.result-points').textContent = 'Баллы: ' + state.points + ' из ' + q.maxPrimary;
+      if (outcome === 'incorrect') input.setAttribute('aria-invalid', 'true');
+    };
     input.value = state.value;
-    feedback.textContent = state.feedback;
+    showResult();
     input.addEventListener('input', () => {
       state.value = input.value;
-      state.feedback = '';
-      feedback.textContent = '';
+      state.points = null;
+      showResult();
       attempts.set(q.id, state);
     });
     node.querySelector('form').addEventListener('submit', event => {
       event.preventDefault();
-      const points = score(q, input.value);
-      const verdict = points === q.maxPrimary ? 'Верно!' : points ? 'Частично верно.' : 'Пока неверно.';
-      state.feedback = verdict + ' Баллы: ' + points + ' из ' + q.maxPrimary + '.';
+      state.points = score(q, input.value);
       state.value = input.value;
-      feedback.textContent = state.feedback;
+      showResult();
       attempts.set(q.id, state);
     });
     return node;

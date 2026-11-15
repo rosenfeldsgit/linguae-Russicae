@@ -10,8 +10,8 @@
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../poster.css">
 <link rel="stylesheet" href="../theory/theory.css">
-<link rel="stylesheet" href="editor.css">
-<script defer src="editor.js"></script>
+<link rel="stylesheet" href="editor.css?v=tables2">
+<script defer src="editor.js?v=tables2"></script>
 </head>
 <body>
 <main class="editor-app">
@@ -35,6 +35,13 @@
 <button type="button" id="add-table">Таблица</button>
 <button type="button" data-command="undo" aria-label="Отменить" title="Отменить (Ctrl+Z)">↶</button>
 <button type="button" data-command="redo" aria-label="Повторить" title="Повторить">↷</button>
+<div id="table-tools" class="table-tools" role="group" aria-label="Настройки таблицы">
+<span id="table-hint">Нажмите на ячейку, чтобы изменить таблицу.</span>
+<label>Ширина столбца, px <input id="column-width" type="number" min="48" max="2000" step="1" disabled></label>
+<label>Высота строки, px <input id="row-height" type="number" min="28" max="2000" step="1" disabled></label>
+<button id="resize-table" type="button" disabled>Применить размеры</button>
+<button id="delete-table" type="button" disabled>Удалить таблицу</button>
+</div>
 </div>
 <div class="chapters"><article id="editor" role="textbox" aria-label="Текст выбранной главы" aria-multiline="true" contenteditable="false" spellcheck="true"></article></div>
 <p class="editor-note">Черновик хранится в этом браузере. Скачивайте файл перед очисткой данных или переходом на другой компьютер. Изменения попадут на сайт после обработки файла в чате.</p>

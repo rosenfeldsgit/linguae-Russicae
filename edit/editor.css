@@ -27,6 +27,18 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-
 .chapters #editor h2{font-size:34px;line-height:1.2;margin:0 0 32px}
 #editor li{margin:.4rem 0}
 #editor table{width:100%;border-collapse:collapse}
+#editor table:has(>colgroup){table-layout:fixed}
+#editor th,#editor td{overflow-wrap:anywhere;position:relative}
+#editor [data-selected-cell]{outline:2px solid var(--blue);outline-offset:-2px}
+.table-tools{display:flex;align-items:end;gap:8px;flex-wrap:wrap;flex-basis:100%;border-top:1px solid var(--line);padding-top:10px}
+.table-tools>span{flex-basis:100%;font-size:12px;color:var(--muted)}
+.table-tools label{display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--muted)}
+.table-tools input{width:136px;min-height:36px;border:1px solid var(--line);background:var(--paper);padding:6px 10px;color:var(--ink);font:14px Golos,sans-serif}
+.table-tools button{min-height:36px;padding:6px 10px}
+#delete-table{color:var(--red)}
+.editor-app.table-resizing,.editor-app.table-resizing *{user-select:none!important;cursor:inherit!important}
+#editor.resize-column{cursor:col-resize}
+#editor.resize-row{cursor:row-resize}
 #editor a{cursor:text}
 #editor .rule{scroll-margin-top:85px}
 .editor-note{font-size:13px;line-height:1.6;color:var(--muted);max-width:780px;margin:18px 0}

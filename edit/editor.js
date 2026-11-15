@@ -1,6 +1,7 @@
 'use strict';
 
 (() => {
+  const {fitWidths, resizeWidths, percentages} = window.RussianTableLayout;
   const STORAGE_KEY = 'russian-theory-editor-v1';
   const editor = document.getElementById('editor');
   const picker = document.getElementById('chapter');
@@ -43,7 +44,9 @@
         if (['TABLE', 'COL', 'TR', 'TH', 'TD'].includes(node.tagName)) {
           for (const property of ['width', 'height']) {
             const value = node.style[property];
-            if (/^\d+(?:\.\d+)?px$/.test(value) && parseFloat(value) > 0 && parseFloat(value) <= (node.tagName === 'TABLE' ? 40000 : 2000)) dimensions.push(property + ': ' + value);
+            const pixels = /^\d+(?:\.\d+)?px$/.test(value) && parseFloat(value) > 0 && parseFloat(value) <= (node.tagName === 'TABLE' ? 40000 : 2000);
+            const percent = property === 'width' && node.tagName === 'COL' && /^\d+(?:\.\d+)?%$/.test(value) && parseFloat(value) > 0 && parseFloat(value) <= 100;
+            if (pixels || percent) dimensions.push(property + ': ' + value);
           }
           if (node.tagName === 'TABLE' && node.style.tableLayout === 'fixed') dimensions.push('table-layout: fixed');
         }
@@ -59,6 +62,15 @@
       }
     }
     scrub(doc.body);
+    // Migrate old pixel-wide drafts without losing their column proportions.
+    for (const table of doc.body.querySelectorAll('table')) {
+      table.style.width = '100%';
+      table.style.tableLayout = 'fixed';
+      const cols = Array.from(table.querySelectorAll(':scope > colgroup > col'));
+      const ratios = percentages(cols.map(col => parseFloat(col.style.width) || 1));
+      cols.forEach((col, i) => { col.style.width = ratios[i] + '%'; });
+      for (const row of table.rows) for (const cell of row.cells) cell.style.removeProperty('width');
+    }
     return doc.body.innerHTML;
   }
 
@@ -181,13 +193,19 @@
       }
     }
     const total = Math.max(1, ...grid.map(row => row.length));
-    const widths = Array(total).fill(table.getBoundingClientRect().width / total);
+    const budget = Math.max(1, table.getBoundingClientRect().width);
+    const widths = Array(total).fill(budget / total);
     for (const [cell, column] of positions) {
       if (cell.colSpan === 1) widths[column] = cell.getBoundingClientRect().width;
     }
     const cols = Array.from(table.querySelectorAll(':scope > colgroup > col'));
-    if (cols.length === total) cols.forEach((col, i) => { if (parseFloat(col.style.width)) widths[i] = parseFloat(col.style.width); });
-    return {positions, widths: widths.map(width => Math.max(48, Math.min(2000, Math.round(width))))};
+    if (cols.length === total) cols.forEach((col, i) => {
+      const size = parseFloat(col.style.width);
+      if (size) widths[i] = col.style.width.endsWith('%') ? size * budget / 100 : size;
+    });
+    const minimum = Math.min(48, budget / (total * 2));
+    return {positions, widths: fitWidths(widths, budget), budget,
+      minimum, maximum: budget - minimum * (total - 1)};
   }
 
   function selectCell(cell) {
@@ -195,12 +213,14 @@
     selectedCell = cell && editor.contains(cell) ? cell : null;
     for (const control of tableTools.querySelectorAll('input,button')) control.disabled = !selectedCell;
     document.getElementById('table-hint').textContent = selectedCell
-      ? 'Тяните правую границу ячейки для ширины, нижнюю — для высоты. Ctrl+Z отменяет изменение.'
+      ? 'Общая ширина фиксирована: столбцы делят ширину страницы. Тяните границы или задайте размеры. Ctrl+Z — отмена.'
       : 'Нажмите на ячейку, чтобы изменить таблицу.';
     if (!selectedCell) { columnWidth.value = ''; rowHeight.value = ''; return; }
     selectedCell.dataset.selectedCell = '';
-    const {positions, widths} = tableGeometry(selectedCell.closest('table'));
-    columnWidth.value = widths[positions.get(selectedCell)];
+    const {positions, widths, minimum, maximum} = tableGeometry(selectedCell.closest('table'));
+    columnWidth.min = Math.ceil(minimum);
+    columnWidth.max = Math.floor(maximum);
+    columnWidth.value = Math.max(Number(columnWidth.min), Math.min(Number(columnWidth.max), Math.round(widths[positions.get(selectedCell)])));
     rowHeight.value = Math.round(selectedCell.parentElement.getBoundingClientRect().height);
   }
 
@@ -235,21 +255,22 @@
 
   function sizedTable(position, width, height) {
     const {table} = position;
-    const {positions, widths} = tableGeometry(table);
+    const geometry = tableGeometry(table);
+    const {positions, budget} = geometry;
     const column = positions.get(table.rows[position.row].cells[position.cell]);
-    if (width !== null) widths[column] = width;
+    const widths = width !== null ? resizeWidths(position.widths || geometry.widths, column, width, budget) : geometry.widths;
     const clone = table.cloneNode(true);
     for (const marker of clone.querySelectorAll('[data-selected-cell]')) marker.removeAttribute('data-selected-cell');
     if (width !== null) {
       for (const group of clone.querySelectorAll(':scope > colgroup, :scope > col')) group.remove();
       const group = document.createElement('colgroup');
-      for (const size of widths) {
+      for (const size of percentages(widths)) {
         const col = document.createElement('col');
-        col.style.width = size + 'px';
+        col.style.width = size + '%';
         group.append(col);
       }
       clone.prepend(group);
-      clone.style.width = widths.reduce((sum, value) => sum + value, 0) + 'px';
+      clone.style.width = '100%';
       clone.style.tableLayout = 'fixed';
       for (const row of clone.rows) for (const cell of row.cells) cell.style.removeProperty('width');
     }
@@ -303,14 +324,15 @@
     selectCell(edge.cell);
     const position = rememberTable();
     resizing = {...position, axis: edge.axis, x: event.clientX, y: event.clientY,
-      original: cleanHTML(position.table.outerHTML), width: Number(columnWidth.value), height: Number(rowHeight.value)};
+      original: cleanHTML(position.table.outerHTML), width: Number(columnWidth.value), height: Number(rowHeight.value),
+      widths: tableGeometry(position.table).widths, minimum: Number(columnWidth.min), maximum: Number(columnWidth.max)};
     document.querySelector('.editor-app').classList.add('table-resizing');
     editor.setPointerCapture(event.pointerId);
   });
   editor.addEventListener('pointermove', event => {
     if (!resizing) return;
     const column = resizing.axis === 'column';
-    const size = Math.max(column ? 48 : 28, Math.min(2000, Math.round(column ? resizing.width + event.clientX - resizing.x : resizing.height + event.clientY - resizing.y)));
+    const size = Math.max(column ? resizing.minimum : 28, Math.min(column ? resizing.maximum : 2000, Math.round(column ? resizing.width + event.clientX - resizing.x : resizing.height + event.clientY - resizing.y)));
     const preview = sizedTable(resizing, column ? size : null, column ? null : size);
     resizing.size = size;
     // Preview the geometry on the existing node, keeping the original for undo.

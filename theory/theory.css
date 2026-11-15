@@ -13,7 +13,9 @@
 .rule h4 a {text-decoration:none}
 .rule p {margin:.6rem 0}
 .rule .exception {background:var(--lime);padding:.65rem .85rem}
-.table-wrap {overflow:auto}
+.chapters .table-wrap {width:100%;max-width:52rem;min-width:0;margin-inline:0;overflow:visible}
+.chapters table {width:100%!important;max-width:52rem!important;min-width:0!important;table-layout:fixed!important}
+.chapters table th,.chapters table td {min-width:0;overflow-wrap:anywhere;word-break:normal;white-space:normal}
 .table-wrap table {border-collapse:collapse;width:100%;background:var(--paper);text-align:left}
 th,td {padding:.5rem;border:1px solid var(--line);vertical-align:top}
 .dictionary {border-block:1px solid var(--ink);padding:.9rem 0;margin:2rem 0}

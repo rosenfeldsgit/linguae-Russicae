@@ -26,7 +26,7 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-
 #editor:focus{box-shadow:inset 3px 0 var(--blue)}
 .chapters #editor h2{font-size:34px;line-height:1.2;margin:0 0 32px}
 #editor li{margin:.4rem 0}
-#editor table{width:100%;border-collapse:collapse}
+#editor table{width:100%;max-width:52rem;border-collapse:collapse}
 #editor table:has(>colgroup){table-layout:fixed}
 #editor th,#editor td{overflow-wrap:anywhere;position:relative}
 #editor [data-selected-cell]{outline:2px solid var(--blue);outline-offset:-2px}

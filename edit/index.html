@@ -9,10 +9,11 @@
 <title>Редактор базы знаний — Русский</title>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../poster.css">
-<link rel="stylesheet" href="../theory/theory.css?v=tables3">
-<link rel="stylesheet" href="editor.css?v=tables3">
-<script defer src="table-layout.js?v=tables3"></script>
-<script defer src="editor.js?v=tables3"></script>
+<link rel="stylesheet" href="../theory/theory.css?v=tables4">
+<link rel="stylesheet" href="editor.css?v=tables4">
+<script defer src="table-layout.js?v=tables4"></script>
+<script defer src="table-model.js?v=tables4"></script>
+<script defer src="editor.js?v=tables4"></script>
 </head>
 <body>
 <main class="editor-app">
@@ -36,16 +37,24 @@
 <button type="button" id="add-table">Таблица</button>
 <button type="button" data-command="undo" aria-label="Отменить" title="Отменить (Ctrl+Z)">↶</button>
 <button type="button" data-command="redo" aria-label="Повторить" title="Повторить">↷</button>
-<div id="table-tools" class="table-tools" role="group" aria-label="Настройки таблицы">
-<span id="table-hint">Нажмите на ячейку, чтобы изменить таблицу.</span>
-<label>Ширина столбца, px <input id="column-width" type="number" min="48" max="2000" step="1" disabled></label>
-<label>Высота строки, px <input id="row-height" type="number" min="28" max="2000" step="1" disabled></label>
-<button id="resize-table" type="button" disabled>Применить размеры</button>
-<button id="delete-table" type="button" disabled>Удалить таблицу</button>
 </div>
+<section id="table-tools" class="table-tools" role="toolbar" aria-label="Работа с таблицей" hidden>
+<div class="table-tools-heading"><strong>Таблица</strong><span id="table-selection-status"></span><button type="button" id="close-table-tools" aria-label="Закрыть настройки таблицы" title="Закрыть (Esc)">×</button></div>
+<div class="table-actions" role="group" aria-label="Ячейки">
+<button type="button" data-table-action="select" aria-pressed="false">Выделить ячейки</button>
+<button type="button" data-table-action="merge" disabled>Объединить</button>
+<button type="button" data-table-action="split" disabled>Разделить</button>
 </div>
+<div class="table-actions" role="group" aria-label="Добавление строк и столбцов">
+<button type="button" data-table-action="row-before">Строка сверху</button>
+<button type="button" data-table-action="row-after">Строка снизу</button>
+<button type="button" data-table-action="column-before">Столбец слева</button>
+<button type="button" data-table-action="column-after">Столбец справа</button>
+</div>
+<div class="table-tools-bottom"><span id="table-hint">Выделите ячейки мышью или с помощью Shift + щелчок.</span><button id="delete-table" data-table-action="delete" type="button">Удалить таблицу</button></div>
+</section>
 <div class="chapters"><article id="editor" role="textbox" aria-label="Текст выбранной главы" aria-multiline="true" contenteditable="false" spellcheck="true"></article></div>
-<p class="editor-note">Ширина таблиц — по текстовому блоку, максимум 832 px; на телефоне таблицы сужаются вместе со страницей. Черновик хранится в этом браузере. Скачивайте файл перед очисткой данных или переходом на другой компьютер. Изменения попадут на сайт после обработки файла в чате.</p>
+<p class="editor-note">Щёлкните по таблице — появятся её инструменты. Enter в последней строке добавляет новую; Shift+Enter переносит текст внутри ячейки. Черновик хранится в этом браузере. Скачивайте файл перед очисткой данных или переходом на другой компьютер. Изменения попадут на сайт после обработки файла в чате.</p>
 </div>
 <noscript>Для редактирования включите JavaScript.</noscript>
 </main>

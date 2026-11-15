@@ -2,6 +2,7 @@
 
 (() => {
   const {fitWidths, resizeWidths, percentages} = window.RussianTableLayout;
+  const Table = window.RussianTableModel;
   const STORAGE_KEY = 'russian-theory-editor-v1';
   const editor = document.getElementById('editor');
   const picker = document.getElementById('chapter');
@@ -10,9 +11,13 @@
   const count = document.getElementById('change-count');
   const toolbar = document.querySelector('.editor-toolbar');
   const tableTools = document.getElementById('table-tools');
-  const columnWidth = document.getElementById('column-width');
-  const rowHeight = document.getElementById('row-height');
   let selectedCell = null;
+  let selectedCells = [];
+  let selectionAnchor = null;
+  let selectionMode = false;
+  let customTableSelection = false;
+  let skipTableClick = false;
+  let popupFrame = null;
   let resizing = null;
   let chapters = new Map();
   let originals = new Map();
@@ -55,7 +60,7 @@
           const validID = name === 'id' && /^[RS]\d{2}-\d{2}$/.test(value);
           const validClass = name === 'class' && ['rule', 'exception', 'table-wrap', 'dictionary', 'words'].includes(value);
           const validLink = node.tagName === 'A' && name === 'href' && /^(https:\/\/|#[A-Za-z0-9-]+)/.test(value);
-          const validSpan = ['TH', 'TD'].includes(node.tagName) && ['colspan', 'rowspan'].includes(name) && /^[1-9]\d?$/.test(value);
+          const validSpan = ['TH', 'TD'].includes(node.tagName) && ['colspan', 'rowspan'].includes(name) && /^[1-9]\d{0,2}$/.test(value);
           if (!(validID || validClass || validLink || validSpan)) node.removeAttribute(name);
         }
         if (dimensions.length) node.setAttribute('style', dimensions.join('; ') + ';');
@@ -208,20 +213,62 @@
       minimum, maximum: budget - minimum * (total - 1)};
   }
 
-  function selectCell(cell) {
-    for (const marker of editor.querySelectorAll('[data-selected-cell]')) marker.removeAttribute('data-selected-cell');
+  function readTable(table) {
+    return Table.fromRows(Array.from(table.rows, row => Array.from(row.cells, cell => ({
+      element: cell, html: cell.innerHTML, tag: cell.tagName, style: cell.getAttribute('style') || '',
+      rowSpan: cell.rowSpan, colSpan: cell.colSpan,
+    }))), Array.from(table.rows, row => row.getAttribute('style') || ''));
+  }
+
+  function positionTableTools() {
+    if (!selectedCell?.isConnected || resizing) { tableTools.hidden = true; return; }
+    const rect = selectedCell.closest('table').getBoundingClientRect();
+    const toolbarBottom = Math.max(0, toolbar.getBoundingClientRect().bottom);
+    if (rect.bottom < toolbarBottom || rect.top > window.innerHeight) { tableTools.hidden = true; return; }
+    tableTools.hidden = false;
+    const popup = tableTools.getBoundingClientRect();
+    const cell = selectedCell.getBoundingClientRect();
+    const anchor = rect.top >= toolbarBottom ? rect.top : cell.top;
+    let top = anchor - popup.height - 10;
+    if (top < toolbarBottom + 8) top = cell.bottom + 10;
+    top = Math.max(toolbarBottom + 8, Math.min(top, window.innerHeight - popup.height - 12));
+    tableTools.style.top = top + 'px';
+    tableTools.style.left = Math.max(12, Math.min(rect.left, window.innerWidth - popup.width - 12)) + 'px';
+  }
+  function scheduleTableTools() {
+    if (popupFrame !== null) return;
+    popupFrame = requestAnimationFrame(() => { popupFrame = null; positionTableTools(); });
+  }
+  window.addEventListener('scroll', scheduleTableTools, true);
+  window.addEventListener('resize', scheduleTableTools);
+
+  function selectCell(cell, end = cell) {
+    for (const marker of editor.querySelectorAll('[data-selected-cell],[data-multi-selected]')) {
+      marker.removeAttribute('data-selected-cell'); marker.removeAttribute('data-multi-selected');
+    }
     selectedCell = cell && editor.contains(cell) ? cell : null;
-    for (const control of tableTools.querySelectorAll('input,button')) control.disabled = !selectedCell;
-    document.getElementById('table-hint').textContent = selectedCell
-      ? 'Общая ширина фиксирована: столбцы делят ширину страницы. Тяните границы или задайте размеры. Ctrl+Z — отмена.'
-      : 'Нажмите на ячейку, чтобы изменить таблицу.';
-    if (!selectedCell) { columnWidth.value = ''; rowHeight.value = ''; return; }
-    selectedCell.dataset.selectedCell = '';
-    const {positions, widths, minimum, maximum} = tableGeometry(selectedCell.closest('table'));
-    columnWidth.min = Math.ceil(minimum);
-    columnWidth.max = Math.floor(maximum);
-    columnWidth.value = Math.max(Number(columnWidth.min), Math.min(Number(columnWidth.max), Math.round(widths[positions.get(selectedCell)])));
-    rowHeight.value = Math.round(selectedCell.parentElement.getBoundingClientRect().height);
+    if (!selectedCell) {
+      selectedCells = []; selectionAnchor = null; selectionMode = false; customTableSelection = false; tableTools.hidden = true; return;
+    }
+    const table = selectedCell.closest('table');
+    const model = readTable(table);
+    const first = model.cells.find(record => record.element === cell);
+    const last = model.cells.find(record => record.element === end) || first;
+    const area = Table.rectangle(model, first.id, last.id);
+    selectedCells = model.cells.filter(record => area.ids.includes(record.id)).map(record => record.element).filter(Boolean);
+    for (const selected of selectedCells) {
+      selected.dataset.selectedCell = '';
+      if (selectedCells.length > 1) selected.dataset.multiSelected = '';
+    }
+    tableTools.querySelector('[data-table-action="merge"]').disabled = selectedCells.length < 2;
+    tableTools.querySelector('[data-table-action="split"]').disabled = selectedCells.length !== 1 || cell.rowSpan === 1 && cell.colSpan === 1;
+    tableTools.querySelector('[data-table-action="select"]').setAttribute('aria-pressed', String(selectionMode));
+    document.getElementById('table-selection-status').textContent = 'Выбрано ячеек: ' + selectedCells.length;
+    document.getElementById('table-hint').textContent = selectionMode
+      ? 'Нажмите первую и последнюю ячейку нужного прямоугольника, затем «Объединить».'
+      : 'Для объединения выделите ячейки мышью или с помощью Shift + щелчок. Размеры меняются за границы.';
+    positionTableTools();
+    scheduleTableTools();
   }
 
   function rememberTable() {
@@ -248,7 +295,11 @@
       range.collapse(true);
       selection.removeAllRanges();
       selection.addRange(range);
+      cell.scrollIntoView({block: 'nearest'});
     }
+    selectionMode = false;
+    customTableSelection = false;
+    selectionAnchor = cell || null;
     selectCell(cell || null);
     saveActive();
   }
@@ -257,7 +308,7 @@
     const {table} = position;
     const geometry = tableGeometry(table);
     const {positions, budget} = geometry;
-    const column = positions.get(table.rows[position.row].cells[position.cell]);
+    const column = position.resizeColumn ?? positions.get(table.rows[position.row].cells[position.cell]);
     const widths = width !== null ? resizeWidths(position.widths || geometry.widths, column, width, budget) : geometry.widths;
     const clone = table.cloneNode(true);
     for (const marker of clone.querySelectorAll('[data-selected-cell]')) marker.removeAttribute('data-selected-cell');
@@ -274,32 +325,99 @@
       clone.style.tableLayout = 'fixed';
       for (const row of clone.rows) for (const cell of row.cells) cell.style.removeProperty('width');
     }
-    if (height !== null) clone.rows[position.row].style.height = height + 'px';
+    if (height !== null) clone.rows[position.resizeRow ?? position.row].style.height = height + 'px';
     return cleanHTML(clone.outerHTML);
   }
 
+  function renderTable(model, source, focusId, widths) {
+    const clone = source.cloneNode(true);
+    for (const child of Array.from(clone.children)) child.remove();
+    const cols = document.createElement('colgroup');
+    for (const width of percentages(widths)) {
+      const col = document.createElement('col'); col.style.width = width + '%'; cols.append(col);
+    }
+    clone.append(cols);
+    const body = document.createElement('tbody');
+    let focus;
+    for (let r = 0; r < model.rows; r++) {
+      const row = document.createElement('tr');
+      if (model.rowStyles[r]) row.setAttribute('style', model.rowStyles[r]);
+      const records = model.cells.filter(record => record.row === r).sort((a, b) => a.col - b.col);
+      for (const [c, record] of records.entries()) {
+        const cell = document.createElement(record.tag === 'TH' ? 'th' : 'td');
+        cell.innerHTML = record.html;
+        if (record.style) cell.setAttribute('style', record.style);
+        if (record.rowSpan > 1) cell.rowSpan = record.rowSpan;
+        if (record.colSpan > 1) cell.colSpan = record.colSpan;
+        row.append(cell);
+        if (record.id === focusId) focus = {row: r, cell: c};
+      }
+      body.append(row);
+    }
+    clone.append(body);
+    return {html: cleanHTML(clone.outerHTML), focus};
+  }
+
+  function changeTable(action, insertAt) {
+    const position = rememberTable();
+    if (!position) return;
+    const {table} = position;
+    if (action === 'delete') {
+      const wrapper = table.parentElement;
+      const target = wrapper.matches('.table-wrap') && wrapper.children.length === 1 ? wrapper : table;
+      replaceTable(target, '<p><br></p>', null);
+      return;
+    }
+    const model = readTable(table);
+    const current = model.cells.find(record => record.element === selectedCell);
+    let result, focusId;
+    const widths = tableGeometry(table).widths;
+    try {
+      if (action.startsWith('row-')) {
+        const at = insertAt ?? (action === 'row-before' ? current.row : current.row + current.rowSpan);
+        result = Table.insertRow(model, at);
+        focusId = Table.grid(result)[at][current.col].id;
+      } else if (action.startsWith('column-')) {
+        const at = action === 'column-before' ? current.col : current.col + current.colSpan;
+        result = Table.insertColumn(model, at);
+        focusId = Table.grid(result)[current.row][at].id;
+        widths.splice(at, 0, widths.reduce((sum, value) => sum + value, 0) / widths.length);
+      } else if (action === 'merge') {
+        if (selectedCells.length < 2) return;
+        const records = model.cells.filter(record => selectedCells.includes(record.element)).sort((a, b) => a.row - b.row || a.col - b.col);
+        result = Table.merge(model, records[0].id, records[records.length - 1].id);
+        focusId = records[0].id;
+      } else if (action === 'split') {
+        result = Table.split(model, current.id); focusId = current.id;
+      } else return;
+      const rendered = renderTable(result, table, focusId, widths);
+      replaceTable(table, rendered.html, {...position, ...rendered.focus});
+    } catch (error) { announce(error.message || 'Не удалось изменить таблицу.', true); }
+  }
+
+  tableTools.addEventListener('mousedown', event => { if (event.target.closest('button')) event.preventDefault(); });
   tableTools.addEventListener('click', event => {
     const button = event.target.closest('button');
-    const position = rememberTable();
-    if (!button || !position) return;
-    if (button.id === 'delete-table') {
-      const wrapper = position.table.parentElement;
-      const target = wrapper.matches('.table-wrap') && wrapper.children.length === 1 ? wrapper : position.table;
-      replaceTable(target, '<p><br></p>', null);
-    } else {
-      if (!columnWidth.reportValidity() || !rowHeight.reportValidity() || !columnWidth.value || !rowHeight.value) return;
-      replaceTable(position.table, sizedTable(position, Number(columnWidth.value), Number(rowHeight.value)), position);
-    }
-  });
-  for (const input of [columnWidth, rowHeight]) input.addEventListener('keydown', event => {
-    if (event.key === 'Enter') { event.preventDefault(); document.getElementById('resize-table').click(); }
+    if (!button) return;
+    if (button.id === 'close-table-tools') { selectCell(null); return; }
+    const action = button.dataset.tableAction;
+    if (action === 'select') {
+      selectionMode = !selectionMode;
+      selectionAnchor = null;
+      selectCell(selectedCell);
+    } else changeTable(action);
   });
   document.addEventListener('selectionchange', () => {
-    if (resizing || tableTools.contains(document.activeElement)) return;
+    if (resizing || selectionMode || customTableSelection && selectedCells.length > 1 || tableTools.contains(document.activeElement)) return;
     const selection = window.getSelection();
     const node = selection?.anchorNode;
     const element = node?.nodeType === 1 ? node : node?.parentElement;
-    if (element && editor.contains(element)) selectCell(element.closest('td,th'));
+    const focusNode = selection?.focusNode;
+    const focus = focusNode?.nodeType === 1 ? focusNode : focusNode?.parentElement;
+    if (element && editor.contains(element)) selectCell(element.closest('td,th'), focus?.closest('td,th'));
+  });
+  document.addEventListener('pointerdown', event => {
+    if (!editor.contains(event.target) && !tableTools.contains(event.target)) selectCell(null);
   });
 
   function edgeAt(event) {
@@ -317,15 +435,31 @@
   });
   editor.addEventListener('pointerleave', () => editor.classList.remove('resize-column', 'resize-row'));
   editor.addEventListener('pointerdown', event => {
+    skipTableClick = false;
     if (event.button !== 0) return;
+    const cell = event.target.closest('td,th');
+    if (cell && (selectionMode || event.shiftKey)) {
+      event.preventDefault();
+      customTableSelection = true;
+      if (!selectionAnchor || selectionAnchor.closest('table') !== cell.closest('table')) selectionAnchor = cell;
+      selectCell(selectionAnchor, cell);
+      skipTableClick = true;
+      return;
+    }
+    customTableSelection = false;
+    selectionAnchor = cell;
     const edge = edgeAt(event);
     if (!edge) return;
     event.preventDefault();
     selectCell(edge.cell);
     const position = rememberTable();
+    const geometry = tableGeometry(position.table);
+    const column = geometry.positions.get(edge.cell) + edge.cell.colSpan - 1;
+    const row = position.row + edge.cell.rowSpan - 1;
     resizing = {...position, axis: edge.axis, x: event.clientX, y: event.clientY,
-      original: cleanHTML(position.table.outerHTML), width: Number(columnWidth.value), height: Number(rowHeight.value),
-      widths: tableGeometry(position.table).widths, minimum: Number(columnWidth.min), maximum: Number(columnWidth.max)};
+      original: cleanHTML(position.table.outerHTML), width: geometry.widths[column], height: position.table.rows[row].getBoundingClientRect().height,
+      widths: geometry.widths, minimum: geometry.minimum, maximum: geometry.maximum, resizeColumn: column, resizeRow: row};
+    tableTools.hidden = true;
     document.querySelector('.editor-app').classList.add('table-resizing');
     editor.setPointerCapture(event.pointerId);
   });
@@ -341,10 +475,8 @@
     if (column) {
       for (const group of resizing.table.querySelectorAll(':scope > colgroup')) group.remove();
       resizing.table.prepend(parsed.querySelector('colgroup').cloneNode(true));
-      columnWidth.value = size;
     } else {
-      resizing.table.rows[resizing.row].style.height = size + 'px';
-      rowHeight.value = size;
+      resizing.table.rows[resizing.resizeRow].style.height = size + 'px';
     }
   });
   function finishResize(cancelled = false) {
@@ -364,7 +496,30 @@
   editor.addEventListener('pointercancel', () => finishResize(true));
   editor.addEventListener('lostpointercapture', () => finishResize(true));
   editor.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && resizing) { event.preventDefault(); finishResize(true); }
+    if (event.isComposing || event.ctrlKey || event.metaKey || event.altKey) return;
+    const node = window.getSelection()?.anchorNode;
+    const cell = (node?.nodeType === 1 ? node : node?.parentElement)?.closest('td,th');
+    if (!cell || !editor.contains(cell)) return;
+    const model = readTable(cell.closest('table'));
+    const current = model.cells.find(record => record.element === cell);
+    if (event.key === 'Enter' && !event.shiftKey && window.getSelection()?.isCollapsed && current.row + current.rowSpan === model.rows) {
+      event.preventDefault(); selectCell(cell); changeTable('row-after', model.rows);
+    } else if (event.key === 'Tab') {
+      const ordered = model.cells.slice().sort((a, b) => a.row - b.row || a.col - b.col);
+      const index = ordered.findIndex(record => record.id === current.id);
+      const next = ordered[index + (event.shiftKey ? -1 : 1)];
+      if (next?.element) {
+        event.preventDefault();
+        const range = document.createRange(); range.selectNodeContents(next.element);
+        const selection = window.getSelection(); selection.removeAllRanges(); selection.addRange(range);
+        selectCell(next.element); next.element.scrollIntoView({block: 'nearest'});
+      } else if (!event.shiftKey) { event.preventDefault(); selectCell(cell); changeTable('row-after', model.rows); }
+    }
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    if (resizing) { event.preventDefault(); finishResize(true); }
+    else if (!tableTools.hidden) { event.preventDefault(); selectCell(null); }
   });
 
   picker.addEventListener('change', () => openChapter(picker.value));
@@ -375,7 +530,11 @@
     timer = setTimeout(saveActive, 300);
   });
   editor.addEventListener('click', event => {
-    selectCell(event.target.closest('td,th'));
+    if (!skipTableClick) {
+      const selection = window.getSelection();
+      if (selection?.isCollapsed) selectCell(event.target.closest('td,th'));
+    }
+    skipTableClick = false;
     if (event.target.closest('a')) event.preventDefault();
   });
   editor.addEventListener('paste', event => {
@@ -410,7 +569,7 @@
       format: 'russian-knowledge-base-edits', schemaVersion: 1,
       exportedAt: new Date().toISOString(),
       source: 'https://github.com/rosenfeldsgit/linguae-Russicae',
-      instructions: 'Сопоставить originalMarkdown и originalHTML с актуальной базой. Перенести изменения editedHTML (editedMarkdown — читаемая копия, размеры таблиц сохранены только в editedHTML), сохранить ID правил и размеры столбцов/строк. Изменения словников перенести в dictionary.path. При конфликте не перезаписывать новые изменения сайта. Пересобрать /theory/ и /edit/. Карточки и ответы не менять автоматически.',
+      instructions: 'Сопоставить originalMarkdown и originalHTML с актуальной базой. Перенести изменения editedHTML (editedMarkdown — читаемая копия, размеры и объединения ячеек сохранены только в editedHTML), сохранить ID правил, colspan/rowspan, размеры столбцов/строк и весь текст объединённых ячеек. Изменения словников перенести в dictionary.path. При конфликте не перезаписывать новые изменения сайта. Пересобрать /theory/ и /edit/. Карточки и ответы не менять автоматически.',
       chapters: changes.map(change => ({...change, editedMarkdown: toMarkdown(change.editedHTML)})),
     };
     const blob = new Blob([JSON.stringify(payload, null, 2) + '\n'], {type: 'application/json;charset=utf-8'});

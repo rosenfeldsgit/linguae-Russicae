@@ -361,6 +361,42 @@
       "url": "https://gramota.ru/spravka/vopros/313712",
       "kind": "primary",
       "note": "Разные условия выбора суффикса у двух частей речи."
+    },
+    "IRYA_SUFFIX_ADJ": {
+      "title": "ИРЯ РАН. Суффиксы и финали прилагательных, §33",
+      "url": "https://oross.ruslang.ru/paragraph/33",
+      "kind": "primary",
+      "note": "Проверены условия -ив-/-ев-, -инск-/-енск-, -ан-/-ян-/-енн-, 15.11.2026."
+    },
+    "IRYA_SUFFIX_VERB": {
+      "title": "ИРЯ РАН. Суффиксы и финали глаголов, §34",
+      "url": "https://oross.ruslang.ru/paragraph/34",
+      "kind": "primary",
+      "note": "Проверены -ова-/-ева-, -ыва-/-ива-, ударный -ва-, инфинитивы и -енеть/-енить, 15.11.2026."
+    },
+    "IRYA_SUFFIX_ADV": {
+      "title": "ИРЯ РАН. Суффиксы наречий, §35",
+      "url": "https://oross.ruslang.ru/paragraph/35",
+      "kind": "primary",
+      "note": "Проверена словообразовательная модель наречий с -а/-о, 15.11.2026."
+    },
+    "GRAMOTA_O_E": {
+      "title": "Грамота.ру. Буквы о и е после ц",
+      "url": "https://gramota.ru/biblioteka/spravochniki/pravila-russkoy-orfografii-i-punktuatsii/bukvy-o-i-e-posle-ts",
+      "kind": "primary",
+      "note": "О/е после ц, в том числе перцо́вый и си́тцевый, 15.11.2026."
+    },
+    "GRAMOTA_DOSTOIN": {
+      "title": "Грамота.ру. Ответ №284719: достоин и достоинство",
+      "url": "https://gramota.ru/spravka/vopros/284719",
+      "kind": "primary",
+      "note": "Словарное и в особой краткой форме и производном существительном, 15.11.2026."
+    },
+    "IRYA_SUFFIX_O_YO": {
+      "title": "ИРЯ РАН. Ударные о/ё после шипящих, §20",
+      "url": "https://oross.ruslang.ru/paragraph/20",
+      "kind": "primary",
+      "note": "Проверены именные и глагольные суффиксы, -ёр-, -ёвк-, производные и окончания, 15.11.2026."
     }
   },
   "officialArchive": {

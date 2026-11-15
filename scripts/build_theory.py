@@ -1,5 +1,6 @@
 """Render the published reference from the canonical chapters, using only the standard library."""
 from html import escape
+from datetime import date
 from itertools import groupby
 import json
 from pathlib import Path
@@ -98,7 +99,9 @@ def chapter(number, meta, sources, card_tasks):
     for item in meta['sourceSections']:
         result.append(f'<li><a href="{escape(source_url)}#{escape(item["anchor"])}">{escape(item["title"])}</a></li>')
     result.append('</ul></details>')
-    result.append('<p>Дата сверки материалов: 13 ноября 2026 года.</p><a href="#catalog">← Все задания</a>')
+    checked = date.fromisoformat(meta.get('checkedOn', '2026-11-13'))
+    month = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'][checked.month - 1]
+    result.append(f'<p>Дата сверки материалов: {checked.day} {month} {checked.year} года.</p><a href="#catalog">← Все задания</a>')
     if number == '27':
         destination = '#essay-practice'
     elif number in card_tasks:

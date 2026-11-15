@@ -7,7 +7,7 @@ function run(file) {
   vm.runInNewContext(fs.readFileSync(file, 'utf8'), ctx, {filename: file});
 }
 const html = fs.readFileSync('index.html', 'utf8');
-const banks = [...html.matchAll(/src="(cards\/task-\d+\.js)"/g)].map(match => match[1]);
+const banks = [...html.matchAll(/src="(cards\/task-\d+\.js)(?:\?[^"\s]*)?"/g)].map(match => match[1]);
 assert.deepEqual(banks.slice().sort(), fs.readdirSync('cards').filter(f => f.startsWith('task-')).map(f => 'cards/' + f).sort());
 run('cards/catalog.js');
 const register = ctx.registerCards;

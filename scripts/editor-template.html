@@ -9,11 +9,11 @@
 <title>Редактор базы знаний — Русский</title>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../poster.css">
-<link rel="stylesheet" href="../theory/theory.css?v=tables4">
-<link rel="stylesheet" href="editor.css?v=tables4">
-<script defer src="table-layout.js?v=tables4"></script>
-<script defer src="table-model.js?v=tables4"></script>
-<script defer src="editor.js?v=tables4"></script>
+<link rel="stylesheet" href="../theory/theory.css?v=tables5">
+<link rel="stylesheet" href="editor.css?v=tables5">
+<script defer src="table-layout.js?v=tables5"></script>
+<script defer src="table-model.js?v=tables5"></script>
+<script defer src="editor.js?v=tables5"></script>
 </head>
 <body>
 <main class="editor-app">
@@ -50,6 +50,10 @@
 <button type="button" data-table-action="row-after">Строка снизу</button>
 <button type="button" data-table-action="column-before">Столбец слева</button>
 <button type="button" data-table-action="column-after">Столбец справа</button>
+</div>
+<div class="table-actions" role="group" aria-label="Удаление строк и столбцов">
+<button type="button" data-table-action="delete-rows" class="table-delete-action">Удалить строку</button>
+<button type="button" data-table-action="delete-columns" class="table-delete-action">Удалить столбец</button>
 </div>
 <div class="table-tools-bottom"><span id="table-hint">Выделите ячейки мышью или с помощью Shift + щелчок.</span><button id="delete-table" data-table-action="delete" type="button">Удалить таблицу</button></div>
 </section>

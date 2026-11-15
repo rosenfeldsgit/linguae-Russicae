@@ -122,7 +122,28 @@
     return result;
   }
 
-  const api = Object.freeze({fromRows, grid, rectangle, insertRow, insertColumn, merge, split});
+  function deleteBand(model, axis, at, count = 1) {
+    const result = copy(model);
+    const dimension = axis === 'row' ? 'rows' : 'columns';
+    const span = axis === 'row' ? 'rowSpan' : 'colSpan';
+    if (!model[dimension] || !Number.isInteger(at) || at < 0 || at >= model[dimension] || !Number.isInteger(count) || count < 1) return result;
+    count = Math.min(count, model[dimension] - at);
+    const end = at + count;
+    result[dimension] -= count;
+    result.cells = result.cells.filter(cell => {
+      const overlap = Math.max(0, Math.min(end, cell[axis] + cell[span]) - Math.max(at, cell[axis]));
+      if (overlap === cell[span]) return false;
+      cell[span] -= overlap;
+      if (cell[axis] >= at) cell[axis] = Math.max(at, cell[axis] - count);
+      return true;
+    });
+    if (axis === 'row') result.rowStyles.splice(at, count);
+    return result;
+  }
+  const deleteRows = (model, at, count = 1) => deleteBand(model, 'row', at, count);
+  const deleteColumns = (model, at, count = 1) => deleteBand(model, 'col', at, count);
+
+  const api = Object.freeze({fromRows, grid, rectangle, insertRow, insertColumn, merge, split, deleteRows, deleteColumns});
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else window.RussianTableModel = api;
 })();

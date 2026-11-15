@@ -36,3 +36,27 @@ complete(T.insertRow(allMerged, 1));
 complete(T.split(allMerged, allMerged.cells[0].id));
 assert.equal(complete(T.fromRows([[cell('А'), cell('Б')], [cell('В')]])).cells.length, 4);
 console.log('Table merge/split, rectangular span selection, row/column insertion and content preservation verified.');
+
+assert.equal(text(complete(T.deleteRows(simple, 1))), 'АБВЖЗИ');
+assert.equal(text(complete(T.deleteColumns(simple, 1))), 'АВГЕЖИ');
+assert.equal(text(complete(T.deleteRows(simple, 0, 2))), 'ЖЗИ');
+assert.equal(text(complete(T.deleteColumns(simple, 1, 2))), 'АГЖ');
+for (const at of [0, 1]) {
+  const rows = complete(T.deleteRows(merged, at));
+  const columns = complete(T.deleteColumns(merged, at));
+  assert.equal(rows.cells.find(c => c.id === 0).rowSpan, 1);
+  assert.equal(columns.cells.find(c => c.id === 0).colSpan, 1);
+  assert.equal(rows.cells.find(c => c.id === 0).html, merged.cells[0].html);
+  assert.equal(columns.cells.find(c => c.id === 0).html, merged.cells[0].html);
+}
+assert.ok(!complete(T.deleteRows(merged, 0, 2)).cells.some(c => c.id === 0));
+assert.ok(!complete(T.deleteColumns(merged, 0, 2)).cells.some(c => c.id === 0));
+const single = T.fromRows([[cell('Последняя')]]);
+assert.equal(T.deleteRows(single, 0).rows, 0);
+assert.equal(T.deleteRows(single, 0).cells.length, 0);
+assert.equal(T.deleteColumns(single, 0).columns, 0);
+assert.equal(T.deleteColumns(single, 0).cells.length, 0);
+assert.equal(simple.cells.length, 9);
+for (let start = 0; start < spanning.rows; start++) for (let count = 1; count <= spanning.rows - start; count++) complete(T.deleteRows(spanning, start, count));
+for (let start = 0; start < spanning.columns; start++) for (let count = 1; count <= spanning.columns - start; count++) complete(T.deleteColumns(spanning, start, count));
+console.log('Row/column deletion, partial merged spans, content retention and removal of the last band verified.');

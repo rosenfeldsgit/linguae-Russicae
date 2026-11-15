@@ -41,6 +41,7 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-
 .table-tools button{min-height:36px;padding:6px 10px;font-size:12px}
 .table-tools button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
 .table-tools button:disabled:hover{background:var(--paper)}
+.table-tools .table-delete-action{color:var(--red)}
 .table-tools-bottom{display:flex;align-items:center;gap:12px;border-top:1px solid var(--line);padding-top:10px;margin-top:10px}
 #table-hint{flex:1;color:var(--muted);font-size:11px;line-height:1.45}
 #delete-table{color:var(--red);white-space:nowrap;background:transparent;border-color:transparent}

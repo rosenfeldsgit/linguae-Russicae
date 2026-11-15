@@ -264,6 +264,10 @@
     tableTools.querySelector('[data-table-action="split"]').disabled = selectedCells.length !== 1 || cell.rowSpan === 1 && cell.colSpan === 1;
     tableTools.querySelector('[data-table-action="select"]').setAttribute('aria-pressed', String(selectionMode));
     document.getElementById('table-selection-status').textContent = 'Выбрано ячеек: ' + selectedCells.length;
+    const rowsToDelete = area.bottom - area.top;
+    const columnsToDelete = area.right - area.left;
+    tableTools.querySelector('[data-table-action="delete-rows"]').textContent = rowsToDelete === 1 ? 'Удалить строку' : 'Удалить строки (' + rowsToDelete + ')';
+    tableTools.querySelector('[data-table-action="delete-columns"]').textContent = columnsToDelete === 1 ? 'Удалить столбец' : 'Удалить столбцы (' + columnsToDelete + ')';
     document.getElementById('table-hint').textContent = selectionMode
       ? 'Нажмите первую и последнюю ячейку нужного прямоугольника, затем «Объединить».'
       : 'Для объединения выделите ячейки мышью или с помощью Shift + щелчок. Размеры меняются за границы.';
@@ -373,7 +377,17 @@
     let result, focusId;
     const widths = tableGeometry(table).widths;
     try {
-      if (action.startsWith('row-')) {
+      if (action === 'delete-rows' || action === 'delete-columns') {
+        const records = model.cells.filter(record => selectedCells.includes(record.element)).sort((a, b) => a.row - b.row || a.col - b.col);
+        const area = Table.rectangle(model, records[0].id, records[records.length - 1].id);
+        if (action === 'delete-rows') result = Table.deleteRows(model, area.top, area.bottom - area.top);
+        else {
+          result = Table.deleteColumns(model, area.left, area.right - area.left);
+          widths.splice(area.left, area.right - area.left);
+        }
+        if (!result.rows || !result.columns) { changeTable('delete'); return; }
+        focusId = Table.grid(result)[Math.min(area.top, result.rows - 1)][Math.min(area.left, result.columns - 1)].id;
+      } else if (action.startsWith('row-')) {
         const at = insertAt ?? (action === 'row-before' ? current.row : current.row + current.rowSpan);
         result = Table.insertRow(model, at);
         focusId = Table.grid(result)[at][current.col].id;

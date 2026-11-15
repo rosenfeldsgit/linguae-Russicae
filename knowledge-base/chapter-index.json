@@ -246,7 +246,13 @@
       "ORTH_SUFFIX",
       "RUSTUTORS_11",
       "IRYA_SUFFIX",
-      "GRAMOTA_DIMINUTIVES"
+      "GRAMOTA_DIMINUTIVES",
+      "IRYA_SUFFIX_ADJ",
+      "IRYA_SUFFIX_VERB",
+      "IRYA_SUFFIX_ADV",
+      "GRAMOTA_O_E",
+      "GRAMOTA_DOSTOIN",
+      "IRYA_SUFFIX_O_YO"
     ],
     "coverage": "core",
     "status": "authored",
@@ -263,7 +269,8 @@
         "anchor": "hmenu-7",
         "title": "Суффиксы прилагательных"
       }
-    ]
+    ],
+    "checkedOn": "2026-11-15"
   },
   "12": {
     "title": "Личные окончания глаголов и суффиксы причастий",

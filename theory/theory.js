@@ -49,7 +49,7 @@ function route() {
   const essay = document.getElementById('essay-practice');
   essay.hidden = target !== essay;
   catalog.hidden = Boolean(chapter) || !essay.hidden;
-  document.title = (chapter ? chapter.querySelector('h2').textContent + ' — ' : '') + 'База знаний — Русский';
+  document.title = (chapter ? chapter.querySelector('h2').textContent + ' — ' : '') + 'База знаний — Руса Лингво';
   if (target && (chapter || target === catalog || target === essay)) target.scrollIntoView();
 }
 

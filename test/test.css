@@ -13,3 +13,11 @@
 
 /* Collapse only the source passage; task instructions stay outside this block. */
 .passage-block{white-space:normal;margin-bottom:24px}.passage-block .passage{margin-bottom:0}.passage-toggle{display:block;min-height:44px;margin-bottom:10px;font:inherit;font-size:14px;text-align:left}.passage-toggle:focus-visible{outline:3px solid var(--blue,#293ef4);outline-offset:4px}
+
+.review-explanation{white-space:normal;overflow-wrap:anywhere}
+.review-explanation p{margin:0 0 .8em}
+.review-explanation p:last-child{margin-bottom:0}
+.explanation-sources{display:block;list-style:disc;margin:1em 0 0;padding-left:1.3em;font-size:.8em;line-height:1.6}
+.explanation-sources li{margin:.4em 0}
+.explanation-sources a{color:inherit;text-underline-offset:3px}
+.explanation summary{cursor:pointer;min-height:44px;padding:12px 0;text-decoration:underline;text-underline-offset:4px}

@@ -3,7 +3,7 @@
 #search-box label {display:block;margin-bottom:.4rem}
 #search {width:100%;font:inherit;padding:.8rem 1rem;border:1px solid var(--ink);color:var(--ink);background:var(--paper)}
 .catalog-list,#results {padding:0;list-style:none}
-.catalog-list a,#results a {display:flex;align-items:baseline;gap:1rem;padding:.85rem 0;border-bottom:1px solid var(--line);text-decoration:none}
+.catalog-list a,#results a {display:flex;align-items:baseline;gap:1rem;padding:.85rem 0;border-bottom:1px solid var(--line);text-decoration:none;overflow-wrap:anywhere}
 .catalog-list span {min-width:3.4rem;font:1rem Plex,monospace;color:var(--muted)}
 #catalog a,.chapters a {color:var(--ink);text-underline-offset:.2em}
 #catalog a:hover,.chapters a:hover {color:var(--blue)}

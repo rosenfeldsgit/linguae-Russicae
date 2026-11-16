@@ -31,7 +31,7 @@
     });
     document.body.append(dialog);
     dialog.showModal();
-    document.title = 'История версий — Русский';
+    document.title = 'История версий — Руса Лингво';
     if (push) window.history.pushState({versionsOverlay:true}, '', target.href);
   };
   link.addEventListener('click', event => {

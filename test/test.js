@@ -3,7 +3,7 @@
   const managed = window.EGE_MANAGED || {exams:[],disabled:[],tasks:{}};
   const config = {...window.EGE_EXAM_CONFIG, tasks:{...window.EGE_EXAM_CONFIG.tasks,...managed.tasks}};
   let preparing = false;
-  const {bank, score, renderPassage, renderQuestion} = window.EGE_EXERCISES;
+  const {bank, score, renderPassage, renderQuestion, renderExplanation} = window.EGE_EXERCISES;
   const $ = id => document.getElementById(id);
   let session = null;
   let interval = null;
@@ -155,9 +155,9 @@
       correctAnswer.className = 'review-answer';
       correctAnswer.textContent = 'Ответ: ' + question.answers.join(' / ');
       review.append(correctAnswer);
-      const explanation = document.createElement('p');
+      const explanation = document.createElement('div');
       explanation.className = 'review-explanation';
-      explanation.textContent = question.explanation || 'Ответ проверен по ключу сборника. Подробный разбор пока не добавлен.';
+      renderExplanation(explanation, question);
       review.append(explanation);
       detailCell.append(review);
       detailRow.append(detailCell);

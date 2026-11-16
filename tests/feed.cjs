@@ -18,16 +18,17 @@ class Element {
 (async()=>{
  const nodes={};const document={getElementById:id=>nodes[id] ||= new Element()};
  document.getElementById('exercise').content={firstElementChild:new Element()};
- const bank=[{id:'doshchinsky-2027-v1-q8',displayId:8,task:8,maxPrimary:2,answerType:'matching',answers:['12345']}];
- const window={EGE_EXERCISES:{bank,score:(q,value)=>value==='12345'?2:value==='12344'?1:0,renderPassage(){},renderQuestion(){}},EGE_EXAM_LOADER:{load:async q=>q}};
+ const bank=[{id:'doshchinsky-2027-v1-q8',displayId:8,task:8,maxPrimary:2,answerType:'matching',answers:['12345'],explanation:'Разбор соответствий'}];
+ const window={EGE_EXERCISES:{bank,score:(q,value)=>value==='12345'?2:value==='12344'?1:0,renderPassage(){},renderQuestion(){},renderExplanation(){}},EGE_EXAM_LOADER:{load:async q=>q}};
  vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../feed/feed.js'),'utf8'),{window,document,Map,Set,Option:function(text,value){this.text=text;this.value=value;}});
  const tick=()=>new Promise(resolve=>setImmediate(resolve));
  await tick();
  let card=nodes.feed.children[0],input=card.querySelector('input'),result=card.querySelector('.result');
  assert.equal(result.hidden,true);
+ assert.equal(card.querySelector('.explanation').hidden,true);
  for(const [answer,outcome,title] of [['12345','correct','Всё верно'],['12344','partial','Частично верно'],['99999','incorrect','Попробуйте ещё раз']]){
   input.value=answer;input.fire('input');assert.equal(result.hidden,true);assert.equal(card.dataset.result,undefined);
-  card.querySelector('form').fire('submit');assert.equal(result.hidden,false);assert.equal(card.dataset.result,outcome);assert.equal(result.querySelector('.result-title').textContent,title);
+  card.querySelector('form').fire('submit');assert.equal(result.hidden,false);assert.equal(card.querySelector('.explanation').hidden,false);assert.equal(card.dataset.result,outcome);assert.equal(result.querySelector('.result-title').textContent,title);
  }
  assert.equal(input.attributes['aria-invalid'],'true');
  nodes.task.value='8';nodes.task.fire('change');await tick();

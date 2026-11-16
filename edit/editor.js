@@ -170,7 +170,7 @@
     editor.innerHTML = drafts[next]?.editedHTML ?? originals.get(next);
     // Expand existing vocabularies without recording a cosmetic disclosure change.
     for (const details of editor.querySelectorAll('details')) details.open = true;
-    document.title = '№ ' + next + ' — Редактор базы знаний — Русский';
+    document.title = '№ ' + next + ' — Редактор базы знаний — Руса Лингво';
     history.replaceState(null, '', '#task-' + next);
     const outdated = drafts[next] && drafts[next].originalHTML !== originals.get(next);
     if (!storageFailed) announce(outdated ? 'Восстановлен черновик из прежней версии базы. При переносе сверим изменения.' : drafts[next] ? 'Восстановлен сохранённый черновик.' : 'Можно редактировать. Черновик сохраняется в этом браузере.');

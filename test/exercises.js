@@ -73,5 +73,32 @@
     }
     node.append(columns);
   }
-  window.EGE_EXERCISES = {bank, score, renderPassage, renderQuestion};
+  function renderExplanation(node, question) {
+    node.replaceChildren();
+    const text = question.explanation || 'Ответ проверен по ключу сборника. Подробный разбор пока не добавлен.';
+    for (const paragraph of text.split(/\n+/)) {
+      const p = document.createElement('p');
+      p.textContent = paragraph;
+      node.append(p);
+    }
+    const sources = document.createElement('ul');
+    sources.className = 'explanation-sources';
+    for (const source of question.explanationSources || []) {
+      // Sources are data as well: never accept executable or relative URLs.
+      if (typeof source.url !== 'string' || !source.url.startsWith('https://')) continue;
+      let url;
+      try {url = new URL(source.url);} catch {continue;}
+      if (url.protocol !== 'https:' || url.username || url.password) continue;
+      const link = document.createElement('a');
+      link.href = url.href;
+      link.textContent = source.title || url.hostname;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      const item = document.createElement('li');
+      item.append(link);
+      sources.append(item);
+    }
+    if (sources.children.length) node.append(sources);
+  }
+  window.EGE_EXERCISES = {bank, score, renderPassage, renderQuestion, renderExplanation};
 })();

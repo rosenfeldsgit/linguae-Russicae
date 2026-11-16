@@ -35,7 +35,12 @@ const server = http.createServer(async (request, response) => {
         await page.setViewportSize({width: 911, height: 850});
         const toggle = page.getByRole('button', {name: 'Меню разделов'});
         await toggle.click();
-        assert.equal(await page.locator('#section-nav a:visible').count(), 3);
+        assert.equal(await page.locator('#section-nav a:visible').count(), 4);
+        const currentSection = page.locator('#section-nav a[aria-current=page]');
+        assert.equal(await currentSection.count(), 1);
+        assert(await currentSection.isVisible());
+        assert(await currentSection.evaluate(el => getComputedStyle(el).backgroundColor !==
+          getComputedStyle(el.parentElement.querySelector('a:not([aria-current])')).backgroundColor));
         await page.keyboard.press('Escape');
         assert.equal(await page.locator('#section-nav').isVisible(), false);
         assert(await toggle.evaluate(el => el === document.activeElement));

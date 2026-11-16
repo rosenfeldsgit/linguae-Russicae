@@ -64,7 +64,7 @@ body{font-family:Golos,Arial,sans-serif;background:var(--bg);color:var(--ink)}.a
   .poster-hero #section-nav{grid-column:1/-1;justify-self:end;order:0}
   .poster-hero .compact-nav{display:grid;width:min(100%,18rem);gap:0}
   .compact-nav a{text-align:left}
-  .compact-nav a[aria-current]{display:none}
+  .poster-hero .compact-nav a[aria-current=page]{background:var(--blue);border-color:var(--blue);color:var(--paper)}
   .poster-hero:has(.nav-toggle) .poster-caption{grid-column:1/-1}
 }
 .nav-toggle[hidden],#section-nav[hidden]{display:none}

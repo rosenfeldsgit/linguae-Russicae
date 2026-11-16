@@ -92,7 +92,7 @@ const server = http.createServer(async (request, response) => {
 
     await page.goto(base + '/feed/');
     assert.equal(await page.evaluate(() => performance.getEntriesByType('resource')
-      .find(entry => entry.name.endsWith('/styles.css?v=shared1')).transferSize), 0,
+      .find(entry => entry.name.endsWith('/styles.css?v=cleanup1')).transferSize), 0,
       'Shared stylesheet is reused from the browser cache');
     await page.waitForFunction(() => document.querySelector('#feed').children.length >= 8);
     const headings = page.locator('#feed h2');

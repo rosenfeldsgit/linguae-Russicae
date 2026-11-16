@@ -28,7 +28,7 @@ class PublicArtifact(unittest.TestCase):
                 self.assertEqual((target / font.relative_to(ROOT)).read_bytes(), font.read_bytes())
             for license in (ROOT / 'assets/fonts').glob('*-OFL.txt'):
                 self.assertTrue((target / license.relative_to(ROOT)).is_file())
-            for private in ['server/ege/settings.py', 'compose.yaml', '.env', '.git/config', 'data/paronyms-source.json']:
+            for private in ['public-files.json', 'server/ege/settings.py', 'compose.yaml', '.env', '.git/config', 'data/paronyms-source.json']:
                 self.assertFalse((target / private).exists(), private)
             for page in target.rglob('*.html'):
                 parser = Links()

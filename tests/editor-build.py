@@ -4,6 +4,7 @@ import json
 import re
 import subprocess
 import unittest
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -11,14 +12,14 @@ ROOT = Path(__file__).resolve().parents[1]
 class EditorBuild(unittest.TestCase):
     def test_reproducible_and_complete(self):
         paths = [ROOT / 'edit/index.html', ROOT / 'edit/chapters.json']
-        before = [path.read_bytes() for path in paths]
-        subprocess.run(['python3', str(ROOT / 'scripts/build_editor.py')], check=True)
-        self.assertEqual(before, [path.read_bytes() for path in paths])
-        payload = json.loads(paths[1].read_text())
+        before = [path.read_text(encoding='utf-8') for path in paths]
+        subprocess.run([sys.executable, str(ROOT / 'scripts/build_editor.py')], check=True)
+        self.assertEqual(before, [path.read_text(encoding='utf-8') for path in paths])
+        payload = json.loads(paths[1].read_text(encoding='utf-8'))
         self.assertEqual(payload['schemaVersion'], 1)
         self.assertEqual([chapter['number'] for chapter in payload['chapters']], list(map(str, range(1, 28))))
         for chapter in payload['chapters']:
-            canonical = (ROOT / chapter['path']).read_text()
+            canonical = (ROOT / chapter['path']).read_text(encoding='utf-8')
             self.assertEqual(chapter['originalMarkdown'], canonical)
             expected_ids = re.findall(r'^### ([RS]\d+-\d+)\.', canonical, re.M)
             actual_ids = re.findall(r'<section id="([RS]\d+-\d+)"', chapter['html'])
@@ -26,13 +27,13 @@ class EditorBuild(unittest.TestCase):
             self.assertNotIn('practice-link', chapter['html'])
             if chapter['number'] in ('4', '5'):
                 dictionary = chapter['dictionary']
-                self.assertEqual(dictionary['original'], json.loads((ROOT / dictionary['path']).read_text()))
+                self.assertEqual(dictionary['original'], json.loads((ROOT / dictionary['path']).read_text(encoding='utf-8')))
                 self.assertIn('class="dictionary"', chapter['html'])
-        self.assertIn('noindex, nofollow, noarchive', paths[0].read_text())
+        self.assertIn('noindex, nofollow, noarchive', paths[0].read_text(encoding='utf-8'))
 
     def test_no_public_navigation_to_editor(self):
         for page in [ROOT / 'index.html', ROOT / 'theory/index.html', ROOT / 'feed/index.html', ROOT / 'test/index.html']:
-            self.assertNotRegex(page.read_text(), r'href=["\'][^"\']*edit(?:/|["\'])')
+            self.assertNotRegex(page.read_text(encoding='utf-8'), r'href=["\'][^"\']*edit(?:/|["\'])')
 
 
 if __name__ == '__main__':

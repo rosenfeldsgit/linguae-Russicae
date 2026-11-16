@@ -21,16 +21,16 @@ def build():
         entries.append({
             'number': number, 'title': meta['title'],
             'path': 'knowledge-base/' + meta['path'],
-            'originalMarkdown': (KB / meta['path']).read_text(),
+            'originalMarkdown': (KB / meta['path']).read_text(encoding='utf-8'),
             'html': body,
             'dictionary': {'path': 'knowledge-base/' + dictionary_path, 'original': data(dictionary_path)} if dictionary_path else None,
         })
     target = ROOT / 'edit'
     target.mkdir(exist_ok=True)
-    (target / 'chapters.json').write_text(json.dumps({'schemaVersion': 1, 'chapters': entries}, ensure_ascii=False, indent=2) + '\n')
+    (target / 'chapters.json').write_text(json.dumps({'schemaVersion': 1, 'chapters': entries}, ensure_ascii=False, indent=2) + '\n', encoding='utf-8', newline='\n')
     options = ''.join(f'<option value="{n}">№ {n}. {escape(meta["title"])}</option>' for n, meta in chapters.items())
-    template = (ROOT / 'scripts/editor-template.html').read_text()
-    (target / 'index.html').write_text(template.replace('<!--options-->', options))
+    template = (ROOT / 'scripts/editor-template.html').read_text(encoding='utf-8')
+    (target / 'index.html').write_text(template.replace('<!--options-->', options), encoding='utf-8', newline='\n')
 
 
 if __name__ == '__main__':

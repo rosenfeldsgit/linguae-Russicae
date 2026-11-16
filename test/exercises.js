@@ -3,7 +3,9 @@
   const managed = window.EGE_MANAGED || {exams:[],disabled:[]};
   const overrides = new Map(managed.exams.map(q=>[q.id,q]));
   const existing = [...(window.EGE_EXAM_BANK || []), ...(window.EGE_EXAM_MANIFEST || [])];
-  const bank = [...existing.filter(q=>!managed.disabled.includes(q.id)).map(q=>overrides.get(q.id)||q),...managed.exams.filter(q=>!existing.some(old=>old.id===q.id))];
+  const disabled = new Set(managed.disabled);
+  const existingIds = new Set(existing.map(q => q.id));
+  const bank = [...existing.filter(q=>!disabled.has(q.id)).map(q=>overrides.get(q.id)||q),...managed.exams.filter(q=>!existingIds.has(q.id) && !disabled.has(q.id))];
   const normalize = value => value.toLowerCase().replace(/ё/g, 'е').replace(/[\s,;]/g, '');
   function score(question, value) {
     const answer = normalize(value);

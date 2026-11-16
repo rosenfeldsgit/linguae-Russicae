@@ -98,6 +98,30 @@ class BookImport(TestCase):
             self.assertEqual(self.client.get('/'+path).status_code,404)
 
 class SecurityRegression(TestCase):
+    def test_content_queries_do_not_grow_with_records(self):
+        import json
+        from .models import Rule
+        task = Task.objects.create(number=1, title='Test')
+        rule = Rule.objects.create(title='Rule', text='Rule text')
+        for i in range(5):
+            Record.objects.create(category='card', task=task, rule=rule, title=str(i), active=True)
+            Record.objects.create(category='exam', task=task, rule=rule, title=str(i), active=True)
+        Record.objects.create(category='card', task=task, title='Hidden', active=False, legacy_id='hidden')
+        with self.assertNumQueries(3):
+            response = self.client.get('/content.js')
+        payload = json.loads(response.content.decode().removeprefix('window.EGE_MANAGED = ')[:-1])
+        self.assertEqual(len(payload['cards']), 5)
+        self.assertEqual(len(payload['exams']), 5)
+        self.assertEqual(payload['disabled'], ['hidden'])
+        self.assertTrue(all(row['explanation'] == 'Rule text' for row in payload['cards']))
+
+    def test_compressed_fonts_are_served_with_correct_mime(self):
+        response = self.client.get('/assets/fonts/golos-400.woff2')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['Content-Type'], 'font/woff2')
+        self.assertTrue(b''.join(response.streaming_content).startswith(b'wOF2'))
+        response.close()
+
     def test_private_paths_and_unsupported_methods(self):
         for path in ['/.env', '/.git/config', '/compose.yaml', '/server/.env.example', '/backup.sql']:
             self.assertEqual(self.client.get(path).status_code, 404, path)

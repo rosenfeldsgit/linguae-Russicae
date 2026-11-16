@@ -17,6 +17,7 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - run: python3 scripts/scan_secrets.py
+      - run: python3 tests/secret-scan.py
       - run: python3 tests/public-artifact.py
       - run: python3 tests/editor-build.py
       - run: python3 scripts/build_public.py public-build
@@ -32,6 +33,11 @@ jobs:
       - run: |
           set -e
           for script in tests/*.cjs; do node "$script"; done
+      - name: Browser flows and editor HTML safety
+        run: |
+          npm install --no-save --package-lock=false playwright@1.57.0
+          npx playwright install --with-deps chromium
+          node tests/browser.js
   deployment-config:
     runs-on: ubuntu-latest
     timeout-minutes: 15

@@ -37,3 +37,31 @@
   });
   setOpen(false);
 })();
+
+// Warm only a section the visitor has expressed interest in.
+// The browser controls priority, caching and whether to honor the hint.
+(() => {
+  const nav = document.querySelector('.mode-nav');
+  if (!nav) return;
+  const connection = navigator.connection;
+  if (connection?.saveData || /(^|-)2g$/.test(connection?.effectiveType || '')) return;
+  const warmed = new Set();
+  let timer;
+  function prefetch(link) {
+    const url = new URL(link.href);
+    if (url.origin !== location.origin || url.pathname === location.pathname ||
+        warmed.has(url.href)) return;
+    warmed.add(url.href);
+    const hint = document.createElement('link');
+    hint.rel = 'prefetch';
+    hint.href = url.href;
+    document.head.append(hint);
+  }
+  for (const link of nav.querySelectorAll('a')) {
+    link.addEventListener('pointerenter', event => {
+      if (event.pointerType === 'mouse') timer = setTimeout(() => prefetch(link), 100);
+    });
+    link.addEventListener('pointerleave', () => clearTimeout(timer));
+    link.addEventListener('focus', () => prefetch(link));
+  }
+})();

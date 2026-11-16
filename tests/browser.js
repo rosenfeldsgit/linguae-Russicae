@@ -14,6 +14,7 @@ const server = http.createServer(async (request, response) => {
     let file = path.resolve(root, '.' + pathname);
     if (!file.startsWith(root + path.sep) && file !== root) throw new Error('Invalid path');
     if ((await fs.stat(file)).isDirectory()) file = path.join(file, 'index.html');
+    if (/\.(css|js|woff2)$/.test(file)) response.setHeader('Cache-Control', 'public, max-age=600');
     response.setHeader('Content-Type', types[path.extname(file)] || 'application/octet-stream');
     response.end(await fs.readFile(file));
   } catch {response.writeHead(404); response.end();}
@@ -69,6 +70,13 @@ const server = http.createServer(async (request, response) => {
     if (process.env.SCREENSHOT_PATH) await page.screenshot({path: process.env.SCREENSHOT_PATH});
     await page.setViewportSize({width: 1280, height: 900});
     await page.goto(base);
+    const section = page.locator('#section-nav a[href="test/"]');
+    await section.focus();
+    assert.equal(await page.locator('link[rel=prefetch]').count(), 1);
+    assert.equal(await page.locator('link[rel=prefetch]').getAttribute('href'), base + '/test/');
+    await section.blur();
+    await section.focus();
+    assert.equal(await page.locator('link[rel=prefetch]').count(), 1);
     await page.locator('#options button, #word button').first().waitFor();
     await page.locator('#options button, #word button').first().click();
     if (await page.locator('#check-answer').isVisible()) await page.locator('#check-answer').click();
@@ -78,6 +86,9 @@ const server = http.createServer(async (request, response) => {
     assert(!await page.evaluate(() => performance.getEntriesByType('resource').some(r => r.name.includes('.ttf'))));
 
     await page.goto(base + '/feed/');
+    assert.equal(await page.evaluate(() => performance.getEntriesByType('resource')
+      .find(entry => entry.name.endsWith('/styles.css?v=shared1')).transferSize), 0,
+      'Shared stylesheet is reused from the browser cache');
     await page.waitForFunction(() => document.querySelector('#feed').children.length >= 8);
     const headings = page.locator('#feed h2');
     const firstBatch = await headings.allTextContents();

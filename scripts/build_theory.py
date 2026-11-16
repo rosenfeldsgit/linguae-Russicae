@@ -11,7 +11,7 @@ KB = ROOT / 'knowledge-base'
 
 
 def data(path):
-    return json.loads((KB / path).read_text())
+    return json.loads((KB / path).read_text(encoding='utf-8'))
 
 
 def inline(text):
@@ -73,7 +73,7 @@ def dictionary(number):
 
 
 def chapter(number, meta, sources, card_tasks):
-    raw = (KB / meta['path']).read_text().split('## Источники')[0]
+    raw = (KB / meta['path']).read_text(encoding='utf-8').split('## Источники')[0]
     sections = re.split(r'^## (.+)$', raw, flags=re.M)
     title = escape(meta['title'])
     result = [f'<article id="task-{number}" data-number="{number}"><a href="#catalog">← Все задания</a>',
@@ -115,13 +115,13 @@ def chapter(number, meta, sources, card_tasks):
 def build():
     chapters = data('chapter-index.json')
     sources = data('sources.json')
-    template = (ROOT / 'scripts/theory-template.html').read_text()
+    template = (ROOT / 'scripts/theory-template.html').read_text(encoding='utf-8')
     links = [f'<li><a href="#task-{n}"><span>№ {n}</span> {escape(meta["title"])}</a></li>'
              for n, meta in chapters.items()]
     card_tasks = data('data/current-inventory.json')['cardCountsByTask']
     articles = [chapter(n, meta, sources, card_tasks) for n, meta in chapters.items()]
     page = template.replace('<!--catalog-->', '\n'.join(links)).replace('<!--chapters-->', '\n'.join(articles))
-    (ROOT / 'theory/index.html').write_text(page)
+    (ROOT / 'theory/index.html').write_text(page, encoding='utf-8', newline='\n')
 
 
 if __name__ == '__main__':

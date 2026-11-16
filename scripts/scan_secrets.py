@@ -4,6 +4,7 @@ Only locations and rule names are printed. This is not proof that no secret exis
 import re
 import subprocess
 import sys
+import tempfile
 
 RULES = {
     'github-token': r'(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,})',
@@ -18,18 +19,32 @@ RULES = {
 def git(*args):
     return subprocess.check_output(['git', *args])
 
+def text_objects():
+    rows = [row.partition(' ') for row in git('rev-list', '--objects', '--all').decode('utf-8').splitlines()]
+    # A file avoids pipe deadlocks. Keep only one object's contents in memory.
+    with tempfile.TemporaryFile() as requests:
+        for sha, _, _ in rows:
+            requests.write(sha.encode('ascii') + b'\n')
+        requests.seek(0)
+        with subprocess.Popen(['git', 'cat-file', '--batch'], stdin=requests, stdout=subprocess.PIPE) as process:
+            for sha, _, path in rows:
+                header = process.stdout.readline().split()
+                if len(header) != 3 or header[0].decode('ascii') != sha:
+                    raise RuntimeError('Cannot read Git object ' + sha)
+                size = int(header[2])
+                raw = process.stdout.read(size)
+                if len(raw) != size or process.stdout.read(1) != b'\n':
+                    raise RuntimeError('Incomplete Git object ' + sha)
+                if header[1] in (b'blob', b'commit') and b'\0' not in raw:
+                    yield sha, path, raw.decode('utf-8', errors='replace')
+            if process.wait():
+                raise RuntimeError('git cat-file failed')
+
+
 def scan():
     count = failures = 0
-    for row in git('rev-list', '--objects', '--all').decode().splitlines():
-        sha, _, path = row.partition(' ')
-        kind = git('cat-file', '-t', sha).strip()
-        if kind not in (b'blob', b'commit'):
-            continue
-        raw = git('cat-file', '-p', sha)
-        if b'\0' in raw:
-            continue
+    for sha, path, value in text_objects():
         count += 1
-        value = raw.decode('utf-8', errors='replace')
         for rule, pattern in RULES.items():
             for match in re.finditer(pattern, value):
                 # Explicit, non-production fixture used by Django's ephemeral test DB.

@@ -1,4 +1,4 @@
-# Русский
+# Руса Лингво
 
 Карточки, пробники и база знаний для подготовки к ЕГЭ по русскому языку.
 
@@ -45,11 +45,17 @@
 python3 scripts/build_theory.py
 node knowledge-base/tools/build.cjs
 python3 tests/public-artifact.py
+python3 tests/editor-build.py
+python3 tests/secret-scan.py
 python3 scripts/build_public.py /tmp/russian-public
 for script in tests/*.cjs; do node "$script" || exit; done
 ```
 
 Для публичной сборки укажите новый каталог. Она копирует разрешённые файлы по списку `PUBLIC_FILES` в `server/content/views.py`.
+
+Для браузерных проверок выполните `npm install --no-save --package-lock=false playwright@1.57.0`, затем `npx playwright install chromium` и `node tests/browser.js`. Проверяются карточка, лента, запуск пробника, теория и безопасная вставка/восстановление/экспорт черновика редактора. Тест сам запускает временный сервер только на localhost.
+
+Сайт использует полные WOFF2-шрифты. Исходные TTF и лицензии сохранены в `assets/fonts/`. Для повторной сборки установите `python3 -m pip install -r scripts/font-requirements.txt` и выполните `python3 scripts/build_fonts.py`: скрипт проверяет сохранение символов, порядка глифов и ширины букв. Сборка HTML и запуск сайта не требуют FontTools.
 
 Повторная генерация паронимов выполняется командой `node scripts/build-paronyms.cjs`. Источники и ограничения описаны в [data/paronyms-README.md](data/paronyms-README.md).
 

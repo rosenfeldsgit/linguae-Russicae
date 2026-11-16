@@ -12,7 +12,7 @@ def build(destination):
         raise ValueError('Destination must not contain the repository')
     if destination.exists():
         raise ValueError('Use a new, empty destination')
-    tree = ast.parse((ROOT / 'server/content/views.py').read_text())
+    tree = ast.parse((ROOT / 'server/content/views.py').read_text(encoding='utf-8'))
     files = next(ast.literal_eval(node.value) for node in tree.body
                  if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id == 'PUBLIC_FILES' for t in node.targets))
     files |= {'content.js', 'admin/index.html'}

@@ -1,0 +1,13 @@
+'use strict';
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+const existing = [{id: 'a', prompt: 'original'}, {id: 'b'}, {id: 'c'}];
+const managed = {exams: [{id: 'a', prompt: 'edited'}, {id: 'new'}, {id: 'hidden-new'}], disabled: ['b', 'hidden-new']};
+const context = {window: {EGE_EXAM_BANK: existing, EGE_MANAGED: managed}};
+vm.runInNewContext(fs.readFileSync('test/exercises.js', 'utf8'), context);
+const bank = context.window.EGE_EXERCISES.bank;
+assert.equal(JSON.stringify(bank.map(q => q.id)), JSON.stringify(['a', 'c', 'new']));
+assert.equal(bank[0].prompt, 'edited');
+assert.equal(existing[0].prompt, 'original');
+console.log('Managed question overrides, hidden entries, order and source immutability OK');

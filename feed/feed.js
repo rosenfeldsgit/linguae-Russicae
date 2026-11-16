@@ -1,6 +1,6 @@
 'use strict';
 (() => {
-  const {bank, score, renderPassage, renderQuestion} = window.EGE_EXERCISES;
+  const {bank, score, renderPassage, renderQuestion, renderExplanation} = window.EGE_EXERCISES;
   const questions = bank.filter(q => /^doshchinsky-202[67]-v\d+-q\d+$/.test(q.id))
     .sort((a, b) => a.displayId - b.displayId);
   const byId = id => document.getElementById(id);
@@ -26,9 +26,13 @@
     const input = node.querySelector('input');
     input.inputMode = q.answerType === 'word' ? 'text' : 'numeric';
     const feedback = node.querySelector('.result');
+    const explanation = node.querySelector('.explanation');
+    renderExplanation(node.querySelector('.explanation-body'), q);
     const state = attempts.get(q.id) || {value: '', points: null};
     const showResult = () => {
       feedback.hidden = state.points === null;
+      explanation.hidden = state.points === null || !q.explanation;
+      if (state.points === null) explanation.open = false;
       input.removeAttribute('aria-invalid');
       node.removeAttribute('data-result');
       if (state.points === null) return;

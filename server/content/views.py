@@ -7,13 +7,16 @@ from .models import Record,Task
 
 @require_safe
 def content_js(request):
-    rows=Record.objects.select_related('task','rule')
-    payload={'cards':[r.payload() for r in rows.filter(category='card',active=True)],'exams':[r.payload() for r in rows.filter(category='exam',active=True)],'disabled':[r.legacy_id for r in rows.filter(active=False).exclude(legacy_id=None)],'tasks':{str(t.number):{'number':t.number,'title':t.title,'maxPrimary':t.max_primary} for t in Task.objects.all()}}
+    cards,exams=[],[]
+    for record in Record.objects.filter(active=True).select_related('task','rule').iterator(chunk_size=500):
+        if record.category=='card':cards.append(record.payload())
+        elif record.category=='exam':exams.append(record.payload())
+    payload={'cards':cards,'exams':exams,'disabled':list(Record.objects.filter(active=False).exclude(legacy_id=None).values_list('legacy_id',flat=True)),'tasks':{str(t.number):{'number':t.number,'title':t.title,'maxPrimary':t.max_primary} for t in Task.objects.all()}}
     response=HttpResponse('window.EGE_MANAGED = '+json.dumps(payload,ensure_ascii=False)+';',content_type='application/javascript; charset=utf-8')
     response['Cache-Control']='no-store'
     return response
 
-PUBLIC_FILES={'edit/table-model.js','edit/table-layout.js','edit/index.html','edit/editor.css','edit/editor.js','edit/chapters.json','theory/index.html','theory/theory.css','theory/theory.js','assets/apple-touch-icon.png','manifest.json','assets/icon-192.png','assets/icon-512.png','index.html','app.js','styles.css','favicon.svg','assets/logo.svg','assets/brand-poster.svg','poster.css','poster.js','assets/fonts/golos-400.ttf','assets/fonts/golos-500.ttf','assets/fonts/golos-700.ttf','assets/fonts/golos-900.ttf','assets/fonts/plex-mono-400.ttf','assets/fonts/roboto-condensed-700.ttf','exam-config.js','exam-explanations.js','cards/catalog.js','cards/task-1.js','cards/task-10.js','cards/task-11.js','cards/task-12.js','cards/task-13.js','cards/task-14.js','cards/task-15.js','cards/task-16.js','cards/task-17.js','cards/task-18.js','cards/task-19.js','cards/task-20.js','cards/task-21.js','cards/task-22.js','cards/task-4.js','cards/task-5.js','cards/task-6.js','cards/task-7.js','cards/task-9.js','versions-link.js','versions/index.html','versions/versions.js','test/feed.html','feed/index.html','feed/feed.js','feed/feed.css','test/exercises.js','test/index.html','test/test.css','test/test.js','test/bank.js','test/bank-manifest.js','test/bank-loader.js'}
+PUBLIC_FILES={'CNAME','assets/fonts/Golos-OFL.txt','assets/fonts/IBM-Plex-Mono-OFL.txt','assets/fonts/Roboto-Condensed-OFL.txt','edit/table-model.js','edit/table-layout.js','edit/index.html','edit/editor.css','edit/editor.js','edit/chapters.json','theory/index.html','theory/theory.css','theory/theory.js','assets/apple-touch-icon.png','manifest.json','assets/icon-192.png','assets/icon-512.png','index.html','app.js','styles.css','favicon.svg','assets/logo.svg','assets/brand-poster.svg','poster.css','poster.js','assets/fonts/golos-400.woff2','assets/fonts/golos-500.woff2','assets/fonts/golos-700.woff2','assets/fonts/golos-900.woff2','assets/fonts/plex-mono-400.woff2','assets/fonts/roboto-condensed-700.woff2','exam-config.js','exam-explanations.js','cards/catalog.js','cards/task-1.js','cards/task-10.js','cards/task-11.js','cards/task-12.js','cards/task-13.js','cards/task-14.js','cards/task-15.js','cards/task-16.js','cards/task-17.js','cards/task-18.js','cards/task-19.js','cards/task-20.js','cards/task-21.js','cards/task-22.js','cards/task-4.js','cards/task-5.js','cards/task-6.js','cards/task-7.js','cards/task-9.js','versions-link.js','versions/index.html','versions/versions.js','test/feed.html','feed/index.html','feed/feed.js','feed/feed.css','test/exercises.js','test/index.html','test/test.css','test/test.js','test/bank.js','test/bank-manifest.js','test/bank-loader.js'}
 @require_safe
 def public_file(request,path='index.html'):
     if path in ('theory','feed','edit'):
@@ -25,5 +28,5 @@ def public_file(request,path='index.html'):
     if not (path in PUBLIC_FILES or variant and (1 if variant[1]=="2026" else 3)<=int(variant[2])<=36):raise Http404
     file=settings.ROOT/path
     if not file.is_file():raise Http404
-    types={'.html':'text/html; charset=utf-8','.js':'application/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml','.json':'application/json; charset=utf-8','.png':'image/png','.ttf':'font/ttf'}
+    types={'.html':'text/html; charset=utf-8','.js':'application/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml','.json':'application/json; charset=utf-8','.png':'image/png','.woff2':'font/woff2'}
     return FileResponse(file.open('rb'),content_type=types.get(file.suffix,'application/octet-stream'))

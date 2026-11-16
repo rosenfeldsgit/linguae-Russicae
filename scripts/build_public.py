@@ -1,5 +1,5 @@
 """Build an explicit public artifact; never copy the repository root to a web root."""
-import ast
+import json
 from pathlib import Path
 import shutil
 import sys
@@ -12,13 +12,13 @@ def build(destination):
         raise ValueError('Destination must not contain the repository')
     if destination.exists():
         raise ValueError('Use a new, empty destination')
-    tree = ast.parse((ROOT / 'server/content/views.py').read_text(encoding='utf-8'))
-    files = next(ast.literal_eval(node.value) for node in tree.body
-                 if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id == 'PUBLIC_FILES' for t in node.targets))
+    files = set(json.loads((ROOT / 'public-files.json').read_text(encoding='utf-8')))
     files |= {'content.js', 'admin/index.html'}
     files.update(str(p.relative_to(ROOT)) for p in (ROOT / 'test').glob('doshchinsky-*/v[0-9]*.json'))
     for name in sorted(files):
         source = ROOT / name
+        if Path(name).is_absolute() or '..' in Path(name).parts:
+            raise ValueError('Public file must be relative to the repository: ' + name)
         if not source.is_file():
             raise FileNotFoundError(name)
         target = destination / name

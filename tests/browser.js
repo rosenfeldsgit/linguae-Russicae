@@ -30,6 +30,18 @@ const server = http.createServer(async (request, response) => {
     for (const route of ['/', '/test/', '/feed/', '/theory/', '/versions/']) {
       await page.goto(base + route);
       await page.evaluate(() => document.fonts.ready);
+      if (route !== '/versions/') {
+        await page.setViewportSize({width: 911, height: 850});
+        const toggle = page.getByRole('button', {name: 'Меню разделов'});
+        await toggle.click();
+        assert.equal(await page.locator('#section-nav a:visible').count(), 3);
+        await page.keyboard.press('Escape');
+        assert.equal(await page.locator('#section-nav').isVisible(), false);
+        assert(await toggle.evaluate(el => el === document.activeElement));
+        await page.setViewportSize({width: 1280, height: 900});
+        await page.locator('#section-nav').waitFor();
+        assert.equal(await page.locator('#section-nav a:visible').count(), 4);
+      }
       for (const width of [320, 360, 390, 520, 680, 681, 768, 900, 911, 1000, 1024, 1200, 1440, 1920]) {
         await page.setViewportSize({width, height: 900});
         for (const size of ['100%', '200%']) {
@@ -39,7 +51,7 @@ const server = http.createServer(async (request, response) => {
             const heading = document.querySelector('.poster-hero h1').getBoundingClientRect();
             return {overflow: document.documentElement.scrollWidth > innerWidth + 1,
               wide: [...document.querySelectorAll('body *')].filter(el => el.getBoundingClientRect().right > innerWidth + 1).slice(0, 8).map(el => el.tagName + '.' + el.className),
-              overlap: [...document.querySelectorAll('.poster-hero .mode-nav a')].some(link => {
+              overlap: [...document.querySelectorAll('.poster-hero .mode-nav a, .nav-toggle')].some(link => {
                 const rect = link.getBoundingClientRect();
                 return Math.min(heading.right, rect.right) - Math.max(heading.left, rect.left) > 1 &&
                   Math.min(heading.bottom, rect.bottom) - Math.max(heading.top, rect.top) > 1;
@@ -52,7 +64,7 @@ const server = http.createServer(async (request, response) => {
     }
     await page.setViewportSize({width: 911, height: 850});
     await page.goto(base);
-    assert((await page.locator('h1').innerText()).includes('Руса Лингво'));
+    assert((await page.locator('h1').innerText()).includes('РУСА ЛИНГВО'));
     if (process.env.SCREENSHOT_PATH) await page.screenshot({path: process.env.SCREENSHOT_PATH});
     await page.setViewportSize({width: 1280, height: 900});
     await page.goto(base);
@@ -66,8 +78,15 @@ const server = http.createServer(async (request, response) => {
 
     await page.goto(base + '/feed/');
     await page.waitForFunction(() => document.querySelector('#feed').children.length >= 8);
+    const headings = page.locator('#feed h2');
+    const firstBatch = await headings.allTextContents();
+    await page.locator('#more').evaluate(button => button.click());
+    await page.waitForFunction(count => document.querySelectorAll('#feed h2').length > count, firstBatch.length);
+    const loaded = await headings.allTextContents();
+    assert.deepEqual(loaded.slice(0, firstBatch.length), firstBatch);
+    assert.equal(new Set(loaded).size, loaded.length);
     const answer = await page.evaluate(async () => {
-      const summary = window.EGE_EXERCISES.bank.filter(q => /^doshchinsky-202[67]-v\d+-q\d+$/.test(q.id)).sort((a, b) => a.displayId - b.displayId)[0];
+      const summary = window.EGE_EXERCISES.bank.find(q => String(q.displayId) === document.querySelector('#feed h2').textContent.split('#').pop());
       return (await window.EGE_EXAM_LOADER.load(summary)).answers[0];
     });
     await page.locator('#feed input').first().fill(answer);
@@ -75,18 +94,18 @@ const server = http.createServer(async (request, response) => {
     await page.locator('#feed [data-result="correct"]').first().waitFor();
     await page.locator('#search-id').fill('992');
     await page.locator('#search').evaluate(form => form.requestSubmit());
-    const explanation = page.locator('#feed .explanation');
+    const explanation = page.locator('#feed .answer-review');
     await page.waitForFunction(() => document.querySelector('#feed h2')?.textContent.endsWith('#992'));
     assert.equal(await explanation.isVisible(), false, 'No explanation before checking');
     await page.locator('#feed input').fill('24');
     await page.locator('#feed form').evaluate(form => form.requestSubmit());
-    await explanation.locator('summary').click();
+    assert((await explanation.locator('.review-answer').innerText()).includes('24'));
     assert((await explanation.innerText()).includes('прИнятый'));
     assert(await explanation.locator('.explanation-sources a').count());
     await page.locator('#feed input').fill('2');
     assert.equal(await explanation.isVisible(), false, 'Hide explanation while editing');
     await page.locator('#feed form').evaluate(form => form.requestSubmit());
-    await explanation.locator('summary').click();
+    assert((await explanation.locator('.review-answer').innerText()).includes('24'));
     assert((await explanation.innerText()).includes('прИнятый'));
 
     await page.goto(base + '/test/');

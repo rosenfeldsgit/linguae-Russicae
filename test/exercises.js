@@ -100,5 +100,17 @@
     }
     if (sources.children.length) node.append(sources);
   }
-  window.EGE_EXERCISES = {bank, score, renderPassage, renderQuestion, renderExplanation};
+  function renderAnswer(node, question) {
+    const answer = document.createElement('p');
+    answer.className = 'review-answer';
+    answer.textContent = 'Правильный ответ: ' + question.answers.join(' / ');
+    node.replaceChildren(answer);
+    if (question.explanation) {
+      const explanation = document.createElement('div');
+      explanation.className = 'review-explanation';
+      renderExplanation(explanation, question);
+      node.append(explanation);
+    }
+  }
+  window.EGE_EXERCISES = {bank, score, renderPassage, renderQuestion, renderExplanation, renderAnswer};
 })();

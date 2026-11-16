@@ -9,3 +9,31 @@
  new MutationObserver(update).observe(label,{childList:true,characterData:true,subtree:true});
  update();
 })();
+
+(() => {
+  const button = document.querySelector('.nav-toggle');
+  if (!button) return;
+  const nav = document.getElementById('section-nav');
+  const compact = matchMedia('(max-width: 1100px)');
+  function setOpen(open) {
+    button.hidden = !compact.matches;
+    button.setAttribute('aria-expanded', String(open));
+    nav.hidden = compact.matches && !open;
+    nav.classList.toggle('compact-nav', compact.matches);
+  }
+  button.addEventListener('click', () => setOpen(nav.hidden));
+  compact.addEventListener('change', () => setOpen(false));
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && compact.matches && !nav.hidden) {
+      setOpen(false);
+      button.focus();
+    }
+  });
+  document.addEventListener('click', event => {
+    if (!button.contains(event.target)) setOpen(false);
+  });
+  document.addEventListener('focusin', event => {
+    if (!nav.contains(event.target) && event.target !== button) setOpen(false);
+  });
+  setOpen(false);
+})();

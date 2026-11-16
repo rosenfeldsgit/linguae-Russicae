@@ -3,7 +3,7 @@
   const managed = window.EGE_MANAGED || {exams:[],disabled:[],tasks:{}};
   const config = {...window.EGE_EXAM_CONFIG, tasks:{...window.EGE_EXAM_CONFIG.tasks,...managed.tasks}};
   let preparing = false;
-  const {bank, score, renderPassage, renderQuestion, renderExplanation} = window.EGE_EXERCISES;
+  const {bank, score, renderPassage, renderQuestion, renderAnswer} = window.EGE_EXERCISES;
   const $ = id => document.getElementById(id);
   let session = null;
   let interval = null;
@@ -151,14 +151,10 @@
         if (key==='prompt') renderQuestion(block,question); else renderPassage(block,question);
         review.append(block);
       }
-      const correctAnswer = document.createElement('p');
-      correctAnswer.className = 'review-answer';
-      correctAnswer.textContent = 'Ответ: ' + question.answers.join(' / ');
-      review.append(correctAnswer);
-      const explanation = document.createElement('div');
-      explanation.className = 'review-explanation';
-      renderExplanation(explanation, question);
-      review.append(explanation);
+      const answer = document.createElement('div');
+      answer.className = 'answer-review';
+      renderAnswer(answer, question);
+      review.append(answer);
       detailCell.append(review);
       detailRow.append(detailCell);
       detailRow.id = 'review-' + question.displayId;

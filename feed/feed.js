@@ -1,8 +1,11 @@
 'use strict';
 (() => {
-  const {bank, score, renderPassage, renderQuestion, renderExplanation} = window.EGE_EXERCISES;
-  const questions = bank.filter(q => /^doshchinsky-202[67]-v\d+-q\d+$/.test(q.id))
-    .sort((a, b) => a.displayId - b.displayId);
+  const {bank, score, renderPassage, renderQuestion, renderAnswer} = window.EGE_EXERCISES;
+  const questions = bank.filter(q => /^doshchinsky-202[67]-v\d+-q\d+$/.test(q.id));
+  for (let i = questions.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [questions[i], questions[j]] = [questions[j], questions[i]];
+  }
   const byId = id => document.getElementById(id);
   const task = byId('task');
   const query = byId('search-id');
@@ -26,21 +29,17 @@
     const input = node.querySelector('input');
     input.inputMode = q.answerType === 'word' ? 'text' : 'numeric';
     const feedback = node.querySelector('.result');
-    const explanation = node.querySelector('.explanation');
-    renderExplanation(node.querySelector('.explanation-body'), q);
     const state = attempts.get(q.id) || {value: '', points: null};
     const showResult = () => {
       feedback.hidden = state.points === null;
-      explanation.hidden = state.points === null || !q.explanation;
-      if (state.points === null) explanation.open = false;
       input.removeAttribute('aria-invalid');
       node.removeAttribute('data-result');
       if (state.points === null) return;
       const outcome = state.points === q.maxPrimary ? 'correct' : state.points ? 'partial' : 'incorrect';
       node.dataset.result = outcome;
-      feedback.querySelector('.result-icon').textContent = {correct: '✓', partial: '◐', incorrect: '×'}[outcome];
-      feedback.querySelector('.result-title').textContent = {correct: 'Всё верно', partial: 'Частично верно', incorrect: 'Попробуйте ещё раз'}[outcome];
-      feedback.querySelector('.result-points').textContent = 'Баллы: ' + state.points + ' из ' + q.maxPrimary;
+      renderAnswer(feedback.querySelector('.answer-content'), q);
+      const verdict = {correct: 'Верно', partial: 'Частично верно', incorrect: 'Неверно'}[outcome];
+      feedback.querySelector('.result-points').textContent = verdict + ' · ' + state.points + ' из ' + q.maxPrimary;
       if (outcome === 'incorrect') input.setAttribute('aria-invalid', 'true');
     };
     input.value = state.value;

@@ -48,9 +48,10 @@ const server = http.createServer(async (request, response) => {
           const layout = await page.evaluate(async size => {
             document.documentElement.style.fontSize = size;
             await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+            window.scrollTo({left: 0, behavior: 'instant'});
             const heading = document.querySelector('.poster-hero h1').getBoundingClientRect();
             return {overflow: document.documentElement.scrollWidth > innerWidth + 1,
-              wide: [...document.querySelectorAll('body *')].filter(el => el.getBoundingClientRect().right > innerWidth + 1).slice(0, 8).map(el => el.tagName + '.' + el.className),
+              wide: [...document.querySelectorAll('body *')].filter(el => el.getBoundingClientRect().right > innerWidth + 1 || el.scrollWidth > el.clientWidth + 1).slice(0, 8).map(el => el.tagName + '.' + el.className + '(' + el.clientWidth + '/' + el.scrollWidth + ')'),
               overlap: [...document.querySelectorAll('.poster-hero .mode-nav a, .nav-toggle')].some(link => {
                 const rect = link.getBoundingClientRect();
                 return Math.min(heading.right, rect.right) - Math.max(heading.left, rect.left) > 1 &&

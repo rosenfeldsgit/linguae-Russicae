@@ -31,6 +31,18 @@ const server = http.createServer(async (request, response) => {
     for (const route of ['/', '/test/', '/feed/', '/theory/', '/versions/']) {
       await page.goto(base + route);
       await page.evaluate(() => document.fonts.ready);
+      const entrance = page.locator(({
+        '/': '.practice-main', '/test/': '#setup', '/feed/': '.filters',
+        '/theory/': '#catalog', '/versions/': '.release-list'
+      })[route]);
+      await page.emulateMedia({reducedMotion: 'no-preference'});
+      assert.equal(await entrance.evaluate(el => getComputedStyle(el).animationName), 'section-rise');
+      await entrance.evaluate(el => Promise.all(el.getAnimations().map(animation => animation.finished)));
+      assert.equal(await entrance.evaluate(el => getComputedStyle(el).transform), 'none');
+      await page.emulateMedia({reducedMotion: 'reduce'});
+      assert.equal(await entrance.evaluate(el => getComputedStyle(el).animationName), 'none');
+      assert.equal(await page.locator('.poster-hero h1').evaluate(el => getComputedStyle(el).animationName), 'none');
+      await page.emulateMedia({reducedMotion: 'no-preference'});
       if (route !== '/versions/') {
         await page.setViewportSize({width: 911, height: 850});
         const toggle = page.getByRole('button', {name: 'Меню разделов'});
@@ -75,6 +87,22 @@ const server = http.createServer(async (request, response) => {
     if (process.env.SCREENSHOT_PATH) await page.screenshot({path: process.env.SCREENSHOT_PATH});
     await page.setViewportSize({width: 1280, height: 900});
     await page.goto(base);
+    const motion = await page.evaluate(async () => {
+      const panel = document.querySelector('.practice-main');
+      await Promise.all(panel.getAnimations().map(animation => animation.finished));
+      document.querySelector('#sections button[data-section="9"]').click();
+      const switched = panel.getAnimations().length;
+      document.querySelector('#sections button[data-section="10"]').click();
+      const rapidSwitch = panel.getAnimations().length;
+      await Promise.all(panel.getAnimations().map(animation => animation.finished));
+      document.querySelector('#skip').click();
+      return {switched, rapidSwitch, nextCard: panel.getAnimations().length};
+    });
+    assert.deepEqual(motion, {switched: 1, rapidSwitch: 1, nextCard: 0});
+    await page.emulateMedia({reducedMotion: 'reduce'});
+    await page.locator('#sections button[data-section="9"]').click();
+    assert.equal(await page.locator('.practice-main').evaluate(el => el.getAnimations().length), 0);
+    await page.emulateMedia({reducedMotion: 'no-preference'});
     const section = page.locator('#section-nav a[href="test/"]');
     await section.focus();
     assert.equal(await page.locator('link[rel=prefetch]').count(), 1);

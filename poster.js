@@ -1,4 +1,35 @@
 'use strict';
+
+// Replay the entrance only when switching card sections, never on each answer.
+(() => {
+  const sections = document.getElementById('sections');
+  if (!sections || !Element.prototype.animate) return;
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const panels = [...document.querySelectorAll('.practice-main, .poster-rail')];
+  let selected = sections.querySelector('[aria-pressed="true"]')?.dataset.section;
+  function cancelEntrances() {
+    for (const panel of panels) {
+      for (const animation of panel.getAnimations()) animation.cancel();
+    }
+  }
+  sections.addEventListener('click', event => {
+    const button = event.target.closest('button[data-section]');
+    if (!button || button.dataset.section === selected) return;
+    selected = button.dataset.section;
+    cancelEntrances();
+    if (reducedMotion.matches) return;
+    for (const panel of panels) {
+      panel.animate([
+        {opacity: 0, transform: 'translateY(10px)'},
+        {opacity: 1, transform: 'translateY(0)'}
+      ], {duration: 280, easing: 'cubic-bezier(.22,1,.36,1)'});
+    }
+  });
+  reducedMotion.addEventListener('change', event => {
+    if (event.matches) cancelEntrances();
+  });
+})();
+
 (() => {
  const number = document.getElementById('rail-number');
  const topic = document.getElementById('rail-topic');

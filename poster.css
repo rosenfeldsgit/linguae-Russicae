@@ -77,3 +77,31 @@ body{font-family:Golos,Arial,sans-serif;background:var(--bg);color:var(--ink)}.a
 .answer-review .review-explanation{margin:12px 0 0;padding:12px 0 0;border-top:1px solid var(--line);background:transparent;color:var(--ink);font:16px/1.6 Golos,sans-serif}
 
 .exercise .context,.exercise .instruction,.exercise .option.phrase{max-width:100%;overflow-wrap:anywhere}
+
+/* Brief section entrances. Content stays visible without motion or JavaScript.
+   Backwards fill applies only during the delay, leaving no transform afterwards. */
+@keyframes section-rise{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes section-fade{
+  from{opacity:0}
+  to{opacity:1}
+}
+@media screen and (prefers-reduced-motion:no-preference){
+  .poster-hero h1{animation:section-rise 280ms cubic-bezier(.22,1,.36,1) backwards}
+  .poster-caption{animation:section-fade 260ms ease-out 40ms backwards}
+  #sections{animation:section-rise 300ms cubic-bezier(.22,1,.36,1) 40ms backwards}
+  .practice-main,.poster-rail,
+  .exam-app > #setup,.exam-app > .filters,
+  #session > .exam-panel,.exam-app > #results,
+  #catalog,.chapters > article,#essay-practice,
+  .versions-heading,.release-list{
+    animation:section-rise 320ms cubic-bezier(.22,1,.36,1) 60ms backwards;
+  }
+  .poster-rail{animation-delay:100ms}
+  #feed > .exam-panel{animation:section-rise 280ms cubic-bezier(.22,1,.36,1) backwards}
+  #feed > .exam-panel:nth-child(2){animation-delay:35ms}
+  #feed > .exam-panel:nth-child(3){animation-delay:70ms}
+  .release-list{animation-delay:100ms}
+}

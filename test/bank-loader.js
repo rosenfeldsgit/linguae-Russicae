@@ -21,6 +21,13 @@
   }
   async function load(summary) {
     if (typeof summary.prompt === 'string') return summary;
+    if (summary.readyVariantId) {
+      const variant = window.EGE_READY_VARIANTS.find(entry => entry.id === summary.readyVariantId);
+      const questions = await loadReady(variant);
+      const question = questions[summary.task - 1];
+      if (question?.id !== summary.id) throw new Error('Задание не найдено в базе.');
+      return question;
+    }
     const file = summary.file;
     if (typeof file !== 'string' || !/^doshchinsky-(?:2026\/v(?:[1-9]|[12]\d|3[0-6])|2027\/v(?:[3-9]|[12]\d|3[0-6]))\.json$/.test(file)) {
       throw new Error('Недопустимый путь к заданиям.');
@@ -37,14 +44,16 @@
     const data = await getVariant(`ready-variants/${variant.id}.json`);
     const questions = [...data.questions.values()];
     if (questions.length !== 27 || questions.some((q, index) =>
-      q.task !== index + 1 || !q.prompt || (q.passageKey && !data.passages[q.passageKey]?.text) ||
+      q.task !== index + 1 || q.id !== `${variant.id}-q${q.task}` || !q.prompt ||
+      (q.passageKey && !data.passages[q.passageKey]?.text) ||
       (q.task === 27 ? q.answerType !== 'essay' : !q.answers?.length))) {
       throw new Error('Комплект заданий неполный.');
     }
-    return questions.map(q => ({
+    return questions.map((q, index) => ({
       ...q,
+      displayId: variant.firstDisplayId + index,
       passage: data.passages[q.passageKey]?.text || '',
-      source: {title: variant.title},
+      source: {title: variant.title, url: variant.sourceUrl, variant: variant.id},
     }));
   }
   window.EGE_EXAM_LOADER = {load, loadReady};

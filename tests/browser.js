@@ -84,6 +84,14 @@ const server = http.createServer(async (request, response) => {
     await page.setViewportSize({width: 911, height: 850});
     await page.goto(base);
     assert((await page.locator('h1').innerText()).includes('РУСА ЛИНГВО'));
+    const historyTab = page.context().waitForEvent('page');
+    await page.getByRole('link', {name: /История изменений/}).click();
+    const history = await historyTab;
+    await history.waitForURL(base + '/versions/');
+    await history.locator('.release-list').waitFor();
+    assert.equal(page.url(), base + '/');
+    assert.equal(await page.locator('dialog').count(), 0);
+    await history.close();
     if (process.env.SCREENSHOT_PATH) await page.screenshot({path: process.env.SCREENSHOT_PATH});
     await page.setViewportSize({width: 1280, height: 900});
     await page.goto(base);
@@ -210,6 +218,33 @@ const server = http.createServer(async (request, response) => {
     assert.match(await page.locator('#essay-criteria').getAttribute('href'), /^https:\/\/fipi\.ru\//);
     await page.locator('#restart').click();
     assert(await ready.evaluate(button => button === document.activeElement));
+
+    await page.goto(base + '/test/?task=27');
+    await page.locator('#task-picker input[value="23"]').check();
+    await page.locator('#start').click();
+    await page.locator('#task-nav button').last().waitFor();
+    const shared = await page.locator('#passage .passage').textContent();
+    assert.match(await page.locator('#source').textContent(), /Демоверсия/);
+    await page.getByRole('button', {name: 'Задание 27', exact: true}).click();
+    assert.equal(await page.locator('#passage .passage').textContent(), shared);
+    await page.getByRole('textbox', {name: 'Сочинение'}).fill(essay);
+    await page.locator('#finish').click();
+    await page.locator('#confirm-finish').click();
+    assert.equal(await page.locator('#essay-submission').textContent(), essay);
+
+    await page.goto(base + '/feed/');
+    await page.locator('#search-id').fill('1899');
+    await page.locator('#search').evaluate(form => form.requestSubmit());
+    await page.getByRole('textbox', {name: 'Сочинение'}).fill(essay);
+    assert.match(await page.locator('#feed h2').textContent(), /Задание 27 · #1899/);
+    await page.locator('#search').evaluate(form => form.requestSubmit());
+    await page.getByRole('textbox', {name: 'Сочинение'}).waitFor();
+    assert.equal(await page.getByRole('textbox', {name: 'Сочинение'}).inputValue(), essay);
+
+    await page.goto(base + '/?task=27');
+    await page.getByRole('button', {name: 'Родина даёт силы пережить трудности'}).click();
+    await page.getByRole('button', {name: 'Пояснение к ответу'}).click();
+    assert.match(await page.locator('.rule-note').innerText(), /Второй пример конкретизирует первый/);
 
     await page.goto(base + '/theory/#task-11');
     assert(await page.locator('#task-11').isVisible());

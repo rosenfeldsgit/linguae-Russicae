@@ -1,7 +1,7 @@
 'use strict';
 (() => {
   const {bank, score, renderPassage, renderQuestion, renderAnswer} = window.EGE_EXERCISES;
-  const questions = bank.filter(q => /^doshchinsky-202[67]-v\d+-q\d+$/.test(q.id));
+  const questions = bank.filter(q => Number.isInteger(q.displayId));
   for (let i = questions.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [questions[i], questions[j]] = [questions[j], questions[i]];
@@ -22,10 +22,24 @@
   function exercise(q) {
     const node = byId('exercise').content.firstElementChild.cloneNode(true);
     node.querySelector('h2').textContent = 'Задание ' + q.task + ' · #' + q.displayId;
-    const [, year, variant] = q.id.match(/^doshchinsky-(\d+)-v(\d+)-/);
-    node.querySelector('.source').textContent = 'Сборник Дощинского ' + year + ' · Вариант ' + variant;
+    const source = node.querySelector('.source');
+    source.textContent = q.source?.title || '';
+    if (Number.isInteger(q.source?.variant)) source.textContent += ' · Вариант ' + q.source.variant;
     renderPassage(node.querySelector('.reading'), q, true);
     renderQuestion(node.querySelector('.question'), q);
+    if (q.answerType === 'essay') {
+      node.querySelector('.check').hidden = true;
+      const essay = node.querySelector('.feed-essay');
+      const draft = essay.querySelector('textarea');
+      const criteria = essay.querySelector('a');
+      essay.hidden = false;
+      draft.value = attempts.get(q.id)?.value || '';
+      draft.addEventListener('input', () => attempts.set(q.id, {value: draft.value}));
+      criteria.href = q.source?.url || '../theory/#task-27';
+      essay.querySelector('.author-position').textContent = q.authorPosition || '';
+      essay.querySelector('details').hidden = !q.authorPosition;
+      return node;
+    }
     const input = node.querySelector('input');
     input.inputMode = q.answerType === 'word' ? 'text' : 'numeric';
     const feedback = node.querySelector('.result');

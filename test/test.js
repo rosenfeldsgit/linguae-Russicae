@@ -8,18 +8,20 @@
   let session = null;
   let interval = null;
   const readyVariants = window.EGE_READY_VARIANTS;
+  if (bank.some(question => question.task === 27)) config.tasks[27] = {number: 27, maxPrimary: 22};
   const randomItem = items => items[Math.floor(Math.random() * items.length)];
   const time = ms => {
     const seconds = Math.floor(ms / 1000);
     return [Math.floor(seconds / 60), seconds % 60].map(n => String(n).padStart(2, '0')).join(':');
   };
   function selection() {
-    return [...$('task-picker').querySelectorAll('input:checked')].map(input => Number(input.value));
+    return [...$('setup').querySelectorAll('input:checked')].map(input => Number(input.value));
   }
   function updateSelection() {
     const numbers = selection();
-    const points = numbers.reduce((sum, n) => sum + config.tasks[n].maxPrimary, 0);
-    $('selection-summary').textContent = `Выбрано заданий — ${numbers.length}. Максимум — ${points} первичных баллов.`;
+    const points = numbers.filter(n => n !== 27).reduce((sum, n) => sum + config.tasks[n].maxPrimary, 0);
+    const essayNote = numbers.includes(27) ? ' Сочинение проверяется вручную (до 22 баллов).' : '';
+    $('selection-summary').textContent = `Выбрано заданий — ${numbers.length}. Максимум за часть 1 — ${points} первичных баллов.${essayNote}`;
     $('start').disabled = !numbers.length;
   }
   function saveTime() {
@@ -84,7 +86,7 @@
       tasks.get(question.task).push(question);
     }
     const selected = numbers.map(task => {
-      const shared = task <= 3 ? [1, 2, 3] : task >= 23 && task <= 26 ? [23, 24, 25, 26] : [task];
+      const shared = task <= 3 ? [1, 2, 3] : task >= 23 && task <= 27 ? [23, 24, 25, 26, 27] : [task];
       const key = shared[0];
       if (!variants[key]) {
         const needed = shared.filter(n => numbers.includes(n));
@@ -137,7 +139,7 @@
         $('essay-submission').textContent = session.answers[index].trim() || 'Сочинение не написано.';
         $('essay-author-position').hidden = !question.authorPosition;
         $('essay-author-position').textContent = question.authorPosition ? `Позиция автора по ключу. ${question.authorPosition}` : '';
-        $('essay-criteria').href = session.variant.sourceUrl;
+        $('essay-criteria').href = question.source.url || '../theory/#task-27';
         return;
       }
       const points = score(question, session.answers[index]);
@@ -190,9 +192,12 @@
       row.children[0].append(info);
       $('result-rows').append(row, detailRow);
     });
-    $('result-summary').textContent = `${total} из ${maximum} первичных баллов · ${time(duration)}`;
+    const hasEssay = !$('essay-review').hidden;
+    $('result-summary').textContent = maximum ? `${total} из ${maximum} первичных баллов · ${time(duration)}` : `Время работы — ${time(duration)}`;
+    $('results').querySelector('.table-wrap').hidden = !maximum;
     $('conversion').textContent = session.variant
       ? `${session.variant.title} · Баллы за часть 1. Сочинение проверяется вручную.`
+      : hasEssay ? 'Сочинение проверяется вручную.'
       : `По предоставленной шкале ${total} первичных → ${config.conversion[total]} тестовых из 100. Учтены только выбранные задания, сочинение — 0 баллов. Максимум части 1 — 28 первичных → 55 тестовых.`;
     $('session').hidden = true;
     $('results').hidden = false;
@@ -206,24 +211,24 @@
     const input = document.createElement('input');
     input.type = 'checkbox';
     input.value = task.number;
-    input.checked = !availableTask || String(task.number) === requestedTask;
+    input.checked = availableTask ? String(task.number) === requestedTask : task.number !== 27;
     input.disabled = !bank.some(question => question.task === task.number);
     if (input.disabled) input.checked = false;
     input.setAttribute('aria-label', `Задание ${task.number}, максимум ${task.maxPrimary}`);
     input.addEventListener('change', updateSelection);
     const number = document.createElement('span');
-    number.textContent = task.number;
+    number.textContent = task.number === 27 ? '27 · Сочинение' : task.number;
     const weight = document.createElement('small');
     weight.textContent = `${task.maxPrimary} б.`;
     label.append(input, number, weight);
-    $('task-picker').append(label);
+    $(task.number === 27 ? 'essay-picker' : 'task-picker').append(label);
   }
   $('select-all').addEventListener('click', () => {
     $('task-picker').querySelectorAll('input:not(:disabled)').forEach(input => input.checked = true);
     updateSelection();
   });
   $('clear-all').addEventListener('click', () => {
-    $('task-picker').querySelectorAll('input').forEach(input => input.checked = false);
+    $('setup').querySelectorAll('input[type="checkbox"]').forEach(input => input.checked = false);
     updateSelection();
   });
   async function prepare(startButton, variant) {

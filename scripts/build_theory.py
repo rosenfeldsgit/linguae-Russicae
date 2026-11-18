@@ -15,7 +15,8 @@ def data(path):
 
 
 def inline(text):
-    return re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', escape(text))
+    text = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', escape(text))
+    return re.sub(r'(?<!\*)\*([^*]+)\*(?!\*)', r'<em>\1</em>', text)
 
 
 def kind(line):
@@ -28,7 +29,26 @@ def kind(line):
     return 'text'
 
 
+TABLE_TAG = re.compile(
+    r'</?(?:table|thead|tbody|colgroup|strong|em)>|<br\s*/?>|'
+    r'</?(?:tr|td|th|col)(?: (?:scope="col"|(?:rowspan|colspan)="[1-9]\d{0,2}"|'
+    r'style="(?:height: [1-9]\d{0,3}px|width: (?:[1-9]\d?|100)%);"))*>'
+)
+
+
 def blocks(lines):
+    # Authored HTML tables preserve merged cells and dimensions that Markdown loses.
+    parts = re.split(r'(^<table>\n.*?^</table>$)', '\n'.join(lines), flags=re.M | re.S)
+    for index in range(0, len(parts), 2):
+        parts[index] = text_blocks(parts[index].splitlines())
+    for index in range(1, len(parts), 2):
+        if '<' in TABLE_TAG.sub('', parts[index]):
+            raise ValueError('Unsupported markup in a knowledge-base table')
+        parts[index] = f'<div class="table-wrap">{parts[index]}</div>'
+    return '\n'.join(filter(None, parts))
+
+
+def text_blocks(lines):
     parts = []
     for typ, group in groupby(lines, kind):
         rows = list(group)

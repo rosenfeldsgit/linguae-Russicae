@@ -181,6 +181,36 @@ const server = http.createServer(async (request, response) => {
     assert.equal(rendered.links, 1);
     assert.equal(rendered.images, 0);
     assert(rendered.text.includes('<img'));
+
+    await page.locator('#restart').click();
+    const ready = page.getByRole('button', {name: 'Начать вариант — Демоверсия ЕГЭ 2027'});
+    const variantUrl = '**/test/ready-variants/fipi-2027-demo.json';
+    await page.route(variantUrl, route => route.fulfill({status: 503}), {times: 1});
+    await ready.click();
+    await page.waitForFunction(() => document.querySelector('#ready-variant-error').textContent.includes('Попробуйте'));
+    await ready.click();
+    await page.locator('#session').waitFor();
+    assert.equal(await page.locator('#task-nav button').count(), 27);
+    assert.equal(await page.locator('#ready-variants').isVisible(), false);
+    await page.locator('#answer').fill('эти');
+    await page.getByRole('button', {name: 'Задание 27', exact: true}).click();
+    assert(await page.locator('#passage').isVisible());
+    await page.locator('#passage button').click();
+    assert(await page.locator('#question').isVisible());
+    const essay = 'Первый абзац.\n\nВторой абзац.';
+    await page.getByRole('textbox', {name: 'Сочинение'}).fill(essay);
+    await page.getByRole('button', {name: 'Задание 1, ответ записан', exact: true}).click();
+    assert.equal(await page.locator('#answer').inputValue(), 'эти');
+    await page.getByRole('button', {name: 'Задание 27, ответ записан', exact: true}).click();
+    assert.equal(await page.locator('#essay').inputValue(), essay);
+    await page.locator('#finish').click();
+    await page.locator('#confirm-finish').click();
+    assert.match(await page.locator('#result-summary').textContent(), /1 из 28/);
+    assert.equal(await page.locator('#essay-submission').textContent(), essay);
+    assert.match(await page.locator('#essay-criteria').getAttribute('href'), /^https:\/\/fipi\.ru\//);
+    await page.locator('#restart').click();
+    assert(await ready.evaluate(button => button === document.activeElement));
+
     await page.goto(base + '/theory/#task-11');
     assert(await page.locator('#task-11').isVisible());
 

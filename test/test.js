@@ -7,6 +7,7 @@
   const $ = id => document.getElementById(id);
   let session = null;
   let interval = null;
+  const readyVariants = window.EGE_READY_VARIANTS;
   const randomItem = items => items[Math.floor(Math.random() * items.length)];
   const time = ms => {
     const seconds = Math.floor(ms / 1000);
@@ -46,13 +47,19 @@
     saveTime();
     session.index = index;
     const question = session.questions[index];
-    $('question-title').textContent = `Задание ${question.task} · #${question.displayId}`;
+    const isEssay = question.answerType === 'essay';
+    $('question-title').textContent = session.variant
+      ? `Задание ${question.task}`
+      : `Задание ${question.task} · #${question.displayId}`;
     $('weight').textContent = `${question.maxPrimary} ${question.maxPrimary === 1 ? 'балл' : 'балла'}`;
     $('source').textContent = question.source.title;
     renderPassage($('passage'), question, session.passageCollapsed[index], collapsed => {
       session.passageCollapsed[index] = collapsed;
     });
     renderQuestion($('question'),question);
+    $('short-answer').hidden = isEssay;
+    $('essay-answer').hidden = !isEssay;
+    $('essay').value = isEssay ? session.answers[index] : '';
     $('answer').value = session.answers[index];
     $('answer').inputMode = question.answerType === 'word' ? 'text' : 'numeric';
     $('answer-help').textContent = question.answerType === 'matching' ? 'Пять цифр в порядке А, Б, В, Г, Д.' : question.answerType === 'word' ? 'Слово или сочетание слов.' : 'Запишите цифры без пробелов и запятых.';
@@ -63,7 +70,7 @@
     updateClock();
     if (focus) $('question-title').focus();
   }
-  async function start() {
+  async function loadSelectedQuestions() {
     const numbers = selection();
     if (!numbers.length) return;
     // Номера, опирающиеся на один текст, получают общий вариант источника.
@@ -87,10 +94,13 @@
       }
       return randomItem(variants[key].get(task));
     });
-    const questions = await Promise.all(selected.map(window.EGE_EXAM_LOADER.load));
+    return Promise.all(selected.map(window.EGE_EXAM_LOADER.load));
+  }
+  function startSession(questions, variant, startButton) {
     const now = performance.now();
-    session = { questions, passageCollapsed: questions.map(() => false), answers: questions.map(() => ''), elapsed: questions.map(() => 0), index: 0, startedAt: now, enteredAt: now, finished: false };
+    session = { questions, variant, startButton, passageCollapsed: questions.map(() => false), answers: questions.map(() => ''), elapsed: questions.map(() => 0), index: 0, startedAt: now, enteredAt: now, finished: false };
     $('setup').hidden = true;
+    $('ready-variants').hidden = true;
     $('results').hidden = true;
     $('session').hidden = false;
     $('task-nav').replaceChildren();
@@ -122,6 +132,14 @@
     let maximum = 0;
     $('result-rows').replaceChildren();
     session.questions.forEach((question, index) => {
+      if (question.answerType === 'essay') {
+        $('essay-review').hidden = false;
+        $('essay-submission').textContent = session.answers[index].trim() || 'Сочинение не написано.';
+        $('essay-author-position').hidden = !question.authorPosition;
+        $('essay-author-position').textContent = question.authorPosition ? `Позиция автора по ключу. ${question.authorPosition}` : '';
+        $('essay-criteria').href = session.variant.sourceUrl;
+        return;
+      }
       const points = score(question, session.answers[index]);
       total += points;
       maximum += question.maxPrimary;
@@ -132,7 +150,7 @@
         cell.textContent = value;
         if (column === 0) {
           const source = document.createElement('small');
-          source.textContent = `${question.source.title} · #${question.displayId}`;
+          source.textContent = session.variant ? session.variant.publisher : `${question.source.title} · #${question.displayId}`;
           cell.append(source);
         }
         if (column === 3) cell.className = points === question.maxPrimary ? 'score-full' : points ? 'score-partial' : 'score-zero';
@@ -157,12 +175,12 @@
       review.append(answer);
       detailCell.append(review);
       detailRow.append(detailCell);
-      detailRow.id = 'review-' + question.displayId;
+      detailRow.id = 'review-' + (question.displayId ?? question.id);
       const info = document.createElement('button');
       info.type = 'button';
       info.className = 'rule-toggle';
       info.textContent = 'ⓘ';
-      info.setAttribute('aria-label', 'Задание и объяснение #' + question.displayId);
+      info.setAttribute('aria-label', session.variant ? 'Разбор задания ' + question.task : 'Задание и объяснение #' + question.displayId);
       info.setAttribute('aria-expanded', 'false');
       info.setAttribute('aria-controls', detailRow.id);
       info.addEventListener('click', () => {
@@ -173,7 +191,9 @@
       $('result-rows').append(row, detailRow);
     });
     $('result-summary').textContent = `${total} из ${maximum} первичных баллов · ${time(duration)}`;
-    $('conversion').textContent = `По предоставленной шкале ${total} первичных → ${config.conversion[total]} тестовых из 100. Учтены только выбранные задания, сочинение — 0 баллов. Максимум части 1 — 28 первичных → 55 тестовых.`;
+    $('conversion').textContent = session.variant
+      ? `${session.variant.title} · Баллы за часть 1. Сочинение проверяется вручную.`
+      : `По предоставленной шкале ${total} первичных → ${config.conversion[total]} тестовых из 100. Учтены только выбранные задания, сочинение — 0 баллов. Максимум части 1 — 28 первичных → 55 тестовых.`;
     $('session').hidden = true;
     $('results').hidden = false;
     $('result-title').focus();
@@ -206,30 +226,76 @@
     $('task-picker').querySelectorAll('input').forEach(input => input.checked = false);
     updateSelection();
   });
-  $('start').addEventListener('click', async () => {
+  async function prepare(startButton, variant) {
     if (preparing) return;
-    preparing=true;$('start').disabled=true;$('start').textContent='Подготовка…';
-    try {await start();} catch(error) {$('selection-summary').textContent=error.message;}
-    finally {preparing=false;$('start').textContent='Начать пробник';updateSelection();}
-  });
-  $('answer').addEventListener('input', () => {
-    session.answers[session.index] = $('answer').value;
-    updateNavigation();
-  });
+    const label = startButton.textContent;
+    const status = $(variant ? 'ready-variant-error' : 'selection-summary');
+    preparing = true;
+    startButton.disabled = true;
+    startButton.textContent = 'Подготовка…';
+    if (variant) status.textContent = '';
+    try {
+      const questions = variant
+        ? await window.EGE_EXAM_LOADER.loadReady(variant)
+        : await loadSelectedQuestions();
+      if (questions) startSession(questions, variant, startButton);
+    } catch {
+      status.textContent = 'Не удалось загрузить задания. Попробуйте ещё раз.';
+    } finally {
+      preparing = false;
+      startButton.textContent = label;
+      startButton.disabled = !variant && !selection().length;
+    }
+  }
+  $('start').addEventListener('click', () => prepare($('start')));
+  for (const variant of readyVariants) {
+    const row = document.createElement('li');
+    const info = document.createElement('div');
+    const title = document.createElement('h3');
+    title.textContent = variant.title;
+    const meta = document.createElement('p');
+    meta.className = 'ready-variant-meta';
+    const source = document.createElement('a');
+    source.href = variant.sourceUrl;
+    source.textContent = variant.publisher;
+    source.setAttribute('aria-label', `Первоисточник — ${variant.publisher}, ${variant.title}`);
+    meta.append(source, ` · 27 заданий · ${variant.minutes} мин`);
+    info.append(title, meta);
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'secondary';
+    button.textContent = 'Начать вариант';
+    button.setAttribute('aria-label', `Начать вариант — ${variant.title}`);
+    button.addEventListener('click', () => prepare(button, variant));
+    row.append(info, button);
+    $('ready-variant-list').append(row);
+  }
+  $('ready-variants').hidden = !readyVariants.length;
+  for (const id of ['answer', 'essay']) {
+    $(id).addEventListener('input', event => {
+      session.answers[session.index] = event.currentTarget.value;
+      updateNavigation();
+    });
+  }
   $('previous').addEventListener('click', () => showQuestion(session.index - 1));
   $('next').addEventListener('click', () => session.index < session.questions.length - 1 ? showQuestion(session.index + 1) : confirmFinish());
   $('finish').addEventListener('click', confirmFinish);
   $('cancel-finish').addEventListener('click', () => $('finish-confirm').hidden = true);
   $('confirm-finish').addEventListener('click', finish);
   $('restart').addEventListener('click', () => {
+    const {startButton} = session;
     session = null;
     $('answer').value = '';
+    $('essay').value = '';
+    $('essay-submission').textContent = '';
+    $('essay-review').hidden = true;
     $('result-rows').replaceChildren();
     $('result-summary').textContent = '';
     $('conversion').textContent = '';
     $('results').hidden = true;
     $('setup').hidden = false;
-    $('start').focus();
+    $('ready-variants').hidden = !readyVariants.length;
+    startButton.focus();
   });
   updateSelection();
 })();

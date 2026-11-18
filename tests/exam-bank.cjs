@@ -51,11 +51,17 @@ console.log('936 questions, 36 variants, keys, text-only content, scoring and sh
  bank.push(...loaded.filter(q=>q.id.startsWith('doshchinsky-2026-')));
  assert.equal(new Set(bank.map(q=>q.displayId)).size,1872);
  for(const q of bank)for(const a of q.answers)assert.equal(scoring.score(q,a),q.maxPrimary,q.id);
- const selectionCode=js.slice(js.indexOf('    const variants = {};'),js.indexOf('    const questions = await Promise.all'));
+ const selectionCode=js.slice(js.indexOf('    const variants = {};'),js.indexOf('    return Promise.all(selected'));
  for(let i=0;i<50;i++){
   const selectionContext={numbers:Array.from({length:26},(_,i)=>i+1),bank,randomItem:xs=>xs[Math.floor(Math.random()*xs.length)]};
   vm.runInNewContext(selectionCode+'\nthis.selected=selected;',selectionContext);
   for(const group of [[1,2,3],[23,24,25,26]])assert.equal(new Set(selectionContext.selected.filter(q=>group.includes(q.task)).map(q=>JSON.stringify([q.source.title,q.source.variant]))).size,1);
  }
+ context.window.EGE_READY_VARIANTS=ctx.window.EGE_READY_VARIANTS;
+ const ready=await loader.loadReady(context.window.EGE_READY_VARIANTS[0]);
+ assert.deepEqual(Array.from(ready,q=>q.task),Array.from({length:27},(_,i)=>i+1));
+ assert.equal(ready[26].answerType,'essay');
+ assert.equal(ready[26].passage,ready[22].passage);
+ assert.equal(ready.slice(0,26).reduce((sum,q)=>sum+scoring.score(q,q.answers[0]),0),28);
  console.log('Lazy loading, parallel request cache, random shared-text grouping: OK');
 })().catch(error=>{console.error(error);process.exitCode=1;});

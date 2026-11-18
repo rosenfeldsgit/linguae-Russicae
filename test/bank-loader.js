@@ -15,17 +15,37 @@
       clearTimeout(timer);
     }
   }
+  function getVariant(file) {
+    if (!cache.has(file)) cache.set(file, fetchVariant(file).catch(error => {cache.delete(file); throw error;}));
+    return cache.get(file);
+  }
   async function load(summary) {
     if (typeof summary.prompt === 'string') return summary;
     const file = summary.file;
     if (typeof file !== 'string' || !/^doshchinsky-(?:2026\/v(?:[1-9]|[12]\d|3[0-6])|2027\/v(?:[3-9]|[12]\d|3[0-6]))\.json$/.test(file)) {
       throw new Error('Недопустимый путь к заданиям.');
     }
-    if (!cache.has(file)) cache.set(file, fetchVariant(file).catch(error => {cache.delete(file); throw error;}));
-    const data = await cache.get(file);
+    const data = await getVariant(file);
     const q = data.questions.get(summary.id);
     if (!q) throw new Error('Задание не найдено в базе.');
     return {...q,passage:data.passages[q.passageKey]?.text || ''};
   }
-  window.EGE_EXAM_LOADER = {load};
+  async function loadReady(variant) {
+    if (!window.EGE_READY_VARIANTS.includes(variant) || !/^[a-z0-9-]+$/.test(variant.id)) {
+      throw new Error('Готовый вариант не найден.');
+    }
+    const data = await getVariant(`ready-variants/${variant.id}.json`);
+    const questions = [...data.questions.values()];
+    if (questions.length !== 27 || questions.some((q, index) =>
+      q.task !== index + 1 || !q.prompt || (q.passageKey && !data.passages[q.passageKey]?.text) ||
+      (q.task === 27 ? q.answerType !== 'essay' : !q.answers?.length))) {
+      throw new Error('Комплект заданий неполный.');
+    }
+    return questions.map(q => ({
+      ...q,
+      passage: data.passages[q.passageKey]?.text || '',
+      source: {title: variant.title},
+    }));
+  }
+  window.EGE_EXAM_LOADER = {load, loadReady};
 })();

@@ -57,6 +57,7 @@
   "test/exercises.js",
   "test/feed.html",
   "test/index.html",
+  "test/ready-variants/fipi-2027-demo.json",
   "test/test.css",
   "test/test.js",
   "theory/index.html",

@@ -86,3 +86,11 @@
     justify-items: start;
   }
 }
+
+#essay-picker:not(:empty) {
+  margin-top: 20px;
+}
+#essay-picker .task-choice {
+  width: fit-content;
+  padding-inline: 16px;
+}

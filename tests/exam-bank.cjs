@@ -63,5 +63,14 @@ console.log('936 questions, 36 variants, keys, text-only content, scoring and sh
  assert.equal(ready[26].answerType,'essay');
  assert.equal(ready[26].passage,ready[22].passage);
  assert.equal(ready.slice(0,26).reduce((sum,q)=>sum+scoring.score(q,q.answers[0]),0),28);
+ const summaries=ctx.window.EGE_READY_QUESTIONS;
+ assert.equal(new Set([...bank,...summaries].map(q=>q.displayId)).size,bank.length+summaries.length);
+ assert(summaries.every(q=>scoring.bank.some(item=>item.id===q.id)));
+ for(const summary of summaries) {
+  const question=await loader.load(summary);
+  assert.equal(question.id,summary.id);
+  assert.equal(question.displayId,summary.displayId);
+ }
+ assert.equal(calls.length,70+context.window.EGE_READY_VARIANTS.length,'ready and individual exam views share one fetch');
  console.log('Lazy loading, parallel request cache, random shared-text grouping: OK');
 })().catch(error=>{console.error(error);process.exitCode=1;});

@@ -38,3 +38,14 @@ for (const card of cards) {
   else if (card.kind !== 'stress') assert(card.options.includes(card.answer), card.id);
 }
 console.log(banks.length + ' banks, ' + cards.length + ' cards verified');
+ctx.registerCards = register;
+run('cards/fipi-2027.js');
+const demo = cards.filter(card => card.id.startsWith('fipi-2027-demo-card-'));
+assert.deepEqual(Array.from(demo, card => card.task).sort((a, b) => a - b), Array.from({length: 27}, (_, i) => i + 1));
+for (const card of demo) {
+  assert(card.explanation.trim() && card.sourceUrl.startsWith('https://fipi.ru/'));
+  if (card.kind === 'punctuation') assert(card.answer.every(i => i >= 0 && i < card.parts.length - 1));
+  else if (card.kind === 'stress') assert(Number(card.answer) >= 0 && card.spelling === 'о');
+  else assert(card.options.includes(card.answer), card.id);
+}
+assert.equal(demo.find(card => card.task === 15).spelling.toUpperCase(), 'НН');

@@ -5,8 +5,11 @@
     "sourceIds": [
       "FIPI_2027",
       "GRAMOTA_MORPH",
-      "RUSTUTORS_1"
+      "RUSTUTORS_1",
+      "GRAMOTA_316043",
+      "4EGE_TASK1"
     ],
+    "checkedOn": "2026-11-18",
     "coverage": "core",
     "status": "authored",
     "sourceSections": [

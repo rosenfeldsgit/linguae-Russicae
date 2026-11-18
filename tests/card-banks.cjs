@@ -49,3 +49,4 @@ for (const card of demo) {
   else assert(card.options.includes(card.answer), card.id);
 }
 assert.equal(demo.find(card => card.task === 15).spelling.toUpperCase(), 'НН');
+assert(demo.filter(card => card.task >= 16 && card.task <= 21).every(card => card.kind === 'punctuation'));

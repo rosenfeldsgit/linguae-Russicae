@@ -84,6 +84,8 @@ const server = http.createServer(async (request, response) => {
     await page.setViewportSize({width: 911, height: 850});
     await page.goto(base);
     assert((await page.locator('h1').innerText()).includes('РУСА ЛИНГВО'));
+    assert.deepEqual(await page.locator('#sections button').allTextContents(),
+      ['Все подряд', '1', '5', '9', '10', '11', '12', '13', '14', '15', 'Ударение', 'Пунктуация']);
     const historyTab = page.context().waitForEvent('page');
     await page.getByRole('link', {name: /История изменений/}).click();
     const history = await historyTab;
@@ -245,6 +247,7 @@ const server = http.createServer(async (request, response) => {
     await page.getByRole('button', {name: 'Родина даёт силы пережить трудности'}).click();
     await page.getByRole('button', {name: 'Пояснение к ответу'}).click();
     assert.match(await page.locator('.rule-note').innerText(), /Второй пример конкретизирует первый/);
+    assert.doesNotMatch(await page.locator('.rule-note').innerText(), /ФИПИ|демоверсия/i);
 
     await page.goto(base + '/theory/#task-11');
     assert(await page.locator('#task-11').isVisible());

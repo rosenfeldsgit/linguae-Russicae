@@ -9,8 +9,6 @@
  const cards = [...staticCards,...managed.cards.filter(c=>!staticIds.has(c.id))].filter(c => !disabled.has(c.id)).map(c => overrides.get(c.id) || c).map(card => ({ ...card, displayId: card.displayId || stableId(card.id), maxPrimary: (managed.tasks[card.task] || window.EGE_EXAM_CONFIG.tasks[card.task] || {maxPrimary:1}).maxPrimary }));
  const $=id=>document.getElementById(id);
  const sections=[['all','Все подряд'],['1','1'],['5','5'],...Array.from({length:7},(_,i)=>[String(i+9),String(i+9)]),['stress','Ударение'],['punctuation','Пунктуация']];
- const demoCards = cards.filter(card => card.id.startsWith('fipi-2027-demo-card-'));
- if (demoCards.length) sections.push(['demo-2027','Демоверсия 2027']);
  for (const task of Object.values(managed.tasks)) { if (!sections.some(s=>s[0]===String(task.number)) && cards.some(c=>c.task===task.number)) sections.splice(sections.length-2,0,[String(task.number),String(task.number)]); }
  let pool=[],current=null,timer=null,locked=false,correct=0,wrong=0;
  const rotations = new Map();
@@ -86,14 +84,6 @@
      const emphasis = document.createElement(bold ? 'strong' : 'em');
      emphasis.textContent = part.slice(bold ? 2 : 1, bold ? -2 : -1);
      note.append(emphasis);
-   }
-   if (typeof card.sourceUrl === "string" && card.sourceUrl.startsWith("https://")) {
-     const source = document.createElement('a');
-     source.href = card.sourceUrl;
-     source.target = '_blank';
-     source.rel = 'noopener';
-     source.textContent = 'ФИПИ';
-     note.append(document.createTextNode(' '), source);
    }
    note.hidden = true;
    const toggle = document.createElement('button');
@@ -244,7 +234,7 @@
   clearTimeout(timer);timer=null;current=null;locked=false;$('instruction').hidden=true;
   correct=wrong=0;$('correct').textContent='0';$('wrong').textContent='0';$('mistake-list').replaceChildren();$('empty').hidden=false;
   for(const b of $('sections').children)b.setAttribute('aria-pressed',String(b.dataset.section===id));
-  pool = id === 'all' ? cards : id === 'stress' ? cards.filter(c => c.kind === 'stress') : id === 'punctuation' ? cards.filter(c => c.kind === 'punctuation') : id === 'demo-2027' ? demoCards : cards.filter(c => c.task === Number(id));
+  pool = id === 'all' ? cards : id === 'stress' ? cards.filter(c => c.kind === 'stress') : id === 'punctuation' ? cards.filter(c => c.kind === 'punctuation') : cards.filter(c => c.task === Number(id));
   if(!pool.length){$('word').textContent='Не удалось загрузить карточки';$('context').textContent='Проверьте, что папка cards находится рядом с index.html.';$('skip').hidden=true;return;}
   if (!rotations.has(id)) rotations.set(id, createRotation(pool));
   rotation = rotations.get(id);

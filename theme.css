@@ -55,11 +55,6 @@
 :root[data-theme="dark"] .passage { background: var(--passage-bg); }
 :root[data-theme="dark"] [data-result="incorrect"] .answer-review { border-left-color: var(--red); }
 :root[data-theme="dark"] [data-result="partial"] .answer-review { border-left-color: var(--amber); }
-.card-source {
-  margin: .35rem 0 0;
-  color: var(--muted);
-  font: 12px/1.45 Plex, monospace;
-}
 :root[data-theme="dark"] .option.wrong {
   background: #ff8a7b;
   color: var(--bg);

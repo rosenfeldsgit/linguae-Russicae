@@ -4,7 +4,7 @@ const vm = require('node:vm');
 const assert = require('node:assert/strict');
 const source = fs.readFileSync('app.js', 'utf8');
 const context = {};
-vm.runInNewContext(source.slice(source.indexOf(' const random='), source.indexOf(' function solution(')) +
+vm.runInNewContext(source.slice(source.indexOf(' const normalizeAnswer ='), source.indexOf(' function solution(')) +
   '\nthis.createRotation=createRotation;this.nextCard=nextCard;this.exerciseKey=exerciseKey;', context);
 const card = (id, prompt = 'пр…брежный', answer = 'и', extra = {}) =>
   ({id, task: 10, kind: 'letter', prompt, before: 'пр', after: 'брежный', answer, ...extra});

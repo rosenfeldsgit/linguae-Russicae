@@ -85,7 +85,7 @@ const server = http.createServer(async (request, response) => {
     await page.goto(base);
     assert((await page.locator('h1').innerText()).includes('РУСА ЛИНГВО'));
     assert.deepEqual(await page.locator('#sections button').allTextContents(),
-      ['Все подряд', '1', '5', '9', '10', '11', '12', '13', '14', '15', 'Ударение', 'Пунктуация']);
+      ['Все подряд', '1', '5', '7', '9', '10', '11', '12', '13', '14', '15', 'Ударение', 'Пунктуация']);
     const historyTab = page.context().waitForEvent('page');
     await page.getByRole('link', {name: /История изменений/}).click();
     const history = await historyTab;
@@ -350,11 +350,43 @@ const server = http.createServer(async (request, response) => {
     await print.getByRole('button', {name: 'Закрыть материалы для печати'}).click();
     assert.equal(await page.locator('#session').isVisible(), false, 'Print preview must not start the clock');
 
+    await page.goto(base + '/?task=7');
+    assert.equal(await page.locator('#sections [aria-pressed=true]').textContent(), '7');
+    const reachCard = async fragment => {
+      const found = await page.evaluate(text => {
+        const word = document.getElementById('word');
+        for (let i = 0; i <= window.EGE_TRAINER_CARDS.length; i++) {
+          if (word.textContent.includes(text)) return true;
+          document.getElementById('skip').click();
+        }
+        return false;
+      }, fragment);
+      assert(found, fragment);
+    };
+    const options = page.locator('#options');
+    await reachCard('___ новость');
+    assert.deepEqual((await options.locator('button').allTextContents()).sort(), ['слыша', 'услыша', 'услышав'].sort());
+    await options.getByRole('button', {name: 'слыша', exact: true}).click();
+    assert.equal(await page.locator('#correct').textContent(), '1');
+    assert.deepEqual((await options.locator('.right').allTextContents()).sort(), ['слыша', 'услышав'].sort());
+    assert.equal(await page.locator('#word mark').textContent(), 'слыша');
+    await reachCard('___ новость');
+    await options.getByRole('button', {name: 'услыша', exact: true}).click();
+    assert.equal(await page.locator('#wrong').textContent(), '1');
+    assert.equal(await options.locator('.right').count(), 2);
+    assert.equal(await options.locator('.wrong').textContent(), 'услыша');
+
+    await page.goto(base + '/?task=9');
+    await reachCard('Поч…тная грамота');
+    assert.equal(await page.locator('#card-source').count(), 0);
+    assert.deepEqual((await options.locator('button').allTextContents()).sort(), ['о', 'ё'].sort());
+    await options.getByRole('button', {name: 'ё', exact: true}).click();
+    assert.equal(await page.locator('#correct').textContent(), '1');
+
     await page.goto(base + '/?task=27');
     const demoCardAnswer = page.getByRole('button', {name: 'Родина даёт силы пережить трудности'});
     await page.locator('#options button').first().waitFor();
     for (let i = 0; i < 2 && !await demoCardAnswer.isVisible(); i++) {
-      assert.match(await page.locator('#card-source').textContent(), /СтатГрад.*17\.09\.2026/);
       await page.locator('#skip').click();
     }
     await page.locator('#options .option').filter({hasNotText: 'Родина даёт силы пережить трудности'}).first().click();

@@ -12,11 +12,11 @@ h1{font-size:clamp(32px,4vw,52px);font-weight:500;letter-spacing:-.035em;margin:
 button,select{font:inherit;color:var(--ink);border:1px solid var(--line);background:var(--paper);border-radius:0}
 select{width:100%;padding:12px;font-size:14px;min-height:48px}
 button{cursor:pointer;padding:10px 14px;min-height:40px}
-button:hover{background:var(--green);color:var(--on-green)}
+button:hover{background:var(--lime);color:var(--on-lime)}
 button:disabled{opacity:.5;cursor:default}
 button:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 .download{background:var(--ink);color:var(--paper);min-height:48px;font-weight:500}
-.download:hover{background:var(--blue);color:var(--on-blue)}
+.download:hover{background:var(--blue);color:var(--editor-download-hover,var(--paper))}
 #change-count{margin-left:12px;font-family:Plex,monospace}
 #save-status{flex-basis:100%;font-size:13px;margin:0;min-height:20px;color: var(--green-text)}
 #save-status.error{color:var(--red)}
@@ -30,8 +30,8 @@ button:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-
 #editor table:has(>colgroup){table-layout:fixed}
 #editor th,#editor td{overflow-wrap:anywhere;position:relative;scroll-margin-top:84px;scroll-margin-bottom:16px}
 #editor [data-selected-cell]{outline:2px solid var(--blue);outline-offset:-2px}
-#editor [data-multi-selected]{background:var(--blue);color:var(--on-blue)}
-#editor [data-multi-selected] a{color:var(--on-blue)}
+#editor [data-multi-selected]{background:var(--editor-selection,#e6eaff);color:var(--editor-selection-text,var(--ink))}
+#editor [data-multi-selected] a{color:var(--editor-selection-text,var(--ink))}
 .table-tools[hidden]{display:none}
 .table-tools{position:fixed;z-index:10;width:560px;max-width:calc(100vw - 32px);padding:14px;background:var(--paper);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 28px #191a1826;font-size:13px}
 .table-tools-heading{display:flex;align-items:center;gap:10px;margin-bottom:10px}

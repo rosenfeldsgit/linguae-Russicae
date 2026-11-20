@@ -124,3 +124,30 @@
   width: fit-content;
   padding-inline: 16px;
 }
+
+.print-actions, .print-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.print-bar { justify-content: space-between; margin-bottom: 12px; }
+.print-bar h2 { margin: 0; font: 700 clamp(19px, 4vw, 27px)/1.2 Golos, sans-serif; }
+.print-actions label { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.print-actions select { min-height: 44px; padding: 6px; font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); }
+.finish-area .print-actions { justify-content: center; }
+.print-forms { margin-bottom: 12px; text-decoration: underline; text-underline-offset: 3px; min-height: 44px; }
+#print-dialog {
+  width: min(900px, calc(100vw - 24px));
+  max-height: 92dvh;
+  padding: clamp(12px, 3vw, 24px);
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+}
+#print-dialog::backdrop { background: rgb(0 0 0 / 60%); }
+#print-dialog a { color: var(--blue); }
+#print-page { display: block; height: 59dvh; width: 100%; border: 1px solid var(--line); background: #fff; color-scheme: light; }
+@media (max-width: 780px) {
+  .ready-variant-list li { grid-template-columns: minmax(0, 1fr); justify-items: start; }
+}

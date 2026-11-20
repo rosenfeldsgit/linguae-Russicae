@@ -159,6 +159,8 @@
   const phrase=['spelling','join','word-choice','exam-choice'].includes(current.kind);
   $('instruction').textContent=current.instruction || (phrase?'Выбери написание':'');
   $('instruction').hidden=!(phrase || punctuation || current.instruction);
+  $('card-source').textContent = current.sourceLabel || '';
+  $('card-source').hidden = !current.sourceLabel;
   $('check-answer').hidden=!punctuation;
   $('check-answer').disabled=false;
   $('word').classList.toggle('punctuation-word', punctuation);

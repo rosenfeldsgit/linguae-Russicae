@@ -12,7 +12,7 @@ def build():
     card_tasks = data('data/current-inventory.json')['cardCountsByTask']
     entries = []
     for number, meta in chapters.items():
-        rendered = chapter(number, meta, sources, card_tasks)
+        rendered = chapter(number, meta, sources, card_tasks, include_practice=False)
         # Keep the exact reference body, including rule IDs, tables and dictionaries.
         body = re.sub(r'^<article[^>]*><a[^>]*>.*?</a>\n', '', rendered)
         body = re.sub(r'<a href="#catalog">← Все задания</a>.*$', '', body, flags=re.S)

@@ -80,7 +80,7 @@
       ...q,
       displayId: variant.firstDisplayId + index,
       passage: data.passages[q.passageKey]?.text || '',
-      source: {title: variant.title, url: variant.sourceUrl, variant: variant.id},
+      source: {title: variant.title, url: variant.sourceUrl, variant: variant.id, ...(variant.date ? {date: variant.date} : {})},
     }));
   }
   window.EGE_EXAM_LOADER = {load, loadReady};

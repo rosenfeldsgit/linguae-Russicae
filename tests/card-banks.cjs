@@ -50,3 +50,19 @@ for (const card of demo) {
 }
 assert.equal(demo.find(card => card.task === 15).spelling.toUpperCase(), 'НН');
 assert(demo.filter(card => card.task >= 16 && card.task <= 21).every(card => card.kind === 'punctuation'));
+
+run('cards/statgrad-2026-09-17.js');
+const statgrad = cards.filter(card => card.id.startsWith('statgrad-2026-09-17-'));
+assert.equal(statgrad.length, 54);
+assert.equal(new Set(statgrad.map(card => card.id)).size, 54);
+for (const variant of [1, 2]) {
+  const source = 'СтатГрад · 17.09.2026 · РЯ261010' + variant;
+  const work = statgrad.filter(card => card.sourceLabel === source);
+  assert.deepEqual(Array.from(work, card => card.task).sort((a,b) => a-b), Array.from({length:27}, (_,i) => i+1));
+  for (const card of work) {
+    assert(card.explanation.trim(), card.id);
+    if (card.kind === 'punctuation') assert(card.answer.every(i => i >= 0 && i < card.parts.length - 1), card.id);
+    else if (card.kind === 'stress') assert(Number(card.answer) >= 0 && card.spelling, card.id);
+    else assert(card.options.includes(card.answer), card.id);
+  }
+}

@@ -130,7 +130,7 @@ const server = http.createServer(async (request, response) => {
 
     await page.goto(base + '/feed/');
     assert.equal(await page.evaluate(() => performance.getEntriesByType('resource')
-      .find(entry => entry.name.endsWith('/styles.css?v=accents1')).transferSize), 0,
+      .find(entry => entry.name.endsWith('/styles.css?v=examselection1')).transferSize), 0,
       'Shared stylesheet is reused from the browser cache');
     await page.waitForFunction(() => document.querySelector('#feed').children.length >= 8);
     const headings = page.locator('#feed h2');
@@ -166,12 +166,30 @@ const server = http.createServer(async (request, response) => {
     await page.goto(base + '/test/');
     // Force one known lazy variant for a deterministic review in the real UI.
     await page.evaluate(() => { Math.random = () => 0.035; });
-    await page.locator('#clear-all').click();
+    const checked = page.locator('#setup input[type="checkbox"]:checked');
+    const selectAll = page.getByRole('button', {name: 'Выбрать всё', exact: true});
+    const clearAll = page.getByRole('button', {name: 'Снять выбор', exact: true});
+    await clearAll.click();
+    assert.equal(await checked.count(), 0);
+    await page.getByRole('button', {name: 'Выбрать всю часть 1'}).click();
+    assert.equal(await checked.count(), 26);
+    await selectAll.click();
+    assert.equal(await checked.count(), 27);
+    assert.match(await page.locator('#selection-summary').textContent(), /Сочинение проверяется вручную/);
+    await clearAll.click();
+    assert.equal(await checked.count(), 0);
     await page.locator('#task-picker input[value="11"]').check();
     await page.locator('#start').click();
     await page.waitForFunction(() => !document.querySelector('#session').hidden);
     assert((await page.locator('#question').innerText()).length > 10);
-    await page.locator('#answer').fill('125');
+    const examAnswer = page.locator('#answer');
+    const currentTask = page.locator('#task-nav [aria-current="step"]');
+    await examAnswer.fill('125');
+    assert.equal(await currentTask.evaluate(button => getComputedStyle(button).backgroundColor), 'rgb(41, 62, 244)');
+    assert.match(await currentTask.getAttribute('aria-label'), /ответ записан/);
+    await examAnswer.fill('');
+    assert.doesNotMatch(await currentTask.getAttribute('aria-label'), /ответ записан/);
+    await examAnswer.fill('125');
     await page.locator('#finish').click();
     await page.locator('#confirm-finish').click();
     await page.locator('#result-rows .rule-toggle').click();
@@ -267,7 +285,7 @@ const server = http.createServer(async (request, response) => {
     await page.goto(base + '/test/');
     const theme = page.getByRole('button', {name: 'Тема: Светлая'});
     const selectedTask = page.locator('#task-picker .task-choice:has(input:checked)').first();
-    assert.equal(await selectedTask.evaluate(tile => getComputedStyle(tile).backgroundColor), 'rgb(99, 237, 145)');
+    assert.equal(await selectedTask.evaluate(tile => getComputedStyle(tile).backgroundColor), 'rgb(41, 62, 244)');
     assert.equal(await page.locator('html').getAttribute('data-theme'), 'light');
     const sun = await theme.locator('svg path').getAttribute('d');
     assert(sun);
@@ -301,8 +319,8 @@ const server = http.createServer(async (request, response) => {
     await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
 
     await page.goto(base + '/test/');
-    assert.equal(await selectedTask.evaluate(tile => getComputedStyle(tile).backgroundColor), 'rgb(138, 244, 170)');
-    assert.equal(await selectedTask.evaluate(tile => getComputedStyle(tile).color), 'rgb(25, 26, 24)');
+    assert.equal(await selectedTask.evaluate(tile => getComputedStyle(tile).backgroundColor), 'rgb(166, 210, 255)');
+    assert.equal(await selectedTask.evaluate(tile => getComputedStyle(tile).color), 'rgb(24, 26, 24)');
     await selectedTask.locator('input').focus();
     assert.equal(await selectedTask.evaluate(tile => getComputedStyle(tile).outlineColor), 'rgb(166, 210, 255)');
     await page.getByRole('button', {name: 'Для печати — СтатГрад · 17.09.2026 · РЯ2610102'}).click();

@@ -12,7 +12,7 @@
 .rule h4 {font-size:1.25rem;margin:.4rem 0}
 .rule h4 a {text-decoration:none}
 .rule p {margin:.6rem 0}
-.rule .exception {background:var(--green);color:var(--on-green);padding:.65rem .85rem}
+.rule .exception {background:var(--lime);color:var(--on-lime);padding:.65rem .85rem}
 .chapters .table-wrap {width:100%;max-width:52rem;min-width:0;margin-inline:0;overflow:visible}
 .chapters table {width:100%!important;max-width:52rem!important;min-width:0!important;table-layout:fixed!important}
 .chapters table th,.chapters table td {min-width:0;overflow-wrap:anywhere;word-break:normal;white-space:normal}
@@ -27,6 +27,6 @@ th,td {padding:.5rem;border:1px solid var(--line);vertical-align:top}
 @media(max-width:680px){.words{columns:2}.table-wrap{font-size:.9rem}.chapters article{overflow-wrap:anywhere}}
 
 .chapters .practice-link {display:inline-block;padding:.75rem 1.2rem;background:var(--ink);color:var(--paper);text-decoration:none}
-.chapters .practice-link:hover {background:var(--green);color:var(--on-green)}
+.chapters .practice-link:hover {background:var(--lime);color:var(--on-lime)}
 #essay-practice {max-width:52rem;margin:0 auto 4rem;line-height:1.55}
 #essay-practice textarea {display:block;width:100%;box-sizing:border-box;font:inherit;padding:.75rem;margin:.5rem 0 1rem}

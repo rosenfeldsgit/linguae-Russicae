@@ -268,8 +268,12 @@
     label.append(input, number, weight);
     $(task.number === 27 ? 'essay-picker' : 'task-picker').append(label);
   }
-  $('select-all').addEventListener('click', () => {
+  $('select-part-one').addEventListener('click', () => {
     $('task-picker').querySelectorAll('input:not(:disabled)').forEach(input => input.checked = true);
+    updateSelection();
+  });
+  $('select-all').addEventListener('click', () => {
+    $('setup').querySelectorAll('input[type="checkbox"]:enabled').forEach(input => input.checked = true);
     updateSelection();
   });
   $('clear-all').addEventListener('click', () => {

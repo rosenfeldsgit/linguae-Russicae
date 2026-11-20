@@ -16,15 +16,39 @@
 }
 .poster-caption { align-items: center; gap: 10px; }
 .theme-toggle {
-  min-height: 36px;
-  padding: 5px 9px;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  padding: 0;
   color: var(--ink);
   background: var(--paper);
   border: 1px solid var(--line);
-  font: 12px/1.35 Plex, monospace;
   cursor: pointer;
 }
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 .theme-toggle:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  :where(button:not(:disabled), .mode-nav a, .practice-link) {
+    transition: scale 90ms ease-out;
+  }
+  .option {
+    transition: background .12s, border-color .12s, scale 90ms ease-out;
+  }
+  :where(button:not(:disabled), .mode-nav a, .practice-link):active {
+    scale: .98;
+  }
+}
 :root[data-theme="dark"] .task-choice:has(input:checked) {
   background: var(--lime);
 }

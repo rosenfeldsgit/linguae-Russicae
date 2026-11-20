@@ -64,5 +64,12 @@
   font: 12px/1.45 Plex, monospace;
 }
 :root[data-theme="dark"] .punct-slot.selected:not(:disabled) { background: var(--editor-selection); border-color: var(--blue); }
-:root[data-theme="dark"] .option.wrong { color: #181a18; }
+:root[data-theme="dark"] .option.right {
+  background: var(--green);
+  color: var(--bg);
+}
+:root[data-theme="dark"] .option.wrong {
+  background: #ff8a7b;
+  color: var(--bg);
+}
 :root[data-theme="dark"] #feed .check .primary:hover { background: var(--blue); color: #181a18; }

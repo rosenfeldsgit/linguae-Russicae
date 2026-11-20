@@ -165,7 +165,7 @@ const server = http.createServer(async (request, response) => {
 
     await page.goto(base + '/test/');
     // Force one known lazy variant for a deterministic review in the real UI.
-    await page.evaluate(() => { Math.random = () => 0.04; });
+    await page.evaluate(() => { Math.random = () => 0.035; });
     await page.locator('#clear-all').click();
     await page.locator('#task-picker input[value="11"]').check();
     await page.locator('#start').click();
@@ -217,7 +217,7 @@ const server = http.createServer(async (request, response) => {
     await page.locator('#restart').click();
     assert(await ready.evaluate(button => button === document.activeElement));
 
-    for (const [year, random, variant, keyPage] of [[2027, 0.04, 3, 327], [2026, 0.5, 1, 342]]) {
+    for (const [year, random, variant, keyPage] of [[2027, 0.035, 3, 327], [2026, 0.49, 1, 342]]) {
       await page.goto(base + '/test/?task=27');
       await page.evaluate(value => { Math.random = () => value; }, random);
       await page.locator('#task-picker input[value="23"]').check();
@@ -262,14 +262,69 @@ const server = http.createServer(async (request, response) => {
     await page.getByRole('textbox', {name: 'Сочинение'}).waitFor();
     assert.equal(await page.getByRole('textbox', {name: 'Сочинение'}).inputValue(), essay);
 
+    await page.emulateMedia({colorScheme: 'dark'});
+    await page.goto(base + '/test/');
+    await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
+    const theme = page.getByRole('button', {name: 'Тема: Авто'});
+    await theme.click();
+    await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
+    await page.goto(base + '/feed/');
+    assert.equal(await page.locator('html').getAttribute('data-theme'), 'light');
+    await page.locator('#search-id').fill('1972');
+    await page.locator('#search').evaluate(form => form.requestSubmit());
+    await page.waitForFunction(() => document.querySelector('#feed h2')?.textContent.endsWith('#1972'));
+    assert.match(await page.locator('#feed .source').textContent(), /СтатГрад.*17\.09\.2026.*РЯ2610101/);
+    await page.getByRole('button', {name: 'Тема: Светлая'}).click();
+    await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
+    await page.getByRole('button', {name: 'Тема: Тёмная'}).click();
+    await page.emulateMedia({colorScheme: 'light'});
+    await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
+    await page.getByRole('button', {name: 'Тема: Авто'}).click();
+    await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
+    await page.getByRole('button', {name: 'Тема: Тёмная'}).click();
+    await page.getByRole('button', {name: 'Тема: Светлая'}).click();
+
+    await page.goto(base + '/test/');
+    await page.getByRole('button', {name: 'Для печати — СтатГрад · 17.09.2026 · РЯ2610102'}).click();
+    const print = page.getByRole('dialog', {name: 'Материалы для печати'});
+    const preview = page.frameLocator('#print-page');
+    await preview.getByRole('heading', {name: 'СтатГрад · 17.09.2026 · РЯ2610102'}).waitFor();
+    assert.equal(await preview.locator('.question-number').count(), 27);
+    assert.equal(await preview.locator('.passage').count(), 2);
+    assert.doesNotMatch(await preview.locator('main').innerText(), /Позиция автора по ключу|95876/);
+    await print.getByLabel('Состав').selectOption('set');
+    await preview.getByRole('heading', {name: 'Бланк ответов № 1'}).waitFor();
+    assert.equal(await preview.locator('.answer-row').count(), 26);
+    assert.equal(await preview.locator('.essay-line').count(), 60);
+    const printableDownload = page.waitForEvent('download');
+    await print.getByRole('button', {name: 'Скачать HTML'}).click();
+    const printable = await printableDownload;
+    assert.match(printable.suggestedFilename(), /rya2610102-set-a4\.html$/);
+    const printableHtml = await fs.readFile(await printable.path(), 'utf8');
+    assert.match(printableHtml, /@page \{ size: A4/);
+    assert.match(printableHtml, /Бланк ответов № 2 · лист 2/);
+    await print.getByRole('button', {name: 'Закрыть материалы для печати'}).click();
+    assert.equal(await page.locator('#session').isVisible(), false, 'Print preview must not start the clock');
+
     await page.goto(base + '/?task=27');
-    await page.getByRole('button', {name: 'Родина даёт силы пережить трудности'}).click();
+    const demoCardAnswer = page.getByRole('button', {name: 'Родина даёт силы пережить трудности'});
+    await page.locator('#options button').first().waitFor();
+    for (let i = 0; i < 2 && !await demoCardAnswer.isVisible(); i++) {
+      assert.match(await page.locator('#card-source').textContent(), /СтатГрад.*17\.09\.2026/);
+      await page.locator('#skip').click();
+    }
+    await demoCardAnswer.click();
     await page.getByRole('button', {name: 'Пояснение к ответу'}).click();
     assert.match(await page.locator('.rule-note').innerText(), /Второй пример конкретизирует первый/);
     assert.doesNotMatch(await page.locator('.rule-note').innerText(), /ФИПИ|демоверсия/i);
 
     await page.goto(base + '/theory/#task-11');
     assert(await page.locator('#task-11').isVisible());
+    assert.equal(await page.locator('.chapters article').evaluateAll(chapters => chapters.filter(chapter => {
+      const practice = chapter.querySelector('.practice-link');
+      const sources = [...chapter.querySelectorAll('h3')].find(heading => heading.textContent === 'Источники');
+      return practice && sources && (practice.compareDocumentPosition(sources) & Node.DOCUMENT_POSITION_FOLLOWING);
+    }).length), 27);
 
     await page.goto(base + '/edit/');
     await page.waitForFunction(() => document.querySelector('#editor').contentEditable === 'true');

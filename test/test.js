@@ -45,8 +45,8 @@
     const keyUrl = bookCatalog[question.essayYear] || question.source.url;
     $('essay-key').hidden = !keyUrl;
     if (keyUrl) $('essay-key').href = keyUrl;
-    $('essay-key').textContent = question.answerPage ? `Издание · ключ на с. ${question.answerPage}` : 'Ключ в демоверсии ФИПИ';
-    $('essay-criteria').href = question.source.url || '../theory/#task-27';
+    $('essay-key').textContent = question.answerPage ? `Издание · ключ на с. ${question.answerPage}` : 'Источник задания';
+    $('essay-criteria').href = question.source.date ? '../theory/#task-27' : question.source.url || '../theory/#task-27';
   }
   function selection() {
     return [...$('setup').querySelectorAll('input:checked')].map(input => Number(input.value));
@@ -58,6 +58,7 @@
     const part1 = points ? ` Максимум за часть 1 — ${points} первичных баллов.` : '';
     $('selection-summary').textContent = `Выбрано заданий — ${numbers.length}.${part1}${essayNote}`;
     $('start').disabled = !numbers.length;
+    $('print-selected').disabled = !numbers.length;
   }
   function saveTime() {
     if (!session || session.finished) return;
@@ -137,13 +138,16 @@
     });
     return Promise.all(selected.map(window.EGE_EXAM_LOADER.load));
   }
-  function startSession(questions, variant, startButton) {
+  function cleanPassages(questions) {
     // Some 2027 passages carry a scan transcription of the essay instructions at the end.
-    questions = questions.map(question => {
+    return questions.map(question => {
       if (question.task < 23 || !question.passage) return question;
       const passage = question.passage.split(/\n+\*\*Задание 27\.\*\* Напишите сочинение-рассуждение/u, 1)[0].trimEnd();
       return passage === question.passage ? question : {...question, passage};
     });
+  }
+  function startSession(questions, variant, startButton) {
+    questions = cleanPassages(questions);
     const now = performance.now();
     session = { questions, variant, startButton, passageCollapsed: questions.map(() => false), answers: questions.map(() => ''), elapsed: questions.map(() => 0), index: 0, startedAt: now, enteredAt: now, finished: false };
     $('setup').hidden = true;
@@ -294,6 +298,30 @@
     }
   }
   $('start').addEventListener('click', () => prepare($('start')));
+  async function printSelection(button, variant) {
+    if (preparing) return;
+    const status = $(variant ? 'ready-variant-error' : 'selection-summary');
+    const label = button.textContent;
+    preparing = true;
+    button.disabled = true;
+    button.textContent = 'Подготовка…';
+    if (variant) status.textContent = '';
+    try {
+      const questions = variant ? await window.EGE_EXAM_LOADER.loadReady(variant) : await loadSelectedQuestions();
+      if (questions) window.EGE_PRINT.open(cleanPassages(questions), variant);
+    } catch {
+      status.textContent = 'Не удалось подготовить пробник для печати. Попробуйте ещё раз.';
+    } finally {
+      preparing = false;
+      button.textContent = label;
+      button.disabled = !variant && !selection().length;
+    }
+  }
+  $('print-selected').addEventListener('click', () => printSelection($('print-selected')));
+  $('print-forms').addEventListener('click', () => window.EGE_PRINT.open());
+  for (const id of ['print-session', 'print-results']) {
+    $(id).addEventListener('click', () => window.EGE_PRINT.open(session.questions, session.variant));
+  }
   for (const variant of readyVariants) {
     const row = document.createElement('li');
     const info = document.createElement('div');
@@ -313,7 +341,16 @@
     button.textContent = 'Начать вариант';
     button.setAttribute('aria-label', `Начать вариант — ${variant.title}`);
     button.addEventListener('click', () => prepare(button, variant));
-    row.append(info, button);
+    const print = document.createElement('button');
+    print.type = 'button';
+    print.className = 'secondary';
+    print.textContent = 'Для печати';
+    print.setAttribute('aria-label', `Для печати — ${variant.title}`);
+    print.addEventListener('click', () => printSelection(print, variant));
+    const actions = document.createElement('div');
+    actions.className = 'print-actions';
+    actions.append(button, print);
+    row.append(info, actions);
     $('ready-variant-list').append(row);
   }
   $('ready-variants').hidden = !readyVariants.length;

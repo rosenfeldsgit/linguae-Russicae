@@ -9,6 +9,15 @@ window.EGE_READY_VARIANTS = [
     firstDisplayId: 1873,
     sourceUrl: 'https://fipi.ru/ege/demoversii-specifikacii-kodifikatory',
   },
+  ...['РЯ2610101', 'РЯ2610102'].map((code, index) => ({
+    id: `statgrad-2026-09-17-rya261010${index + 1}`,
+    title: `СтатГрад · 17.09.2026 · ${code}`,
+    publisher: 'СтатГрад',
+    date: '2026-09-17',
+    minutes: 210,
+    firstDisplayId: 1972 + index * 27,
+    sourceUrl: 'https://statgrad.org/',
+  })),
 ];
 window.EGE_READY_QUESTIONS = window.EGE_READY_VARIANTS.flatMap(variant =>
   Array.from({length: 27}, (_, index) => ({
@@ -16,7 +25,7 @@ window.EGE_READY_QUESTIONS = window.EGE_READY_VARIANTS.flatMap(variant =>
     displayId: variant.firstDisplayId + index,
     task: index + 1,
     readyVariantId: variant.id,
-    source: {title: variant.title, url: variant.sourceUrl, variant: variant.id},
+    source: {title: variant.title, url: variant.sourceUrl, variant: variant.id, ...(variant.date ? {date: variant.date} : {})},
   }))
 );
 for (const [year, firstVariant] of [[2027, 3], [2026, 1]]) {

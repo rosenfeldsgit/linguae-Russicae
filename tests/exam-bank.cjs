@@ -63,6 +63,17 @@ console.log('936 questions, 36 variants, keys, text-only content, scoring and sh
  assert.equal(ready[26].answerType,'essay');
  assert.equal(ready[26].passage,ready[22].passage);
  assert.equal(ready.slice(0,26).reduce((sum,q)=>sum+scoring.score(q,q.answers[0]),0),28);
+ const statgrad=context.window.EGE_READY_VARIANTS.filter(variant=>variant.publisher==='СтатГрад');
+ assert.equal(statgrad.length,2);
+ for(const variant of statgrad){
+  const questions=await loader.loadReady(variant);
+  assert.equal(questions.length,27);
+  assert(questions.every(q=>q.source.date==='2026-09-17'&&q.source.title.includes('17.09.2026')));
+  assert.equal(questions.slice(0,26).reduce((sum,q)=>sum+scoring.score(q,q.answers[0]),0),28);
+  assert.equal(questions[26].passage,questions[22].passage);
+  assert(questions[26].authorPosition.length>50 && questions[26].prompt.includes(questions[26].problem));
+  assert.equal(questions[0].passage.match(/\*\*/g).length,10);
+ }
  const summaries=ctx.window.EGE_READY_QUESTIONS;
  assert.equal(new Set([...bank,...summaries].map(q=>q.displayId)).size,bank.length+summaries.length);
  assert(summaries.every(q=>scoring.bank.some(item=>item.id===q.id)));

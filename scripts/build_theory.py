@@ -92,7 +92,7 @@ def dictionary(number):
             + body + '</details>')
 
 
-def chapter(number, meta, sources, card_tasks):
+def chapter(number, meta, sources, card_tasks, include_practice=True):
     raw = (KB / meta['path']).read_text(encoding='utf-8').split('## Источники')[0]
     sections = re.split(r'^## (.+)$', raw, flags=re.M)
     title = escape(meta['title'])
@@ -105,7 +105,14 @@ def chapter(number, meta, sources, card_tasks):
         for key, name, content in zip(pieces[1::3], pieces[2::3], pieces[3::3]):
             result.extend([f'<section id="{key}" class="rule"><h4><a href="#{key}">{escape(name)}</a></h4>',
                            blocks(content.splitlines()), '</section>'])
-    result.extend([dictionary(number), '<h3>Источники</h3><ul>'])
+    result.append(dictionary(number))
+    if include_practice:
+        if number == '27':
+            destination = '#essay-practice'
+        else:
+            destination = f'../?task={number}' if number in card_tasks else f'../test/?task={number}'
+        result.append(f'<p><a class="practice-link" href="{destination}">Перейти к практике</a></p>')
+    result.append('<h3>Источники</h3><ul>')
     for key in meta['sourceIds']:
         src = sources['sources'][key]
         url = src['url']
@@ -122,13 +129,7 @@ def chapter(number, meta, sources, card_tasks):
     checked = date.fromisoformat(meta.get('checkedOn', '2026-11-13'))
     month = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'][checked.month - 1]
     result.append(f'<p>Дата сверки материалов: {checked.day} {month} {checked.year} года.</p><a href="#catalog">← Все задания</a>')
-    if number == '27':
-        destination = '#essay-practice'
-    elif number in card_tasks:
-        destination = f'../?task={number}'
-    else:
-        destination = f'../test/?task={number}'
-    result.append(f'<p><a class="practice-link" href="{destination}">Перейти к практике</a></p></article>')
+    result.append('</article>')
     return '\n'.join(result)
 
 

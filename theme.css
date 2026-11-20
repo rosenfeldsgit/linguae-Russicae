@@ -10,13 +10,8 @@
   --on-lime: #191a18;
   --review-correct: var(--green-text);
   --red: #ffa38c;
-  --blue: #a6d2ff;
-  --on-blue: var(--bg);
+  --blue-ink: var(--blue);
   --focus-blue: var(--blue);
-  --feed-blue: var(--blue);
-  --editor-selection: var(--blue);
-  --editor-selection-text: var(--on-blue);
-  --editor-download-hover: var(--on-blue);
   --orange: #ff795c;
   --amber: #e3c58a;
   --passage-bg: #2b3039;
@@ -43,7 +38,7 @@
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.theme-toggle:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.theme-toggle:focus-visible { outline: 2px solid var(--blue-ink); outline-offset: 2px; }
 
 @media (prefers-reduced-motion: no-preference) {
   :where(button:not(:disabled), .mode-nav a, .practice-link) {

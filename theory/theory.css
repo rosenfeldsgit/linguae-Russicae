@@ -6,7 +6,7 @@
 .catalog-list a,#results a {display:flex;align-items:baseline;gap:1rem;padding:.85rem 0;border-bottom:1px solid var(--line);text-decoration:none;overflow-wrap:anywhere}
 .catalog-list span {min-width:3.4rem;font:1rem Plex,monospace;color:var(--muted)}
 #catalog a,.chapters a {color:var(--ink);text-underline-offset:.2em}
-#catalog a:hover,.chapters a:hover {color:var(--blue)}
+#catalog a:hover,.chapters a:hover {color:var(--blue-ink)}
 .chapters h3 {margin:2.4rem 0 .65rem;font-size:1.55rem}
 .rule {border-top:1px solid var(--line);padding:.8rem 0;scroll-margin-top:1rem}
 .rule h4 {font-size:1.25rem;margin:.4rem 0}

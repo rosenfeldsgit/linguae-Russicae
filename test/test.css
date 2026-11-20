@@ -12,7 +12,7 @@
 .matching-columns{display:grid;grid-template-columns:1fr 1fr;gap:26px;white-space:normal}.matching-columns h3{font:500 14px/1.5 system-ui;color:var(--muted);margin:0 0 14px}.matching-columns section>div{white-space:pre-wrap;overflow-wrap:anywhere}.question>p{margin:0 0 22px}@media(max-width:650px){.matching-columns{grid-template-columns:1fr;gap:24px}}
 
 /* Collapse only the source passage; task instructions stay outside this block. */
-.passage-block{white-space:normal;margin-bottom:24px}.passage-block .passage{margin-bottom:0}.passage-toggle{display:block;min-height:44px;margin-bottom:10px;font:inherit;font-size:14px;text-align:left}.passage-toggle:focus-visible{outline:3px solid var(--blue);outline-offset:4px}
+.passage-block{white-space:normal;margin-bottom:24px}.passage-block .passage{margin-bottom:0}.passage-toggle{display:block;min-height:44px;margin-bottom:10px;font:inherit;font-size:14px;text-align:left}.passage-toggle:focus-visible{outline:3px solid var(--blue-ink);outline-offset:4px}
 
 .review-explanation{white-space:normal;overflow-wrap:anywhere}
 .review-explanation p{margin:0 0 .8em}
@@ -67,7 +67,7 @@
   font: 16px/1.65 Golos, sans-serif;
 }
 #essay:focus-visible {
-  outline: 3px solid var(--blue);
+  outline: 3px solid var(--blue-ink);
   outline-offset: 3px;
 }
 .essay-review {
@@ -157,7 +157,7 @@
   color: var(--ink);
 }
 #print-dialog::backdrop { background: rgb(0 0 0 / 60%); }
-#print-dialog a { color: var(--blue); }
+#print-dialog a { color:var(--blue-ink); }
 #print-page { display: block; height: 59dvh; width: 100%; border: 1px solid var(--line); background: #fff; color-scheme: light; }
 @media (max-width: 780px) {
   .ready-variant-list li { grid-template-columns: minmax(0, 1fr); justify-items: start; }

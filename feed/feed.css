@@ -10,11 +10,11 @@
 #feed .answer-label{display:flex;flex:1;flex-direction:column;min-width:0;padding:14px 20px 12px;gap:6px;font-family:var(--mono,monospace);font-size:12px;letter-spacing:.04em;color:var(--muted)}
 #feed .check input{box-sizing:border-box;display:block;width:100%;min-width:0;min-height:40px;padding:0;border:0;border-radius:0;background:transparent;color:var(--ink);font:500 clamp(22px,3vw,30px)/1.4 'Golos',sans-serif;box-shadow:none;outline:none}
 #feed .check input::placeholder{color:var(--muted);font-size:18px;font-weight:400;letter-spacing:0}
-#feed .check:focus-within{border-color:#334bff;box-shadow:0 0 0 2px #334bff}
+#feed .check:focus-within{border-color:var(--blue);box-shadow:0 0 0 2px var(--blue)}
 #feed .check .primary{display:flex;justify-content:space-between;align-items:center;gap:24px;min-width:180px;margin:0;padding:20px 24px;border:0;border-left:1px solid var(--ink);border-radius:0;background:var(--ink);color:var(--paper);font-size:16px;cursor:pointer}
 #feed .check .primary span{font-size:26px;line-height:1}
-#feed .check .primary:hover{background:#334bff}
-#feed .check .primary:focus-visible{outline:3px solid #334bff;outline-offset:4px}
+#feed .check .primary:hover{background:var(--blue);color:var(--on-blue)}
+#feed .check .primary:focus-visible{outline:3px solid var(--blue);outline-offset:4px}
 @media(max-width:600px){
  .filters{align-items:stretch;flex-direction:column}
  .controls input{min-width:0;flex:1}

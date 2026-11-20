@@ -262,12 +262,13 @@ const server = http.createServer(async (request, response) => {
     await page.getByRole('textbox', {name: 'Сочинение'}).waitFor();
     assert.equal(await page.getByRole('textbox', {name: 'Сочинение'}).inputValue(), essay);
 
+    await page.evaluate(() => localStorage.setItem('rusa-lingvo-theme', 'system'));
     await page.emulateMedia({colorScheme: 'dark'});
     await page.goto(base + '/test/');
-    await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
-    const theme = page.getByRole('button', {name: 'Тема: Авто'});
-    const moon = await theme.locator('svg path').getAttribute('d');
-    assert(moon);
+    const theme = page.getByRole('button', {name: 'Тема: Светлая'});
+    assert.equal(await page.locator('html').getAttribute('data-theme'), 'light');
+    const sun = await theme.locator('svg path').getAttribute('d');
+    assert(sun);
     assert.equal(await theme.textContent(), '');
     const press = page.locator('#clear-all');
     const box = await press.boundingBox();
@@ -281,24 +282,21 @@ const server = http.createServer(async (request, response) => {
     await page.mouse.up();
     await page.emulateMedia({reducedMotion: 'no-preference'});
     await theme.press('Enter');
-    await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
-    const sun = await page.getByRole('button', {name: 'Тема: Светлая'}).locator('svg path').getAttribute('d');
-    assert(sun && sun !== moon);
+    await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
+    const moon = await page.getByRole('button', {name: 'Тема: Тёмная'}).locator('svg path').getAttribute('d');
+    assert(moon && moon !== sun);
     await page.goto(base + '/feed/');
-    assert.equal(await page.locator('html').getAttribute('data-theme'), 'light');
+    assert.equal(await page.locator('html').getAttribute('data-theme'), 'dark');
     await page.locator('#search-id').fill('1972');
     await page.locator('#search').evaluate(form => form.requestSubmit());
     await page.waitForFunction(() => document.querySelector('#feed h2')?.textContent.endsWith('#1972'));
     assert.match(await page.locator('#feed .source').textContent(), /СтатГрад.*17\.09\.2026.*РЯ2610101/);
-    await page.getByRole('button', {name: 'Тема: Светлая'}).click();
-    await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
-    await page.getByRole('button', {name: 'Тема: Тёмная'}).click();
     await page.emulateMedia({colorScheme: 'light'});
-    await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
-    await page.getByRole('button', {name: 'Тема: Авто'}).click();
-    await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
+    assert.equal(await page.locator('html').getAttribute('data-theme'), 'dark');
     await page.getByRole('button', {name: 'Тема: Тёмная'}).click();
+    await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
     await page.getByRole('button', {name: 'Тема: Светлая'}).click();
+    await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
 
     await page.goto(base + '/test/');
     await page.getByRole('button', {name: 'Для печати — СтатГрад · 17.09.2026 · РЯ2610102'}).click();
@@ -335,7 +333,14 @@ const server = http.createServer(async (request, response) => {
       assert.match(await page.locator('#card-source').textContent(), /СтатГрад.*17\.09\.2026/);
       await page.locator('#skip').click();
     }
-    await demoCardAnswer.click();
+    await page.locator('#options .option').filter({hasNotText: 'Родина даёт силы пережить трудности'}).first().click();
+    await page.waitForFunction(() => {
+      const correct = document.querySelector('#options .right');
+      const incorrect = document.querySelector('#options .wrong');
+      return correct && incorrect &&
+        getComputedStyle(correct).backgroundColor === 'rgb(99, 237, 145)' &&
+        getComputedStyle(incorrect).backgroundColor === 'rgb(255, 138, 123)';
+    });
     await page.getByRole('button', {name: 'Пояснение к ответу'}).click();
     assert.match(await page.locator('.rule-note').innerText(), /Второй пример конкретизирует первый/);
     assert.doesNotMatch(await page.locator('.rule-note').innerText(), /ФИПИ|демоверсия/i);

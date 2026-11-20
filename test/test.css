@@ -133,8 +133,6 @@
 }
 .print-bar { justify-content: space-between; margin-bottom: 12px; }
 .print-bar h2 { margin: 0; font: 700 clamp(19px, 4vw, 27px)/1.2 Golos, sans-serif; }
-.print-actions label { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
-.print-actions select { min-height: 44px; padding: 6px; font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); }
 .finish-area .print-actions { justify-content: center; }
 .print-forms { margin-bottom: 12px; text-decoration: underline; text-underline-offset: 3px; min-height: 44px; }
 #print-dialog {

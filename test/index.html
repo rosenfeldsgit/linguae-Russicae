@@ -4,9 +4,9 @@
 <meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'"><meta name="referrer" content="same-origin"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#F2F0E7"><title>Пробники — Руса Лингво</title>
 <link rel="icon" href="../favicon.svg?v=golos4" type="image/svg+xml">
-<link rel="stylesheet" href="../styles.css?v=cleanup1"><link rel="stylesheet" href="test.css?v=print1">
-<script defer src="../exam-config.js?v=2"></script><script defer src="bank.js?v=2"></script><script defer src="bank-manifest.js?v=statgrad1"></script><script defer src="bank-loader.js?v=statgrad1"></script><script defer src="../exam-explanations.js?v=1"></script><script defer src="../content.js?v=1"></script><script defer src="exercises.js?v=demobank1"></script><script defer src="essay-docx.js?v=essay1"></script><script defer src="print.js?v=1"></script><script defer src="test.js?v=print1"></script>
-<link rel="preload" href="../assets/fonts/golos-400.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="../poster.css?v=motion1"><script defer src="../poster.js?v=motion1"></script><link rel="manifest" href="../manifest.json"><link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png"><meta name="apple-mobile-web-app-title" content="Руса Лингво"><link rel="stylesheet" href="../theme.css?v=1"><script src="../theme.js?v=1"></script>
+<link rel="stylesheet" href="../styles.css?v=cleanup1"><link rel="stylesheet" href="test.css?v=print2">
+<script defer src="../exam-config.js?v=2"></script><script defer src="bank.js?v=2"></script><script defer src="bank-manifest.js?v=statgrad1"></script><script defer src="bank-loader.js?v=statgrad1"></script><script defer src="../exam-explanations.js?v=1"></script><script defer src="../content.js?v=1"></script><script defer src="exercises.js?v=demobank1"></script><script defer src="essay-docx.js?v=essay1"></script><script defer src="print.js?v=2"></script><script defer src="test.js?v=print1"></script>
+<link rel="preload" href="../assets/fonts/golos-400.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="../poster.css?v=spiral1"><script defer src="../poster.js?v=motion1"></script><link rel="manifest" href="../manifest.json"><link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png"><meta name="apple-mobile-web-app-title" content="Руса Лингво"><link rel="stylesheet" href="../theme.css?v=accents1"><script src="../theme.js?v=1"></script>
 </head>
 <body><main class="app exam-app">
 <header class="poster-header"><div class="poster-hero"><h1>ПРОБНИК</h1><button type="button" class="nav-toggle" aria-label="Меню разделов" aria-expanded="false" aria-controls="section-nav" hidden><span aria-hidden="true"></span></button><nav id="section-nav" class="mode-nav" aria-label="Режим тренировки"><a href="../">Карточки</a><a href="./" aria-current="page">Пробники</a><a href="../feed/">Лента заданий</a><a href="../theory/">База заданий</a></nav><div class="poster-caption"><span>ЕГЭ / 2027</span></div></div></header>
@@ -64,9 +64,7 @@
     <form method="dialog"><button type="submit" class="quiet" aria-label="Закрыть материалы для печати">Закрыть</button></form>
   </div>
   <div class="print-actions">
-    <label>Состав <select id="print-material"><option value="exam">Пробник</option><option value="forms">Бланки ответов</option><option value="set">Пробник и бланки</option></select></label>
-    <button id="print-send" type="button" class="primary">Печать / PDF</button>
-    <button id="print-download" type="button" class="secondary">Скачать HTML</button>
+    <button id="print-send" type="button" class="primary" disabled>Печать / PDF</button>
   </div>
   <p class="muted fine">Для PDF выберите «Сохранить как PDF» в окне печати. <a href="https://doc.fipi.ru/ege/normativno-pravovye-dokumenty/Pravila_zapolneniya_blankov_2026.pdf" target="_blank" rel="noopener">Образцы бланков ФИПИ</a></p>
   <iframe id="print-page" title="Предпросмотр материалов формата A4"></iframe>

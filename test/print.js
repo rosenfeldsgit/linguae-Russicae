@@ -3,11 +3,7 @@
   const {renderPassage, renderQuestion} = window.EGE_EXERCISES;
   const dialog = document.getElementById('print-dialog');
   const frame = document.getElementById('print-page');
-  const material = document.getElementById('print-material');
   const printButton = document.getElementById('print-send');
-  const downloadButton = document.getElementById('print-download');
-  let current = null;
-  let markup = '';
 
   const stylesheet = `
     @page { size: A4; margin: 15mm; }
@@ -127,42 +123,17 @@
     }
   }
 
-  function update() {
-    const {questions, variant} = current;
-    const output = document.createElement('main');
-    if (material.value !== 'forms') appendExam(output, questions, variant);
-    if (material.value !== 'exam') {
-      const tasks = questions.length ? questions.map(question => question.task) : Array.from({length: 27}, (_, i) => i + 1);
-      appendForms(output, tasks, variant);
-    }
-    markup = '<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
-      '<title>Руса Лингво — материалы для печати</title><style>' + stylesheet + '</style></head><body>' + output.outerHTML + '</body></html>';
-    printButton.disabled = true;
-    frame.srcdoc = markup;
-  }
-
   function open(questions = [], variant = null) {
-    current = {questions, variant};
-    material.options[0].disabled = !questions.length;
-    material.options[2].disabled = !questions.length;
-    material.value = questions.length ? 'exam' : 'forms';
-    update();
+    const output = document.createElement('main');
+    if (questions.length) appendExam(output, questions, variant);
+    else appendForms(output, Array.from({length: 27}, (_, i) => i + 1), variant);
+    printButton.disabled = true;
+    frame.srcdoc = '<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
+      '<title>Руса Лингво — материалы для печати</title><style>' + stylesheet + '</style></head><body>' + output.outerHTML + '</body></html>';
     if (!dialog.open) dialog.showModal();
   }
 
-  material.addEventListener('change', update);
-  frame.addEventListener('load', () => { printButton.disabled = !markup; });
+  frame.addEventListener('load', () => { printButton.disabled = !frame.hasAttribute('srcdoc'); });
   printButton.addEventListener('click', () => frame.contentWindow.print());
-  downloadButton.addEventListener('click', () => {
-    const link = document.createElement('a');
-    const url = URL.createObjectURL(new Blob([markup], {type: 'text/html;charset=utf-8'}));
-    const stem = current.variant?.id || 'rusa-lingvo';
-    link.href = url;
-    link.download = `${stem}-${material.value}-a4.html`;
-    document.body.append(link);
-    link.click();
-    link.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  });
   window.EGE_PRINT = {open};
 })();

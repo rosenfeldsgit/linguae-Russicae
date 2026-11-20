@@ -292,17 +292,23 @@ const server = http.createServer(async (request, response) => {
     assert.equal(await preview.locator('.question-number').count(), 27);
     assert.equal(await preview.locator('.passage').count(), 2);
     assert.doesNotMatch(await preview.locator('main').innerText(), /Позиция автора по ключу|95876/);
-    await print.getByLabel('Состав').selectOption('set');
+    assert.equal(await print.getByRole('combobox').count(), 0);
+    assert.equal(await print.getByRole('button', {name: 'Скачать HTML'}).count(), 0);
+    assert.equal(await preview.locator('.answer-row').count(), 0);
+    await print.getByRole('button', {name: 'Закрыть материалы для печати'}).click();
+
+    await page.getByRole('button', {name: 'Бланки ответов для печати'}).click();
     await preview.getByRole('heading', {name: 'Бланк ответов № 1'}).waitFor();
+    assert.equal(await preview.locator('.question-number').count(), 0);
     assert.equal(await preview.locator('.answer-row').count(), 26);
     assert.equal(await preview.locator('.essay-line').count(), 60);
-    const printableDownload = page.waitForEvent('download');
-    await print.getByRole('button', {name: 'Скачать HTML'}).click();
-    const printable = await printableDownload;
-    assert.match(printable.suggestedFilename(), /rya2610102-set-a4\.html$/);
-    const printableHtml = await fs.readFile(await printable.path(), 'utf8');
+    const printableHtml = await page.locator('#print-page').getAttribute('srcdoc');
     assert.match(printableHtml, /@page \{ size: A4/);
-    assert.match(printableHtml, /Бланк ответов № 2 · лист 2/);
+    await page.locator('#print-page').evaluate(frame => {
+      frame.contentWindow.print = () => { frame.dataset.printed = 'true'; };
+    });
+    await print.getByRole('button', {name: 'Печать / PDF'}).click();
+    assert.equal(await page.locator('#print-page').getAttribute('data-printed'), 'true');
     await print.getByRole('button', {name: 'Закрыть материалы для печати'}).click();
     assert.equal(await page.locator('#session').isVisible(), false, 'Print preview must not start the clock');
 

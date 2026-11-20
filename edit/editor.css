@@ -14,24 +14,24 @@ select{width:100%;padding:12px;font-size:14px;min-height:48px}
 button{cursor:pointer;padding:10px 14px;min-height:40px}
 button:hover{background:var(--lime);color:var(--on-lime)}
 button:disabled{opacity:.5;cursor:default}
-button:focus-visible,select:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+button:focus-visible,select:focus-visible{outline:2px solid var(--blue-ink);outline-offset:3px}
 .download{background:var(--ink);color:var(--paper);min-height:48px;font-weight:500}
-.download:hover{background:var(--blue);color:var(--editor-download-hover,var(--paper))}
+.download:hover{background:var(--blue);color:var(--on-blue)}
 #change-count{margin-left:12px;font-family:Plex,monospace}
 #save-status{flex-basis:100%;font-size:13px;margin:0;min-height:20px;color: var(--green-text)}
 #save-status.error{color:var(--red)}
 .editor-toolbar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;position:sticky;top:0;z-index:2;background:var(--bg);border-block:1px solid var(--line);padding:12px 0}
 .editor-toolbar button{font-size:14px}
 .chapters #editor{max-width:none;padding:36px 52px;min-height:60vh;margin:0;background:var(--paper);border:1px solid var(--line);border-top:0;line-height:1.65;outline:none;overflow-wrap:anywhere}
-#editor:focus{box-shadow:inset 3px 0 var(--blue)}
+#editor:focus{box-shadow:inset 3px 0 var(--blue-ink)}
 .chapters #editor h2{font-size:34px;line-height:1.2;margin:0 0 32px}
 #editor li{margin:.4rem 0}
 #editor table{width:100%;max-width:52rem;border-collapse:collapse}
 #editor table:has(>colgroup){table-layout:fixed}
 #editor th,#editor td{overflow-wrap:anywhere;position:relative;scroll-margin-top:84px;scroll-margin-bottom:16px}
-#editor [data-selected-cell]{outline:2px solid var(--blue);outline-offset:-2px}
-#editor [data-multi-selected]{background:var(--editor-selection,#e6eaff);color:var(--editor-selection-text,var(--ink))}
-#editor [data-multi-selected] a{color:var(--editor-selection-text,var(--ink))}
+#editor [data-selected-cell]{outline:2px solid var(--blue-ink);outline-offset:-2px}
+#editor [data-multi-selected]{background:var(--blue);color:var(--on-blue)}
+#editor [data-multi-selected] a{color:var(--on-blue)}
 .table-tools[hidden]{display:none}
 .table-tools{position:fixed;z-index:10;width:560px;max-width:calc(100vw - 32px);padding:14px;background:var(--paper);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 28px #191a1826;font-size:13px}
 .table-tools-heading{display:flex;align-items:center;gap:10px;margin-bottom:10px}

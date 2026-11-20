@@ -58,7 +58,7 @@ class BaseAdmin(admin.ModelAdmin):
 @admin.register(Card)
 class CardAdmin(BaseAdmin):
     category='card'
-    fieldsets=[('Карточка',{'fields':['id','task','title','active','kind','instruction','prompt','context']}),('Выбор ответа',{'fields':['before','after','spelling','answer','options_text'],'description':'Для буквы: слово «пр…брежный», до «пр», после «брежный», ответ «и», кнопки «е» и «и». Для ударения: слово строчными, до и после ударной гласной, сама гласная в поле написания.'}),('Пунктуация',{'fields':['parts_text','positions_text','mark'],'classes':['collapse']}),('Пояснение и источник',{'fields':['rule','explanation','source','updated']})]
+    fieldsets=[('Карточка',{'fields':['id','task','title','active','kind','instruction','prompt','context']}),('Выбор ответа',{'fields':['before','after','spelling','answer','answers_text','options_text'],'description':'Для буквы: слово «пр…брежный», до «пр», после «брежный», ответ «и», кнопки «е» и «и». Для ударения: слово строчными, до и после ударной гласной, сама гласная в поле написания.'}),('Пунктуация',{'fields':['parts_text','positions_text','mark'],'classes':['collapse']}),('Пояснение и источник',{'fields':['rule','explanation','source','updated']})]
 @admin.register(Exam)
 class ExamAdmin(BaseAdmin):
     category='exam'

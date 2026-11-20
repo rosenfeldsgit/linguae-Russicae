@@ -12,7 +12,7 @@
 
 ## Учебные данные
 
-Карточки и их пояснения находятся в `cards/task-*.js`. Методика пояснений описана в [EXPLANATION_GUIDELINES.md](EXPLANATION_GUIDELINES.md).
+Карточки и их пояснения находятся в `cards/task-*.js`. Хранить источники для сверки, без подписи в интерфейсе карточки. Методика пояснений описана в [EXPLANATION_GUIDELINES.md](EXPLANATION_GUIDELINES.md).
 
 Перед изменением теории прочитать `knowledge-base/README.md`, `knowledge-base/CURRENT_STATE.md`, `chapter-index.json`, `sources.json` и нужные главы. Канонический текст находится в `knowledge-base/chapters/`. Сохранять постоянные ID правил и условия их применения.
 

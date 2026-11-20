@@ -61,11 +61,13 @@ class Record(models.Model):
             if self.before+self.spelling+self.after!=self.prompt or self.spelling not in 'аеёиоуыэюя' or len(self.spelling)!=1:errors['spelling']='Укажите одну ударную гласную. До + гласная + после должны составлять слово строчными буквами.'
         elif not isinstance(self.options,list) or len(self.options)<2 or not all(isinstance(x,str) and x for x in self.options) or len(set(self.options))!=len(self.options) or self.answer not in self.options:
             errors['options']='Нужны минимум две разные кнопки, включая правильный ответ.'
+        elif not isinstance(self.answers,list) or any(a not in self.options for a in self.answers):
+            errors['answers']='Каждый допустимый ответ должен совпадать с одной из кнопок.'
         if errors:raise ValidationError(errors)
     def payload(self):
         base={'id':self.legacy_id or f'db-{self.pk}','displayId':self.pk,'task':self.task.number,'maxPrimary':self.task.max_primary,'explanation':self.explanation or (self.rule.text if self.rule else '')}
         if self.category=='exam':return {**base,'prompt':self.prompt,'passage':self.passage,'answers':self.answers,'answerType':self.answer_type,'source':{'title':self.source,'variant':self.group_key or f'item-{self.pk}'}}
-        return {**base,'kind':self.kind,'instruction':self.instruction,'prompt':self.prompt,'before':self.before,'after':self.after,'context':self.context,'spelling':self.spelling,'answer':self.positions if self.kind=='punctuation' else str(len(self.before)) if self.kind=='stress' else self.answer,'options':self.options,'parts':self.parts,'mark':self.mark}
+        return {**base,'kind':self.kind,'instruction':self.instruction,'prompt':self.prompt,'before':self.before,'after':self.after,'context':self.context,'spelling':self.spelling,'answer':self.positions if self.kind=='punctuation' else str(len(self.before)) if self.kind=='stress' else self.answer,'options':self.options,'answers':self.answers,'parts':self.parts,'mark':self.mark}
 
 class Card(Record):
     class Meta:proxy=True;verbose_name='карточка';verbose_name_plural='Карточки'

@@ -4,8 +4,8 @@
 <meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'"><meta name="referrer" content="same-origin"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#F2F0E7"><title>Пробники — Руса Лингво</title>
 <link rel="icon" href="../favicon.svg?v=golos4" type="image/svg+xml">
-<link rel="stylesheet" href="../styles.css?v=cleanup1"><link rel="stylesheet" href="test.css?v=demobank1">
-<script defer src="../exam-config.js?v=2"></script><script defer src="bank.js?v=2"></script><script defer src="bank-manifest.js?v=demobank1"></script><script defer src="bank-loader.js?v=demobank1"></script><script defer src="../exam-explanations.js?v=1"></script><script defer src="../content.js?v=1"></script><script defer src="exercises.js?v=demobank1"></script><script defer src="test.js?v=demobank1"></script>
+<link rel="stylesheet" href="../styles.css?v=cleanup1"><link rel="stylesheet" href="test.css?v=essay1">
+<script defer src="../exam-config.js?v=2"></script><script defer src="bank.js?v=2"></script><script defer src="bank-manifest.js?v=essay1"></script><script defer src="bank-loader.js?v=essay1"></script><script defer src="../exam-explanations.js?v=1"></script><script defer src="../content.js?v=1"></script><script defer src="exercises.js?v=demobank1"></script><script defer src="essay-docx.js?v=essay1"></script><script defer src="test.js?v=essay1"></script>
 <link rel="preload" href="../assets/fonts/golos-400.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="../poster.css?v=motion1"><script defer src="../poster.js?v=motion1"></script><link rel="manifest" href="../manifest.json"><link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png"><meta name="apple-mobile-web-app-title" content="Руса Лингво"></head>
 <body><main class="app exam-app">
 <header class="poster-header"><div class="poster-hero"><h1>ПРОБНИК</h1><button type="button" class="nav-toggle" aria-label="Меню разделов" aria-expanded="false" aria-controls="section-nav" hidden><span aria-hidden="true"></span></button><nav id="section-nav" class="mode-nav" aria-label="Режим тренировки"><a href="../">Карточки</a><a href="./" aria-current="page">Пробники</a><a href="../feed/">Лента заданий</a><a href="../theory/">База заданий</a></nav><div class="poster-caption"><span>ЕГЭ / 2027</span></div></div></header>
@@ -32,8 +32,9 @@
 <div id="passage" class="passage-block" hidden></div><div id="question" class="question"></div>
 <div id="short-answer"><label class="answer-label" for="answer">Ответ</label><input id="answer" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="answer-help"><p id="answer-help" class="muted fine"></p></div>
 <div id="essay-answer" hidden>
-<label class="answer-label" for="essay">Сочинение</label><textarea id="essay" rows="12" aria-describedby="essay-help"></textarea>
-<p id="essay-help" class="muted fine">Сочинение проверяется вручную по критериям источника.</p>
+<div class="essay-heading"><label class="answer-label" for="essay">Сочинение</label><span id="essay-count" class="essay-count"></span></div>
+<textarea id="essay" rows="12" aria-describedby="essay-help"></textarea>
+<div class="essay-actions"><p id="essay-help" class="muted fine">От 150 слов. Проверяется вручную.</p><button id="essay-draft-download" class="secondary" type="button" disabled>Скачать DOCX</button></div>
 </div>
 <div class="step-actions"><button id="previous" class="secondary" type="button">Назад</button><button id="next" class="primary" type="button">Далее</button></div>
 </article>
@@ -44,10 +45,14 @@
 <div id="result-summary" class="result-summary"></div><p id="conversion" class="muted"></p>
 <div class="table-wrap"><table><caption>Ответы и время по заданиям</caption><thead><tr><th>№</th><th>Ваш ответ</th><th>Верный ответ</th><th>Баллы</th><th>Время</th></tr></thead><tbody id="result-rows"></tbody></table></div>
 <section id="essay-review" class="essay-review" aria-labelledby="essay-review-title" hidden>
-<h3 id="essay-review-title">Задание 27 · Сочинение</h3>
+<div class="essay-heading"><h3 id="essay-review-title">Задание 27 · Сочинение</h3><button id="essay-result-download" class="secondary" type="button" hidden>Скачать DOCX</button></div>
+<p id="essay-review-source" class="essay-count"></p>
+<p id="essay-review-problem"></p>
 <p id="essay-submission" class="essay-submission"></p>
-<p id="essay-author-position" hidden></p>
-<a id="essay-criteria">Критерии оценивания в первоисточнике</a>
+<details id="essay-info" class="essay-info" hidden><summary>Инфо · Позиция автора</summary>
+<p id="essay-author-position"></p><a id="essay-key" class="fine" target="_blank" rel="noopener noreferrer"></a>
+</details>
+<a id="essay-criteria" class="fine">Критерии оценивания</a>
 </section>
 <button id="restart" class="primary" type="button">Новый пробник</button></section>
 <noscript>Для прохождения пробника включите JavaScript.</noscript>

@@ -33,3 +33,19 @@ for (const [year, firstVariant] of [[2027, 3], [2026, 1]]) {
     }
   }
 }
+
+window.EGE_ESSAY_QUESTIONS = [
+  ...window.EGE_EXAM_MANIFEST,
+  ...(window.EGE_EXAM_BANK || []),
+].filter(question => question.task === 26).map(passageSource => {
+  const year = passageSource.id.startsWith('doshchinsky-2026-') ? 2026 : 2027;
+  return {
+    id: passageSource.id.replace(/q26$/, 'q27'),
+    displayId: 1899 + (year === 2027 ? 36 : 0) + passageSource.source.variant,
+    task: 27,
+    maxPrimary: 22,
+    source: passageSource.source,
+    essayYear: year,
+    passageSource,
+  };
+});

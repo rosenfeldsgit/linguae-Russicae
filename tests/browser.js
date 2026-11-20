@@ -165,11 +165,7 @@ const server = http.createServer(async (request, response) => {
 
     await page.goto(base + '/test/');
     // Force one known lazy variant for a deterministic review in the real UI.
-    await page.evaluate(() => {
-      const bank = window.EGE_EXERCISES.bank;
-      const question = bank.find(q => q.id === 'doshchinsky-2027-v3-q11');
-      bank.splice(0, bank.length, question);
-    });
+    await page.evaluate(() => { Math.random = () => 0.04; });
     await page.locator('#clear-all').click();
     await page.locator('#task-picker input[value="11"]').check();
     await page.locator('#start').click();
@@ -221,18 +217,41 @@ const server = http.createServer(async (request, response) => {
     await page.locator('#restart').click();
     assert(await ready.evaluate(button => button === document.activeElement));
 
-    await page.goto(base + '/test/?task=27');
-    await page.locator('#task-picker input[value="23"]').check();
-    await page.locator('#start').click();
-    await page.locator('#task-nav button').last().waitFor();
-    const shared = await page.locator('#passage .passage').textContent();
-    assert.match(await page.locator('#source').textContent(), /Демоверсия/);
-    await page.getByRole('button', {name: 'Задание 27', exact: true}).click();
-    assert.equal(await page.locator('#passage .passage').textContent(), shared);
-    await page.getByRole('textbox', {name: 'Сочинение'}).fill(essay);
-    await page.locator('#finish').click();
-    await page.locator('#confirm-finish').click();
-    assert.equal(await page.locator('#essay-submission').textContent(), essay);
+    for (const [year, random, variant, keyPage] of [[2027, 0.04, 3, 327], [2026, 0.5, 1, 342]]) {
+      await page.goto(base + '/test/?task=27');
+      await page.evaluate(value => { Math.random = () => value; }, random);
+      await page.locator('#task-picker input[value="23"]').check();
+      await page.locator('#start').click();
+      await page.locator('#task-nav button').last().waitFor();
+      const shared = await page.locator('#passage .passage').textContent();
+      assert.doesNotMatch(shared, /Напишите сочинение/);
+      assert.match(await page.locator('#source').textContent(), new RegExp(`Дощинского ${year}`));
+      await page.getByRole('button', {name: 'Задание 27', exact: true}).click();
+      assert.equal(await page.locator('#passage .passage').textContent(), shared);
+      assert(await page.locator('#essay-draft-download').isDisabled());
+      assert.equal(await page.locator('#essay-info').isVisible(), false);
+      await page.getByRole('textbox', {name: 'Сочинение'}).fill(essay);
+      const draft = page.waitForEvent('download');
+      await page.locator('#essay-draft-download').click();
+      assert.equal((await draft).suggestedFilename(), `sochinenie-${year}-variant-${variant}.docx`);
+      await page.locator('#finish').click();
+      await page.locator('#confirm-finish').click();
+      assert.equal(await page.locator('#essay-submission').textContent(), essay);
+      assert.equal(await page.locator('#essay-author-position').isVisible(), false);
+      await page.locator('#essay-info summary').click();
+      assert((await page.locator('#essay-author-position').textContent()).length > 50);
+      assert.match(await page.locator('#essay-key').textContent(), new RegExp(String(keyPage)));
+      assert.match(await page.locator('#essay-key').getAttribute('href'), /^https:\/\/www\.nobr\.ru\//);
+      const result = page.waitForEvent('download');
+      await page.locator('#essay-result-download').click();
+      const downloaded = await result;
+      assert.equal(downloaded.suggestedFilename(), `sochinenie-${year}-variant-${variant}.docx`);
+      const docx = await fs.readFile(await downloaded.path());
+      assert.equal(docx.readUInt32LE(0), 0x04034b50);
+      assert(docx.includes(Buffer.from('Первый абзац.</w:t></w:r></w:p>')));
+      assert(docx.includes(Buffer.from('Второй абзац.</w:t></w:r></w:p>')));
+      assert(!docx.includes(Buffer.from(await page.locator('#essay-author-position').textContent())));
+    }
 
     await page.goto(base + '/feed/');
     await page.locator('#search-id').fill('1899');

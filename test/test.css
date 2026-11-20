@@ -56,7 +56,8 @@
 }
 #essay {
   display: block;
-  width: min(100%, 780px);
+  width: 100%;
+  box-sizing: border-box;
   min-height: 200px;
   resize: vertical;
   background: var(--bg);
@@ -74,12 +75,41 @@
   padding: 20px 0 24px;
   line-height: 1.65;
 }
+.essay-heading, .essay-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+.essay-heading { margin: 0 0 10px; }
+.essay-heading .answer-label { margin: 0; font-weight: 700; }
+.essay-actions { margin-top: 12px; }
+.essay-actions p { margin: 0; }
+.essay-count {
+  color: var(--muted);
+  font: 13px/1.6 Plex, monospace;
+  font-variant-numeric: tabular-nums;
+}
 .essay-submission {
   padding: 14px 16px;
   background: var(--bg);
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+.essay-info {
+  background: var(--bg);
+  border-left: 3px solid var(--blue);
+  padding: 0 16px 12px;
+  margin: 16px 0;
+}
+.essay-info:not([open]) { padding-bottom: 0; }
+.essay-info summary {
+  cursor: pointer;
+  padding: 12px 0;
+  font-weight: 700;
+}
+.essay-info p { margin: 0 0 10px; max-width: 66ch; }
 @media (max-width: 520px) {
   .ready-variant-list li {
     grid-template-columns: minmax(0, 1fr);

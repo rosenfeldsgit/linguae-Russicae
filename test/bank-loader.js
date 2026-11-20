@@ -1,26 +1,53 @@
 'use strict';
 (() => {
   const cache = new Map();
+  const essayKeys = new Map();
   // Variant paths belong to this script, regardless of the page using the bank.
   const bankRoot = new URL('.', document.currentScript.src);
   async function fetchVariant(file) {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 15000);
-    try {
-      const response = await fetch(new URL(file, bankRoot), {signal: controller.signal});
-      if (!response.ok) throw new Error('Не удалось загрузить задания. Попробуйте ещё раз.');
-      const data = await response.json();
-      return {questions: new Map(data.questions.map(q => [q.id, q])), passages: data.passages};
-    } finally {
-      clearTimeout(timer);
-    }
+    const data = await fetchJSON(file);
+    return {questions: new Map(data.questions.map(q => [q.id, q])), passages: data.passages};
   }
   function getVariant(file) {
     if (!cache.has(file)) cache.set(file, fetchVariant(file).catch(error => {cache.delete(file); throw error;}));
     return cache.get(file);
   }
+  async function fetchJSON(file) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 15000);
+    try {
+      const response = await fetch(new URL(file, bankRoot), {signal: controller.signal});
+      if (!response.ok) throw new Error('Не удалось загрузить задания. Попробуйте ещё раз.');
+      return await response.json();
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+  async function loadEssay(summary) {
+    const {essayYear: year, passageSource, ...question} = summary;
+    if (year !== 2026 && year !== 2027) throw new Error('Сборник не найден.');
+    if (!essayKeys.has(year)) {
+      essayKeys.set(year, fetchJSON(`essay-topics/${year}.json`).catch(error => {
+        essayKeys.delete(year);
+        throw error;
+      }));
+    }
+    const [topics, {passage}] = await Promise.all([essayKeys.get(year), load(passageSource)]);
+    const topic = topics[question.source.variant - 1];
+    if (!passage || !topic?.problem || !topic.authorPosition || !Number.isInteger(topic.answerPage)) {
+      throw new Error('Сочинение не найдено в базе.');
+    }
+    const prompt = [
+      `Напишите сочинение-рассуждение по проблеме исходного текста.\n**${topic.problem}**`,
+      'Сформулируйте позицию автора (рассказчика). Прокомментируйте, как она раскрывается в тексте. Приведите два примера-иллюстрации из прочитанного текста, поясните каждый и объясните смысловую связь между ними.',
+      'Сформулируйте и обоснуйте своё отношение к позиции автора. Приведите пример-аргумент из читательского, историко-культурного или жизненного опыта, не повторяя суждений автора. Комиксы, аниме, манга, фанфики, графические романы, компьютерные игры и сходные источники для аргумента не засчитываются.',
+      'Объём сочинения — не менее 150 слов. Работа без опоры на исходный текст не оценивается. Полное переписывание или пересказ текста без комментария оценивается в 0 баллов.',
+    ].join('\n\n');
+    return {...question, ...topic, essayYear: year, prompt, passage, answerType: 'essay', answers: []};
+  }
   async function load(summary) {
     if (typeof summary.prompt === 'string') return summary;
+    if (summary.essayYear) return loadEssay(summary);
     if (summary.readyVariantId) {
       const variant = window.EGE_READY_VARIANTS.find(entry => entry.id === summary.readyVariantId);
       const questions = await loadReady(variant);

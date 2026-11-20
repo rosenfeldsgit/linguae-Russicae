@@ -3,7 +3,16 @@
   const managed = window.EGE_MANAGED || {exams:[],disabled:[],tasks:{}};
   const config = {...window.EGE_EXAM_CONFIG, tasks:{...window.EGE_EXAM_CONFIG.tasks,...managed.tasks}};
   let preparing = false;
-  const {bank, score, renderPassage, renderQuestion, renderAnswer} = window.EGE_EXERCISES;
+  const {bank: exercises, score, renderPassage, renderQuestion, renderAnswer} = window.EGE_EXERCISES;
+  const byId = new Map(exercises.map(question => [question.id, question]));
+  const disabled = new Set(managed.disabled);
+  const bank = [...exercises, ...window.EGE_ESSAY_QUESTIONS
+    .filter(question => !disabled.has(question.id) && !byId.has(question.id))
+    .map(question => ({...question, passageSource: byId.get(question.passageSource.id) || question.passageSource}))];
+  const bookCatalog = {
+    2026: 'https://www.nobr.ru/catalog/ege/ege/4955/',
+    2027: 'https://www.nobr.ru/catalog/ege/ege/7910/',
+  };
   const $ = id => document.getElementById(id);
   let session = null;
   let interval = null;
@@ -14,6 +23,31 @@
     const seconds = Math.floor(ms / 1000);
     return [Math.floor(seconds / 60), seconds % 60].map(n => String(n).padStart(2, '0')).join(':');
   };
+  function essaySource(question) {
+    const {title, variant} = question.source;
+    return Number.isInteger(variant) ? `${title} · Вариант ${variant}` : title;
+  }
+  function updateEssayInput(value) {
+    const words = value.match(/\p{L}+(?:[-‑]\p{L}+)*/gu)?.length || 0;
+    $('essay-count').textContent = `Слов ≈ ${words}`;
+    $('essay-draft-download').disabled = !value.trim();
+  }
+  function renderEssayReview(question, answer) {
+    $('essay-review').hidden = false;
+    $('essay-review-source').textContent = essaySource(question);
+    $('essay-review-problem').textContent = question.problem || '';
+    $('essay-review-problem').hidden = !question.problem;
+    $('essay-submission').textContent = answer.trim() ? answer : 'Сочинение не написано.';
+    $('essay-result-download').hidden = !answer.trim();
+    $('essay-info').open = false;
+    $('essay-info').hidden = !question.authorPosition;
+    $('essay-author-position').textContent = question.authorPosition || '';
+    const keyUrl = bookCatalog[question.essayYear] || question.source.url;
+    $('essay-key').hidden = !keyUrl;
+    if (keyUrl) $('essay-key').href = keyUrl;
+    $('essay-key').textContent = question.answerPage ? `Издание · ключ на с. ${question.answerPage}` : 'Ключ в демоверсии ФИПИ';
+    $('essay-criteria').href = question.source.url || '../theory/#task-27';
+  }
   function selection() {
     return [...$('setup').querySelectorAll('input:checked')].map(input => Number(input.value));
   }
@@ -21,7 +55,8 @@
     const numbers = selection();
     const points = numbers.filter(n => n !== 27).reduce((sum, n) => sum + config.tasks[n].maxPrimary, 0);
     const essayNote = numbers.includes(27) ? ' Сочинение проверяется вручную (до 22 баллов).' : '';
-    $('selection-summary').textContent = `Выбрано заданий — ${numbers.length}. Максимум за часть 1 — ${points} первичных баллов.${essayNote}`;
+    const part1 = points ? ` Максимум за часть 1 — ${points} первичных баллов.` : '';
+    $('selection-summary').textContent = `Выбрано заданий — ${numbers.length}.${part1}${essayNote}`;
     $('start').disabled = !numbers.length;
   }
   function saveTime() {
@@ -53,8 +88,8 @@
     $('question-title').textContent = session.variant
       ? `Задание ${question.task}`
       : `Задание ${question.task} · #${question.displayId}`;
-    $('weight').textContent = `${question.maxPrimary} ${question.maxPrimary === 1 ? 'балл' : 'балла'}`;
-    $('source').textContent = question.source.title;
+    $('weight').textContent = `${isEssay ? 'до ' : ''}${question.maxPrimary} ${question.maxPrimary === 1 ? 'балл' : 'балла'}`;
+    $('source').textContent = isEssay ? essaySource(question) : question.source.title;
     renderPassage($('passage'), question, session.passageCollapsed[index], collapsed => {
       session.passageCollapsed[index] = collapsed;
     });
@@ -62,6 +97,7 @@
     $('short-answer').hidden = isEssay;
     $('essay-answer').hidden = !isEssay;
     $('essay').value = isEssay ? session.answers[index] : '';
+    if (isEssay) updateEssayInput(session.answers[index]);
     $('answer').value = session.answers[index];
     $('answer').inputMode = question.answerType === 'word' ? 'text' : 'numeric';
     $('answer-help').textContent = question.answerType === 'matching' ? 'Пять цифр в порядке А, Б, В, Г, Д.' : question.answerType === 'word' ? 'Слово или сочетание слов.' : 'Запишите цифры без пробелов и запятых.';
@@ -79,7 +115,10 @@
     const variants = {};
     const groups = new Map();
     for (const question of bank) {
-      const key = JSON.stringify([question.source.title, question.source.variant]);
+      const {title, variant} = question.source;
+      const imported = /^doshchinsky-(?:2026|2027)-/.test(question.id) &&
+        /^(?:legacy-|book-2026-)(\d+)$/.exec(variant);
+      const key = JSON.stringify([title, imported ? Number(imported[1]) : variant]);
       if (!groups.has(key)) groups.set(key, new Map());
       const tasks = groups.get(key);
       if (!tasks.has(question.task)) tasks.set(question.task, []);
@@ -99,6 +138,12 @@
     return Promise.all(selected.map(window.EGE_EXAM_LOADER.load));
   }
   function startSession(questions, variant, startButton) {
+    // Some 2027 passages carry a scan transcription of the essay instructions at the end.
+    questions = questions.map(question => {
+      if (question.task < 23 || !question.passage) return question;
+      const passage = question.passage.split(/\n+\*\*Задание 27\.\*\* Напишите сочинение-рассуждение/u, 1)[0].trimEnd();
+      return passage === question.passage ? question : {...question, passage};
+    });
     const now = performance.now();
     session = { questions, variant, startButton, passageCollapsed: questions.map(() => false), answers: questions.map(() => ''), elapsed: questions.map(() => 0), index: 0, startedAt: now, enteredAt: now, finished: false };
     $('setup').hidden = true;
@@ -135,11 +180,7 @@
     $('result-rows').replaceChildren();
     session.questions.forEach((question, index) => {
       if (question.answerType === 'essay') {
-        $('essay-review').hidden = false;
-        $('essay-submission').textContent = session.answers[index].trim() || 'Сочинение не написано.';
-        $('essay-author-position').hidden = !question.authorPosition;
-        $('essay-author-position').textContent = question.authorPosition ? `Позиция автора по ключу. ${question.authorPosition}` : '';
-        $('essay-criteria').href = question.source.url || '../theory/#task-27';
+        renderEssayReview(question, session.answers[index]);
         return;
       }
       const points = score(question, session.answers[index]);
@@ -279,9 +320,16 @@
   for (const id of ['answer', 'essay']) {
     $(id).addEventListener('input', event => {
       session.answers[session.index] = event.currentTarget.value;
+      if (id === 'essay') updateEssayInput(event.currentTarget.value);
       updateNavigation();
     });
   }
+  function downloadEssay(index) {
+    const question = session.questions[index];
+    window.EGE_ESSAY_DOCX.download(question, essaySource(question), session.answers[index]);
+  }
+  $('essay-draft-download').addEventListener('click', () => downloadEssay(session.index));
+  $('essay-result-download').addEventListener('click', () => downloadEssay(session.questions.findIndex(question => question.answerType === 'essay')));
   $('previous').addEventListener('click', () => showQuestion(session.index - 1));
   $('next').addEventListener('click', () => session.index < session.questions.length - 1 ? showQuestion(session.index + 1) : confirmFinish());
   $('finish').addEventListener('click', confirmFinish);

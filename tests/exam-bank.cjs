@@ -72,5 +72,23 @@ console.log('936 questions, 36 variants, keys, text-only content, scoring and sh
   assert.equal(question.displayId,summary.displayId);
  }
  assert.equal(calls.length,70+context.window.EGE_READY_VARIANTS.length,'ready and individual exam views share one fetch');
+ const essaySummaries=ctx.window.EGE_ESSAY_QUESTIONS;
+ assert.equal(essaySummaries.length,72);
+ assert.equal(new Set([...bank,...summaries,...essaySummaries].map(q=>q.displayId)).size,bank.length+summaries.length+72);
+ const passagesById=new Map(bank.map(q=>[q.id,q.passage]));
+ for(const summary of essaySummaries){
+  const essay=await loader.load(summary);
+  const edition=summary.essayYear;
+  assert.equal(essay.task,27);
+  assert.equal(essay.essayYear,edition);
+  assert.equal(essay.answerType,'essay');
+  assert.equal(essay.maxPrimary,22);
+  assert.equal(scoring.score(essay,'Первый абзац'),0);
+  assert(essay.prompt.includes(essay.problem) && essay.problem.endsWith('?'),essay.id);
+  assert(essay.authorPosition.length>50,essay.id);
+  assert(essay.answerPage >= (edition===2026?342:327) && essay.answerPage <= (edition===2026?347:332),essay.id);
+  assert.equal(essay.passage,passagesById.get(summary.passageSource.id),essay.id);
+ }
+ assert.equal(calls.length,70+context.window.EGE_READY_VARIANTS.length+2,'one essay key fetch per edition');
  console.log('Lazy loading, parallel request cache, random shared-text grouping: OK');
 })().catch(error=>{console.error(error);process.exitCode=1;});

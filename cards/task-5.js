@@ -13,7 +13,8 @@ registerCards(5, [
     "sourceId": 5,
     "source": "Сборник Дощинского 2027",
     "instruction": "Выберите ответ",
-    "displayId": 100047
+    "displayId": 100047,
+    "paronymGroup": "embrace"
   },
   {
     "id": 2,
@@ -29,7 +30,8 @@ registerCards(5, [
     "sourceId": 31,
     "source": "Сборник Дощинского 2027",
     "instruction": "Выберите ответ",
-    "displayId": 100048
+    "displayId": 100048,
+    "paronymGroup": "breath"
   },
   {
     "id": 3,
@@ -45,7 +47,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 1,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "art"
   },
   {
     "id": 4,
@@ -61,7 +64,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 1,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "embrace"
   },
   {
     "id": 5,
@@ -79,7 +83,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 1,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "payment"
   },
   {
     "id": 6,
@@ -95,7 +100,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 1,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "trust"
   },
   {
     "id": 7,
@@ -111,7 +117,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 1,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "luck"
   },
   {
     "id": 8,
@@ -127,7 +134,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 2,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "fragment"
   },
   {
     "id": 9,
@@ -143,7 +151,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 2,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "instigator"
   },
   {
     "id": 10,
@@ -159,7 +168,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 2,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "ignorance"
   },
   {
     "id": 11,
@@ -175,7 +185,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 2,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "breath"
   },
   {
     "id": 12,
@@ -191,7 +202,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 3,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "diploma"
   },
   {
     "id": 13,
@@ -208,7 +220,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 3,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "human"
   },
   {
     "id": 14,
@@ -224,7 +237,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 3,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "dress"
   },
   {
     "id": 15,
@@ -240,7 +254,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 3,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "practice"
   },
   {
     "id": 16,
@@ -256,7 +271,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 4,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "fragment"
   },
   {
     "id": 17,
@@ -272,7 +288,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 4,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "embrace"
   },
   {
     "id": 18,
@@ -288,7 +305,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 4,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "earth"
   },
   {
     "id": 19,
@@ -304,7 +322,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 5,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "democracy"
   },
   {
     "id": 20,
@@ -320,7 +339,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 5,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "tech"
   },
   {
     "id": 21,
@@ -336,7 +356,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 5,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "stage"
   },
   {
     "id": 22,
@@ -353,7 +374,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 6,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "intolerable"
   },
   {
     "id": 23,
@@ -369,7 +391,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 6,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "bone"
   },
   {
     "id": 24,
@@ -385,7 +408,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 6,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "charity"
   },
   {
     "id": 25,
@@ -401,7 +425,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 7,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "satiety"
   },
   {
     "id": 26,
@@ -417,7 +442,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 7,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "present"
   },
   {
     "id": 27,
@@ -433,7 +459,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 8,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "greatness"
   },
   {
     "id": 28,
@@ -449,7 +476,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 8,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "effect"
   },
   {
     "id": 29,
@@ -465,7 +493,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 8,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "poor"
   },
   {
     "id": 30,
@@ -481,7 +510,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 9,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "greatness"
   },
   {
     "id": 31,
@@ -497,7 +527,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 9,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "skill"
   },
   {
     "id": 32,
@@ -513,7 +544,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 9,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "eternal"
   },
   {
     "id": 33,
@@ -529,7 +561,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 9,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "idle"
   },
   {
     "id": 34,
@@ -545,7 +578,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 10,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "past"
   },
   {
     "id": 35,
@@ -561,7 +595,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 10,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "sand"
   },
   {
     "id": 36,
@@ -577,7 +612,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 10,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "secret"
   },
   {
     "id": 37,
@@ -593,7 +629,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 10,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "stone"
   },
   {
     "id": 38,
@@ -609,7 +646,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 11,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "dress"
   },
   {
     "id": 39,
@@ -625,7 +663,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 11,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "ice"
   },
   {
     "id": 40,
@@ -641,7 +680,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 11,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "great"
   },
   {
     "id": 41,
@@ -659,7 +699,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 11,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "business"
   },
   {
     "id": 42,
@@ -676,7 +717,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 11,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "action"
   },
   {
     "id": 43,
@@ -692,7 +734,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 12,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "trust"
   },
   {
     "id": 44,
@@ -708,7 +751,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 12,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "subscriber"
   },
   {
     "id": 45,
@@ -724,7 +768,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 12,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "ignorance"
   },
   {
     "id": 46,
@@ -744,7 +789,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 13,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "fill"
   },
   {
     "id": 47,
@@ -760,7 +806,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 13,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "diplomatic"
   },
   {
     "id": 48,
@@ -776,7 +823,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 13,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "personal"
   },
   {
     "id": 49,
@@ -792,7 +840,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 13,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "bath"
   },
   {
     "id": 50,
@@ -808,7 +857,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 13,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "authority"
   },
   {
     "id": 51,
@@ -824,7 +874,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 14,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "motivate"
   },
   {
     "id": 52,
@@ -840,7 +891,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 14,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "art"
   },
   {
     "id": 53,
@@ -856,7 +908,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 14,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "humanism"
   },
   {
     "id": 54,
@@ -872,7 +925,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 15,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "length"
   },
   {
     "id": 55,
@@ -888,7 +942,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 15,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "instigator"
   },
   {
     "id": 56,
@@ -904,7 +959,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 15,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "sound"
   },
   {
     "id": 57,
@@ -920,7 +976,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 16,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "guarantee"
   },
   {
     "id": 58,
@@ -936,7 +993,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 16,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "info"
   },
   {
     "id": 59,
@@ -952,7 +1010,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 16,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "skill"
   },
   {
     "id": 60,
@@ -968,7 +1027,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 16,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "length"
   },
   {
     "id": 61,
@@ -984,7 +1044,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 17,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "kind"
   },
   {
     "id": 62,
@@ -1001,7 +1062,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 17,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "root"
   },
   {
     "id": 63,
@@ -1017,7 +1079,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 17,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "secret"
   },
   {
     "id": 64,
@@ -1033,7 +1096,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 17,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "product"
   },
   {
     "id": 65,
@@ -1049,7 +1113,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 18,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "instigator"
   },
   {
     "id": 66,
@@ -1065,7 +1130,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 18,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "secret"
   },
   {
     "id": 67,
@@ -1081,7 +1147,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 18,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "sound"
   },
   {
     "id": 68,
@@ -1097,7 +1164,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 18,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "apple"
   },
   {
     "id": 69,
@@ -1113,7 +1181,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 19,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "earth"
   },
   {
     "id": 70,
@@ -1129,7 +1198,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 19,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "fear"
   },
   {
     "id": 71,
@@ -1145,7 +1215,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 19,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "authority"
   },
   {
     "id": 72,
@@ -1161,7 +1232,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 19,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "danger"
   },
   {
     "id": 73,
@@ -1177,7 +1249,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 19,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "origin"
   },
   {
     "id": 74,
@@ -1193,7 +1266,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 20,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "danger"
   },
   {
     "id": 75,
@@ -1209,7 +1283,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 20,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "comparison"
   },
   {
     "id": 76,
@@ -1225,7 +1300,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 20,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "motivate"
   },
   {
     "id": 77,
@@ -1241,7 +1317,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 20,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "populist"
   },
   {
     "id": 78,
@@ -1258,7 +1335,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 20,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "root"
   },
   {
     "id": 79,
@@ -1274,7 +1352,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 21,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "effect"
   },
   {
     "id": 80,
@@ -1290,7 +1369,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 21,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "present"
   },
   {
     "id": 81,
@@ -1306,7 +1386,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 21,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "selection"
   },
   {
     "id": 82,
@@ -1322,7 +1403,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 21,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "motivate"
   },
   {
     "id": 83,
@@ -1338,7 +1420,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 22,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "representative"
   },
   {
     "id": 84,
@@ -1354,7 +1437,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 22,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "dress"
   },
   {
     "id": 85,
@@ -1370,7 +1454,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 22,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "recognition"
   },
   {
     "id": 86,
@@ -1386,7 +1471,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 22,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "resistance"
   },
   {
     "id": 87,
@@ -1402,7 +1488,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 22,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "sound"
   },
   {
     "id": 88,
@@ -1418,7 +1505,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 23,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "memory"
   },
   {
     "id": 89,
@@ -1434,7 +1522,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 23,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "guarantee"
   },
   {
     "id": 90,
@@ -1453,7 +1542,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 23,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "fence"
   },
   {
     "id": 91,
@@ -1469,7 +1559,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 24,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "ice"
   },
   {
     "id": 92,
@@ -1486,7 +1577,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 24,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "root"
   },
   {
     "id": 93,
@@ -1503,7 +1595,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 24,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "intolerable"
   },
   {
     "id": 94,
@@ -1519,7 +1612,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 24,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "responsibility"
   },
   {
     "id": 95,
@@ -1535,7 +1629,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 25,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "diplomatic"
   },
   {
     "id": 96,
@@ -1551,7 +1646,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 25,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "charity"
   },
   {
     "id": 97,
@@ -1567,7 +1663,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 25,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "personal"
   },
   {
     "id": 98,
@@ -1583,7 +1680,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 25,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "effect"
   },
   {
     "id": 99,
@@ -1599,7 +1697,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 26,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "address"
   },
   {
     "id": 100,
@@ -1615,7 +1714,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 26,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "present"
   },
   {
     "id": 101,
@@ -1631,7 +1731,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 26,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "dress"
   },
   {
     "id": 102,
@@ -1647,7 +1748,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 26,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "horse"
   },
   {
     "id": 103,
@@ -1663,7 +1765,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 26,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "clay"
   },
   {
     "id": 104,
@@ -1679,7 +1782,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 27,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "populist"
   },
   {
     "id": 105,
@@ -1695,7 +1799,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 27,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "stone"
   },
   {
     "id": 106,
@@ -1711,7 +1816,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 28,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "bone"
   },
   {
     "id": 107,
@@ -1727,7 +1833,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 28,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "clay"
   },
   {
     "id": 108,
@@ -1743,7 +1850,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 28,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "charity"
   },
   {
     "id": 109,
@@ -1759,7 +1867,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 28,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "memory"
   },
   {
     "id": 110,
@@ -1775,7 +1884,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 29,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "tech"
   },
   {
     "id": 111,
@@ -1791,7 +1901,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 29,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "ignorance"
   },
   {
     "id": 112,
@@ -1807,7 +1918,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 29,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "ethics"
   },
   {
     "id": 113,
@@ -1825,7 +1937,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 29,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "business"
   },
   {
     "id": 114,
@@ -1843,7 +1956,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 29,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "payment"
   },
   {
     "id": 115,
@@ -1860,7 +1974,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 30,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "human"
   },
   {
     "id": 116,
@@ -1877,7 +1992,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 30,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "root"
   },
   {
     "id": 117,
@@ -1893,7 +2009,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 30,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "poor"
   },
   {
     "id": 118,
@@ -1909,7 +2026,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 30,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "info"
   },
   {
     "id": 119,
@@ -1925,7 +2043,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 31,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "selection"
   },
   {
     "id": 120,
@@ -1941,7 +2060,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 31,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "humiliation"
   },
   {
     "id": 121,
@@ -1957,7 +2077,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 31,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "subscriber"
   },
   {
     "id": 122,
@@ -1973,7 +2094,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 32,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "fear"
   },
   {
     "id": 123,
@@ -1989,7 +2111,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 32,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "representative"
   },
   {
     "id": 124,
@@ -2005,7 +2128,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 32,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "badluck"
   },
   {
     "id": 125,
@@ -2021,7 +2145,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 32,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "guarantee"
   },
   {
     "id": 126,
@@ -2037,7 +2162,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 33,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "dictation"
   },
   {
     "id": 127,
@@ -2053,7 +2179,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 33,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "responsibility"
   },
   {
     "id": 128,
@@ -2069,7 +2196,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 33,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "sound"
   },
   {
     "id": 129,
@@ -2085,7 +2213,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 33,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "predator"
   },
   {
     "id": 130,
@@ -2102,7 +2231,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 34,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "year"
   },
   {
     "id": 131,
@@ -2118,7 +2248,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 34,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "organic"
   },
   {
     "id": 132,
@@ -2134,7 +2265,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 34,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "bath"
   },
   {
     "id": 133,
@@ -2151,7 +2283,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 34,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "paint"
   },
   {
     "id": 134,
@@ -2168,7 +2301,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 34,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "honor"
   },
   {
     "id": 135,
@@ -2184,7 +2318,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 35,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "diploma"
   },
   {
     "id": 136,
@@ -2200,7 +2335,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 35,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "publicism"
   },
   {
     "id": 137,
@@ -2218,7 +2354,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 35,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "delivery"
   },
   {
     "id": 138,
@@ -2234,7 +2371,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 35,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "humiliation"
   },
   {
     "id": 139,
@@ -2250,7 +2388,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 36,
-    "sourceSentence": 1
+    "sourceSentence": 1,
+    "paronymGroup": "satiety"
   },
   {
     "id": 140,
@@ -2267,7 +2406,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 36,
-    "sourceSentence": 2
+    "sourceSentence": 2,
+    "paronymGroup": "root"
   },
   {
     "id": 141,
@@ -2284,7 +2424,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 36,
-    "sourceSentence": 3
+    "sourceSentence": 3,
+    "paronymGroup": "friendship"
   },
   {
     "id": 142,
@@ -2300,7 +2441,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 36,
-    "sourceSentence": 4
+    "sourceSentence": 4,
+    "paronymGroup": "responsibility"
   },
   {
     "id": 143,
@@ -2316,7 +2458,8 @@ registerCards(5, [
     "instruction": "Выбери подходящее слово",
     "source": "Сборник Дощинского 2027",
     "sourceVariant": 36,
-    "sourceSentence": 5
+    "sourceSentence": 5,
+    "paronymGroup": "poor"
   },
   {
     "id": 144,
@@ -2332,7 +2475,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 941,
-    "sourceVariant": 1
+    "sourceVariant": 1,
+    "paronymGroup": "impersonal"
   },
   {
     "id": 145,
@@ -2348,7 +2492,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 967,
-    "sourceVariant": 2
+    "sourceVariant": 2,
+    "paronymGroup": "secret"
   },
   {
     "id": 146,
@@ -2364,7 +2509,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 993,
-    "sourceVariant": 3
+    "sourceVariant": 3,
+    "paronymGroup": "bath"
   },
   {
     "id": 147,
@@ -2380,7 +2526,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1019,
-    "sourceVariant": 4
+    "sourceVariant": 4,
+    "paronymGroup": "responsibility"
   },
   {
     "id": 148,
@@ -2396,7 +2543,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1045,
-    "sourceVariant": 5
+    "sourceVariant": 5,
+    "paronymGroup": "skill"
   },
   {
     "id": 149,
@@ -2412,7 +2560,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1071,
-    "sourceVariant": 6
+    "sourceVariant": 6,
+    "paronymGroup": "ignorance"
   },
   {
     "id": 150,
@@ -2428,7 +2577,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1097,
-    "sourceVariant": 7
+    "sourceVariant": 7,
+    "paronymGroup": "ethics"
   },
   {
     "id": 151,
@@ -2444,7 +2594,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1123,
-    "sourceVariant": 8
+    "sourceVariant": 8,
+    "paronymGroup": "fill"
   },
   {
     "id": 152,
@@ -2460,7 +2611,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1149,
-    "sourceVariant": 9
+    "sourceVariant": 9,
+    "paronymGroup": "intolerable"
   },
   {
     "id": 153,
@@ -2476,7 +2628,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1175,
-    "sourceVariant": 10
+    "sourceVariant": 10,
+    "paronymGroup": "fill"
   },
   {
     "id": 154,
@@ -2492,7 +2645,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1227,
-    "sourceVariant": 12
+    "sourceVariant": 12,
+    "paronymGroup": "great"
   },
   {
     "id": 155,
@@ -2508,7 +2662,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1253,
-    "sourceVariant": 13
+    "sourceVariant": 13,
+    "paronymGroup": "address"
   },
   {
     "id": 156,
@@ -2524,7 +2679,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1279,
-    "sourceVariant": 14
+    "sourceVariant": 14,
+    "paronymGroup": "bone"
   },
   {
     "id": 157,
@@ -2540,7 +2696,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1305,
-    "sourceVariant": 15
+    "sourceVariant": 15,
+    "paronymGroup": "endure"
   },
   {
     "id": 158,
@@ -2556,7 +2713,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1331,
-    "sourceVariant": 16
+    "sourceVariant": 16,
+    "paronymGroup": "ignorance"
   },
   {
     "id": 159,
@@ -2572,7 +2730,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1357,
-    "sourceVariant": 17
+    "sourceVariant": 17,
+    "paronymGroup": "housing"
   },
   {
     "id": 160,
@@ -2588,7 +2747,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1383,
-    "sourceVariant": 18
+    "sourceVariant": 18,
+    "paronymGroup": "diploma"
   },
   {
     "id": 161,
@@ -2604,7 +2764,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1435,
-    "sourceVariant": 20
+    "sourceVariant": 20,
+    "paronymGroup": "fill"
   },
   {
     "id": 162,
@@ -2620,7 +2781,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1461,
-    "sourceVariant": 21
+    "sourceVariant": 21,
+    "paronymGroup": "fill"
   },
   {
     "id": 163,
@@ -2636,7 +2798,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1487,
-    "sourceVariant": 22
+    "sourceVariant": 22,
+    "paronymGroup": "economy"
   },
   {
     "id": 164,
@@ -2652,7 +2815,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1565,
-    "sourceVariant": 25
+    "sourceVariant": 25,
+    "paronymGroup": "observation"
   },
   {
     "id": 165,
@@ -2668,7 +2832,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1643,
-    "sourceVariant": 28
+    "sourceVariant": 28,
+    "paronymGroup": "eternal"
   },
   {
     "id": 166,
@@ -2684,7 +2849,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1669,
-    "sourceVariant": 29
+    "sourceVariant": 29,
+    "paronymGroup": "instigator"
   },
   {
     "id": 167,
@@ -2700,7 +2866,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1695,
-    "sourceVariant": 30
+    "sourceVariant": 30,
+    "paronymGroup": "dress"
   },
   {
     "id": 168,
@@ -2716,7 +2883,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1721,
-    "sourceVariant": 31
+    "sourceVariant": 31,
+    "paronymGroup": "skill"
   },
   {
     "id": 169,
@@ -2732,7 +2900,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1747,
-    "sourceVariant": 32
+    "sourceVariant": 32,
+    "paronymGroup": "populist"
   },
   {
     "id": 170,
@@ -2748,7 +2917,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1773,
-    "sourceVariant": 33
+    "sourceVariant": 33,
+    "paronymGroup": "practice"
   },
   {
     "id": 171,
@@ -2764,7 +2934,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1799,
-    "sourceVariant": 34
+    "sourceVariant": 34,
+    "paronymGroup": "double"
   },
   {
     "id": 172,
@@ -2780,7 +2951,8 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1825,
-    "sourceVariant": 35
+    "sourceVariant": 35,
+    "paronymGroup": "horse"
   },
   {
     "id": 173,
@@ -2796,6 +2968,7 @@ registerCards(5, [
     "instruction": "Выбери подходящий пароним",
     "source": "Сборник Дощинского 2026",
     "sourceId": 1851,
-    "sourceVariant": 36
+    "sourceVariant": 36,
+    "paronymGroup": "guarantee"
   }
 ]);

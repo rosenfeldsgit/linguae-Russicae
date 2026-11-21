@@ -6,7 +6,7 @@
  const staticCards = window.EGE_TRAINER_CARDS;
  const staticIds = new Set(staticCards.map(c=>c.id));
  const disabled = new Set(managed.disabled);
- const cards = [...staticCards,...managed.cards.filter(c=>!staticIds.has(c.id))].filter(c => !disabled.has(c.id)).map(c => overrides.get(c.id) || c).map(card => ({ ...card, displayId: card.displayId || stableId(card.id), maxPrimary: (managed.tasks[card.task] || window.EGE_EXAM_CONFIG.tasks[card.task] || {maxPrimary:1}).maxPrimary }));
+ const cards = [...staticCards,...managed.cards.filter(c=>!staticIds.has(c.id))].filter(c => !disabled.has(c.id)).map(c => overrides.has(c.id) ? {paronymGroup: c.paronymGroup, ...overrides.get(c.id)} : c).map(card => ({ ...card, displayId: card.displayId || stableId(card.id), maxPrimary: (managed.tasks[card.task] || window.EGE_EXAM_CONFIG.tasks[card.task] || {maxPrimary:1}).maxPrimary }));
  const $=id=>document.getElementById(id);
  const sections=[['all','Все подряд'],['1','1'],['5','5'],['7','7'],...Array.from({length:7},(_,i)=>[String(i+9),String(i+9)]),['stress','Ударение'],['punctuation','Пунктуация']];
  for (const task of Object.values(managed.tasks)) { if (!sections.some(s=>s[0]===String(task.number)) && cards.some(c=>c.task===task.number)) sections.splice(sections.length-2,0,[String(task.number),String(task.number)]); }
@@ -31,25 +31,45 @@
      card.kind === 'stress' ? '' : normalize(card.context),
      card.kind === 'punctuation' ? card.answer : [...new Set(accepted(card).map(normalizeAnswer))].sort(), card.mark || '']);
  }
- function createRotation(items) {
+ function createRotation(items, separateParonyms = false) {
+   const families = new Map();
    const groups = new Map();
    for (const card of items) {
      const key = exerciseKey(card);
      if (!groups.has(key)) groups.set(key, []);
      groups.get(key).push(card);
+     if (separateParonyms) {
+       families.set(key, card.paronymGroup || JSON.stringify([...new Set(card.options.map(normalizeAnswer))].sort()));
+     }
    }
-   return {groups, remaining: [], lastKey: null};
+   return {groups, families, seenFamilies: new Set(), remaining: [], lastKey: null};
  }
  function nextCard(state) {
    if (!state.remaining.length) {
      state.remaining = shuffle([...state.groups.keys()]);
+     state.seenFamilies.clear();
      // Avoid repeating the last exercise at the boundary between rounds.
      const last = state.remaining.length - 1;
      if (last > 0 && state.remaining[last] === state.lastKey) {
        [state.remaining[0], state.remaining[last]] = [state.remaining[last], state.remaining[0]];
      }
    }
-   state.lastKey = state.remaining.pop();
+   if (state.families.size) {
+     const {families, seenFamilies, remaining} = state;
+     const lastFamily = families.get(state.lastKey);
+     // Show one example per family before drawing another from any family.
+     let index = remaining.findIndex(key => !seenFamilies.has(families.get(key)) && families.get(key) !== lastFamily);
+     if (index < 0) index = remaining.findIndex(key => !seenFamilies.has(families.get(key)));
+     if (index < 0) {
+       seenFamilies.clear();
+       index = remaining.findIndex(key => families.get(key) !== lastFamily);
+     }
+     const [key] = remaining.splice(Math.max(0, index), 1);
+     seenFamilies.add(families.get(key));
+     state.lastKey = key;
+   } else {
+     state.lastKey = state.remaining.pop();
+   }
    const copies = state.groups.get(state.lastKey);
    return copies[random(copies.length)];
  }
@@ -262,7 +282,7 @@
   for(const b of $('sections').children)b.setAttribute('aria-pressed',String(b.dataset.section===id));
   pool = id === 'all' ? cards : id === 'stress' ? cards.filter(c => c.kind === 'stress') : id === 'punctuation' ? cards.filter(c => c.kind === 'punctuation') : cards.filter(c => c.task === Number(id));
   if(!pool.length){$('word').textContent='Не удалось загрузить карточки';$('context').textContent='Проверьте, что папка cards находится рядом с index.html.';$('skip').hidden=true;return;}
-  if (!rotations.has(id)) rotations.set(id, createRotation(pool));
+  if (!rotations.has(id)) rotations.set(id, createRotation(pool, id === '5'));
   rotation = rotations.get(id);
   chooseNext();
  }

@@ -33,4 +33,20 @@ context.nextCard(second);
 assert.equal(unconsumed.remaining.length, 2);
 context.nextCard(unconsumed);
 assert.equal(unconsumed.remaining.length, 1);
+const catalog = {window: {}};
+for (const file of ['catalog', 'task-5', 'fipi-2027', 'statgrad-2026-09-17']) {
+  vm.runInNewContext(fs.readFileSync('cards/' + file + '.js', 'utf8'), catalog);
+}
+const paronyms = catalog.window.EGE_TRAINER_CARDS.filter(card => card.task === 5);
+assert(paronyms.every(card => card.paronymGroup));
+const familyCount = new Set(paronyms.map(card => card.paronymGroup)).size;
+const paronymRotation = context.createRotation(paronyms, true);
+for (let round = 0; round < 30; round++) {
+  const shown = Array.from({length: paronyms.length}, () => context.nextCard(paronymRotation));
+  assert.equal(new Set(shown.map(card => card.id)).size, paronyms.length);
+  assert.equal(new Set(shown.slice(0, familyCount).map(card => card.paronymGroup)).size, familyCount);
+  if (previous) assert.notEqual(shown[0].paronymGroup, previous);
+  previous = shown.at(-1).paronymGroup;
+}
+console.log(paronyms.length + ' paronym cards across ' + familyCount + ' families rotate without family repeats on the first pass.');
 console.log('Rotation rounds, duplicate IDs, round boundaries, single card, contexts and independent queues OK');

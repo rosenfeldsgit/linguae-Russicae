@@ -52,7 +52,8 @@
     }]);
   }
   variants.forEach((rows, index) => rows.forEach(([task, word, choices, explanation, instruction]) => {
-    add(index + 1, task, {kind: 'exam-choice', word, choices, answer: choices[0], explanation, instruction});
+    add(index + 1, task, {kind: 'exam-choice', word, choices, answer: choices[0], explanation, instruction,
+      ...(task === 5 ? {paronymGroup: ['bone', 'secret'][index]} : {})});
   }));
   add(1, 4, {kind: 'stress', word: 'плодоносить', answer: 'плодоносИть', explanation: 'Нормативное ударение — плодоноси́ть.'});
   add(2, 4, {kind: 'stress', word: 'дешевизна', answer: 'дешевИзна', explanation: 'Нормативное ударение — дешеви́зна.'});

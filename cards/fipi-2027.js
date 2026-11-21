@@ -56,6 +56,7 @@
       instruction: instructions[task],
       explanation,
       sourceUrl,
+      ...(task === 5 ? {paronymGroup: 'responsibility'} : {}),
     }]);
   }
 

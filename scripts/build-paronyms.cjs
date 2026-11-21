@@ -164,7 +164,7 @@ for (const question of questions) {
     const answer = options[Number(correct)];
     const explanation = definitions[group].split('|').join('\n');
     if (definitions[group].split('|').length !== options.length) throw Error(`Group ${group}`);
-    cards.push({id:`paronym-doshchinsky-2027-v${question.v}-s${index+1}`,task:5,kind:'word-choice',instruction:'Выбери подходящее слово',before:sentence.slice(0,offset),after:sentence.slice(offset+target[0].length),answer,options,explanation,source:question.source.title,sourceVariant:question.v,sourceSentence:index+1});
+    cards.push({id:`paronym-doshchinsky-2027-v${question.v}-s${index+1}`,task:5,kind:'word-choice',instruction:'Выбери подходящее слово',before:sentence.slice(0,offset),after:sentence.slice(offset+target[0].length),answer,options,explanation,source:question.source.title,sourceVariant:question.v,sourceSentence:index+1,paronymGroup:group});
   });
 }
 if (cards.length + excluded.length !== 180) throw Error(`Count ${cards.length}/${excluded.length}`);
